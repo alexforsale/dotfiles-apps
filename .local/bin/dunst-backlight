@@ -1,0 +1,12 @@
+#!/bin/sh
+# original script from https://wiki.archlinux.org/index.php/Dunst
+# <alexforsale@yahoo.com>
+# Arbitrary but unique message id
+msgId="992049"
+
+xbacklight "$@" > /dev/null
+
+brightness="$(xbacklight)"
+
+dunstify -a "ChangeBrightness:" -u low -i notification-keyboard-brightness -r "$msgId" \
+    -h int:value:"${brightness/.*}" ": ${brightness/.*}%" -t 1000
