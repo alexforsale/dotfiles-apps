@@ -10,3 +10,7 @@ brightness="$(xbacklight)"
 
 dunstify -a "ChangeBrightness:" -u low -i notification-keyboard-brightness -r "$msgId" \
     -h int:value:"${brightness/.*}" ": ${brightness/.*}%" -t 1000
+
+# use audio-volume-change from freedesktop
+# TODO: use different sound theme
+canberra-gtk-play -i audio-volume-change -d "changeVolume"
