@@ -4,29 +4,49 @@
 # Arbitrary but unique message id
 msgId="991049"
 
-SINK=$(pactl list short sinks | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,' | head -n 1)
+SINK=$(pactl info | awk -F': ' '/^Default Sink: /{print $2}')
+SINK_INDEX=$(pactl list sinks | \
+    awk '/^Sink #/{gsub("#", ""); idx = $2} /^[ \t]+Name: / {insink = $2 == "'"$SINK"'"; if (insink) { print idx }; exit}')
+BASE_VOLUME=$(pactl list sinks | \
+        awk '/^[ \t]+Name: / {insink = $2 == "'"$SINK"'"} /^[ \t]+Base Volume: / && insink {gsub("%", ""); print $5; exit}')
+step="5"
+#MUTED=$(pactl list sinks | \
+#    awk '/^[ \t]+Name: / {insink = $2 == "'"$SINK"'"} /^[ \t]+Mute: / && insink && $2 ~ /^yes$/ { exitcode=1 }; END { exit !exitcode }')
 
-# Change the volume using alsa(might differ if you use pulseaudio)
-#amixer -c 0 set Master "$@" > /dev/null
-[ "$1" = "toggle" ] &&
-    pactl set-sink-mute ${SINK} toggle
-
-pactl set-sink-volume ${SINK} "$@" > /dev/null
-
-# Query amixer for the current volume and whether or not the speaker is muted
-#volume="$(amixer -c 0 get Master | tail -1 | awk '{print $4}' | sed 's/[^0-9]*//g')"
-volume="$(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')"
-#mute="$(amixer -c 0 get Master | tail -1 | awk '{print $6}' | sed 's/[^a-z]*//g')"
-mute=$(pactl list sinks|grep '^[[:space:]]Mute'|head -n $(($SINK+1))| tail -n 1|sed 's/^[[:space:]]Mute\:[[:space:]]//')
-#if [ "$volume" = "0" ] || [ "$mute" = "off" ]; then
-if [ "$volume" = "0" ] || [ "$mute" = "no" ]; then
-    # Show the sound muted notification
-    dunstify -a "changeVolume" -u low -i audio-volume-muted -r "$msgId" "Volume muted"
-else
-    # Show the volume notification
-    dunstify -a "changeVolume" -u low -i audio-volume-high -r "$msgId" \
-    -h int:volume:value:"$volume" ": ${volume}%" -t 1000
+if [ "${1}" = "up" ]; then
+    pactl set-sink-volume "${SINK}" "+${step}%"
+elif [ "${1}" = "down" ]; then
+    pactl set-sink-volume "${SINK}" "-${step}%"
+elif [ "${1}" = "toggle" ]; then
+    pactl set-sink-mute "$SINK" toggle
 fi
 
+MUTED=$(pactl list sinks | grep -A 6 $SINK | awk '/^[ \t]+Mute/ {print $2}')
+VOLUME=$(pactl list sinks | \
+    awk '/^[ \t]+Name: / {insink = $2 == "'"$SINK"'"} /^[ \t]+Volume: / && insink {gsub("%,?", ""); print $5; exit}')
+
+rate=$(awk -vbase_volume="${BASE_VOLUME}" -vvolume="${VOLUME}" 'BEGIN {print (volume/base_volume) *100}')
 # Play the volume changed sound
 canberra-gtk-play -i audio-volume-change -d "changeVolume"
+
+if [ "${1}" = "up" ] ||
+       [ "${1}" = "down" ]; then
+    if [ $rate -eq 0 ]; then
+        icon="audio-volume-muted"
+        symbol=""
+    elif [ $rate -gt 0 ] &&
+             [ $rate -le 25 ]; then
+        icon="audio-volume-low"
+        symbol=""
+    elif [ $rate -gt 25 ] &&
+             [ $rate -le 75 ]; then
+        icon="audio-volume-medium"
+        symbol=""
+    elif [ $rate -gt 75 ]; then
+        icon="audio-volume-high"
+        symbol=""
+    fi
+    dunstify -a "volume" -u low -i ${icon} -r "$msgId" -h int:volume:value:"$VOLUME" "${symbol} ${VOLUME}%" -t 1000
+elif [ "${1}" = "toggle" ]; then
+    dunstify -a "volume" -u low -i audio-volume-muted -r "$msgId" "${symbol} Mute: ${MUTED}" -t 1000
+fi
