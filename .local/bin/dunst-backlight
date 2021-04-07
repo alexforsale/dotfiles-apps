@@ -4,13 +4,47 @@
 # Arbitrary but unique message id
 msgId="992049"
 
-xbacklight "$@" > /dev/null
+if [ "$DISTRO" = "freebsd" ];then
+    VIDEO=$(/sbin/sysctl hw.acpi.video | grep 'levels' | cut -d'.' -f4)
+    current_level() {
+        echo $(/sbin/sysctl -n hw.acpi.video.${VIDEO}.brightness)
+    }
+    if [ "${1}" = "up" ] && [ $(current_level) -ne 100 ]; then
+        LEVELS=$(/sbin/sysctl -n hw.acpi.video.${VIDEO}.levels | tr " " "\n" | sort -ug)
+        for levels in ${LEVELS}; do
+            echo "using level ${levels}"
+            if [ ${levels} -le $(current_level) ]; then
+                continue
+            elif [ $(current_level -gt ${levels}) ]; then
+                sudo /sbin/sysctl "hw.acpi.video.${VIDEO}.brightness=${levels}" >/dev/null 2>&1
+                break
+            fi
+        done
+    elif [ "${1}" = "down" ] && [ $(current_level) -ne 0 ]; then
+        LEVELS=$(/sbin/sysctl -n hw.acpi.video.${VIDEO}.levels | tr " " "\n" | sort -rug)
+        for levels in ${LEVELS}; do
+            echo "using level ${levels}"
+            if [ ${levels} -ge $(current_level) ]; then
+                continue
+            elif [ ${levels} -lt $(current_level) ];then
+                sudo /sbin/sysctl "hw.acpi.video.${VIDEO}.brightness=${levels}" >/dev/null 2>&1
+                break
+            fi
+        done
+    fi
+    echo "LEVEL=$(current_level)"
+    dunstify -a "ChangeBrightness:" -u low -i notification-keyboard-brightness -r "$msgId" \
+        -h int:value:"$(current_level)" ": $(current_level)%" -t 1000
+    canberra-gtk-play -i audio-volume-change -d "changeVolume"
+else
+    xbacklight "$@" > /dev/null
 
-brightness="$(xbacklight)"
+    brightness="$(xbacklight)"
 
-dunstify -a "ChangeBrightness:" -u low -i notification-keyboard-brightness -r "$msgId" \
-    -h int:value:"${brightness/.*}" ": ${brightness/.*}%" -t 1000
+    dunstify -a "ChangeBrightness:" -u low -i notification-keyboard-brightness -r "$msgId" \
+        -h int:value:"${brightness/.*}" ": ${brightness/.*}%" -t 1000
 
-# use audio-volume-change from freedesktop
-# TODO: use different sound theme
-canberra-gtk-play -i audio-volume-change -d "changeVolume"
+    # use audio-volume-change from freedesktop
+    # TODO: use different sound theme
+    canberra-gtk-play -i audio-volume-change -d "changeVolume"
+fi
