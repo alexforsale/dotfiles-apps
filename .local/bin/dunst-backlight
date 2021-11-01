@@ -37,8 +37,14 @@ if [ "$DISTRO" = "freebsd" ];then
         -h int:value:"$(current_level)" ": $(current_level)%" -t 1000
     canberra-gtk-play -i audio-volume-change -d "changeVolume"
 else
-    xbacklight "$@" > /dev/null
-
+    case "${1}" in
+        "up")
+            xbacklight +2 > /dev/null
+            ;;
+        "down")
+            xbacklight -2 > /dev/null
+            ;;
+    esac
     brightness="$(xbacklight)"
 
     dunstify -a "ChangeBrightness:" -u low -i notification-keyboard-brightness -r "$msgId" \
