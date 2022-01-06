@@ -12,3 +12,5 @@
   menu-element-border:                  0px 10px 0px 10px;
   menu-element-padding:                 27px 16px 21px 0px;
 }
+
+@theme "~/.cache/wal/colors-rofi-dark.rasi"
