@@ -1,4 +1,4 @@
 configuration {
-theme: "~/.cache/wal/colors-rofi-dark";
 modi: "window,drun,run,ssh,combi";
 }
+@theme "~/.cache/wal/colors-rofi-dark"
