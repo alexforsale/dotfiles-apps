@@ -1,0 +1,42 @@
+//-*-css-*-
+@theme "current"
+window {
+  border: 1;
+  width: 15%;
+  padding: 5;
+  children: [ linebox ];
+}
+
+linebox {
+  orientation: horizontal;
+  children: [ prompt, entry, listview ];
+}
+
+prompt {
+  horizontal-align: 0;
+  placeholder: "huh?";
+  placeholder-color: @alternate-normal-bg;
+  padding: 1px;
+  //text-color: @normal-fg;
+}
+
+entry {
+  expand: true;
+  width: 1mm;
+  //padding: 0px 1% 3px 2%;
+}
+
+textbox {
+  blink: true;
+}
+entry {
+  spacing: 0;
+}
+
+listview {
+  column: 1;
+  lines: 2;
+  layout: vertical;
+  dynamic: true;
+  spacing: 5px;
+}

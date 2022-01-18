@@ -1,9 +1,0 @@
-@import "default.rasi"
-
-* {
-  columns: 4;
-}
-
-#window {
-  fullscreen: true;
-}
