@@ -1,8 +1,8 @@
 #!/bin/sh
 # original script from https://wiki.archlinux.org/index.php/Dunst
 # <alexforsale@yahoo.com>
-# Arbitrary but unique message id
-msgId="991049"
+# Arbitrary but unique message tag
+msgTag="myvolume"
 
 SINK=$(pactl info | awk -F': ' '/^Default Sink: /{print $2}')
 SINK_INDEX=$(pactl list sinks | \
@@ -46,7 +46,7 @@ if [ "${1}" = "up" ] ||
         icon="audio-volume-high"
         symbol=""
     fi
-    dunstify -a "volume" -u low -i ${icon} -r "$msgId" -h int:volume:value:"$VOLUME" "${symbol} ${VOLUME}%" -t 1000
+    dunstify -a "volume" -u low -i ${icon} -h string:x-dunst-stack-tag:"${msgTag}" int:volume:value:"$VOLUME" "${symbol} ${VOLUME}%" -t 1000
 elif [ "${1}" = "toggle" ]; then
-    dunstify -a "volume" -u low -i audio-volume-muted -r "$msgId" "${symbol} Mute: ${MUTED}" -t 1000
+    dunstify -a "volume" -u low -i audio-volume-muted -h string:x-dunst-stack-tag:"${msgTag}" "${symbol} Mute: ${MUTED}" -t 1000
 fi

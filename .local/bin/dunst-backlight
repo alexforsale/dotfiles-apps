@@ -2,7 +2,7 @@
 # original script from https://wiki.archlinux.org/index.php/Dunst
 # <alexforsale@yahoo.com>
 # Arbitrary but unique message id
-msgId="992049"
+msgTag="myvolume"
 
 if [ "$DISTRO" = "freebsd" ];then
     VIDEO=$(/sbin/sysctl hw.acpi.video | grep 'levels' | cut -d'.' -f4)
@@ -33,8 +33,8 @@ if [ "$DISTRO" = "freebsd" ];then
         done
     fi
     echo "LEVEL=$(current_level)"
-    dunstify -a "ChangeBrightness:" -u low -i notification-keyboard-brightness -r "$msgId" \
-        -h int:value:"$(current_level)" ": $(current_level)%" -t 1000
+    dunstify -a "ChangeBrightness:" -u low -i notification-keyboard-brightness \
+        -h string:x-dunst-stack-tag:"${msgTag}" -h int:value:"$(current_level)" ": $(current_level)%" -t 1000
     canberra-gtk-play -i audio-volume-change -d "changeVolume"
 else
     case "${1}" in
@@ -47,8 +47,8 @@ else
     esac
     brightness="$(xbacklight)"
 
-    dunstify -a "ChangeBrightness:" -u low -i notification-keyboard-brightness -r "$msgId" \
-        -h int:value:"${brightness/.*}" ": ${brightness/.*}%" -t 1000
+    dunstify -a "ChangeBrightness:" -u low -i notification-keyboard-brightness \
+        -h string:x-dunst-stack-tag:"${msgTag}" -h int:value:"${brightness/.*}" ": ${brightness/.*}%" -t 1000
 
     # use audio-volume-change from freedesktop
     # TODO: use different sound theme
