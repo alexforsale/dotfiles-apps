@@ -1,4 +1,4 @@
-//-*-css-*-
+/* -*-css-*- */
 configuration {
   modi: "window,drun,run,ssh,combi";
   show-icons: true;
