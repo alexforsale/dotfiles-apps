@@ -17,7 +17,7 @@
 * Misc Apps
 ** screenrc
    :PROPERTIES:
-   :header-args: :tangle .config/screen/config :mkdirp t :padline no
+   :header-args: :tangle ~/.config/screen/config :mkdirp t :padline no
    :END:
 *** heading
     #+begin_src conf
@@ -181,7 +181,7 @@
      #+end_src
 *** ~/.config/rofi/themes/prompt.rasi
     :PROPERTIES:
-    :header-args: :tangle .config/rofi/themes/prompt.rasi :mkdirp t
+    :header-args: :tangle ~/.config/rofi/themes/prompt.rasi :mkdirp t
     :END:
 **** header
      #+begin_src css
@@ -284,4 +284,15 @@
            background-color: inherit;
            text-color:       inherit;
        }
+     #+end_src
+** GnuPG
+*** references
+*** ~/.gnupg/gpg-agent.conf
+    :PROPERTIES:
+    :header-args: :tangle ~/.gnupg/gpg-agent.conf :mkdirp t :padline no
+    :END:
+**** looback pinentry
+     Disallow or allow clients to use the loopback pinentry features; see the option =pinentry-mode= for details. Allow is the default.
+     #+begin_src conf
+       allow-loopback-pinentry
      #+end_src
