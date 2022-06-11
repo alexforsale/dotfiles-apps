@@ -157,6 +157,10 @@
      #+begin_src css
        /* -*-css-*- */
      #+end_src
+**** source wal colors
+     #+begin_src css
+       @theme "~/.cache/wal/colors-rofi-dark.rasi"
+     #+end_src
 **** configuration block
      #+begin_src css
        configuration {
