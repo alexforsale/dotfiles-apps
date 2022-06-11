@@ -13,7 +13,7 @@
 #+creator: Emacs 27.2 (Org mode 9.5.2)
 #+cite_export:
 #+property: EXPORT_FILE_NAME: index.html
-#+startup: fold
+#+startup: showall
 * Misc Apps
 ** screenrc
    :PROPERTIES:
