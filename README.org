@@ -159,7 +159,7 @@
      #+end_src
 **** source wal colors
      #+begin_src css
-       @theme "~/.cache/wal/colors-rofi-dark.rasi"
+       @theme "~/.cache/wal/colors-rofi-light.rasi"
      #+end_src
 **** configuration block
      #+begin_src css
@@ -227,8 +227,9 @@
      #+end_src
 **** textbox
      #+begin_src css
-       textbox {
+       #textbox {
            blink: true;
+           text-color: @foreground;
        }
        entry {
            spacing: 0;
@@ -279,14 +280,64 @@
      #+begin_src css
        button.selected {
            background-color: @selected-normal-background;
-           text-color:       @selected-normal-foreground;
+           text-color: @selected-normal-foreground;
        }
      #+end_src
 **** element-*
      #+begin_src css
-       element-text, element-icon {
-           background-color: inherit;
-           text-color:       inherit;
+       element-text {
+           background-color: transparent;
+           text-color: inherit;
+           cursor: inherit;
+           highlight: inherit;
+       }
+
+       element-icon {
+           background-color: transparent;
+           text-color: inherit;
+           cursor: inherit;
+           highlight: inherit;
+       }
+
+       element normal.normal {
+           background-color: @normal-background;
+           text-color:       @normal-foreground;
+       }
+
+       element normal.urgent {
+           background-color: @urgent-background;
+           text-color:       @urgent-foreground;
+       }
+
+       element normal.active {
+           background-color: @active-background;
+           text-color:       @active-foreground;
+       }
+
+       element selected.normal {
+           background-color: @selected-normal-background;
+           text-color:       @selected-normal-foreground;
+       }
+
+       element selected.urgent {
+           background-color: @selected-urgent-background;
+           text-color:       @selected-urgent-foreground;
+       }
+       element selected.active {
+           background-color: @selected-active-background;
+           text-color:       @selected-active-foreground;
+       }
+       element alternate.normal {
+           background-color: @alternate-normal-background;
+           text-color:       @alternate-normal-foreground;
+       }
+       element alternate.urgent {
+           background-color: @alternate-urgent-background;
+           text-color:       @alternate-urgent-foreground;
+       }
+       element alternate.active {
+           background-color: @alternate-active-background;
+           text-color:       @alternate-urgent-foreground;
        }
      #+end_src
 ** GnuPG
