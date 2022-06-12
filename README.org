@@ -222,7 +222,7 @@
            placeholder: "huh?";
            placeholder-color: @alternate-normal-bg;
            padding: 1px;
-           //text-color: @normal-fg;
+           text-color: @normal-fg;
        }
      #+end_src
 **** textbox
@@ -255,7 +255,7 @@
        entry {
            expand: true;
            width: 1mm;
-           //padding: 0px 1% 3px 2%;
+           padding: 0px 1% 3px 2%;
            text-color: @normal-foreground;
        }
      #+end_src
