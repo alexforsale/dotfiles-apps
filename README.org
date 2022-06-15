@@ -159,7 +159,7 @@
      #+end_src
 **** source wal colors
      #+begin_src css
-       @theme "~/.cache/wal/colors-rofi-light.rasi"
+       @theme "~/.cache/wal/colors-rofi-dark.rasi"
      #+end_src
 **** configuration block
      #+begin_src css
@@ -350,4 +350,8 @@
      Disallow or allow clients to use the loopback pinentry features; see the option =pinentry-mode= for details. Allow is the default.
      #+begin_src conf
        allow-loopback-pinentry
+     #+end_src
+**** enable ssh-support
+     #+begin_src emacs-lisp
+       enable-ssh-support
      #+end_src
