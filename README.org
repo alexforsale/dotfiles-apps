@@ -342,6 +342,7 @@
      #+end_src
 ** GnuPG
 *** references
+    - https://gist.github.com/mcattarinussi/834fc4b641ff4572018d0c665e5a94d3
 *** ~/.gnupg/gpg-agent.conf
     :PROPERTIES:
     :header-args: :tangle ~/.gnupg/gpg-agent.conf :mkdirp t :padline no
@@ -352,6 +353,7 @@
        allow-loopback-pinentry
      #+end_src
 **** enable ssh-support
-     #+begin_src emacs-lisp
+     #+begin_src conf
        enable-ssh-support
      #+end_src
+     create a file =~/.gnupg/sshcontrol= containing the keygrip of your subkey.
