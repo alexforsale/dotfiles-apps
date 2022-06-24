@@ -352,6 +352,11 @@
      #+begin_src conf
        allow-loopback-pinentry
      #+end_src
+**** allow emacs pinentry
+     Tell Pinentry to allow features to divert the passphrase entry to a running Emacs instance. How this is exactly handled depends on the version of the used Pinentry.
+     #+begin_src conf
+     allow-emacs-pinentry
+     #+end_src
 **** enable ssh-support
      #+begin_src conf
        enable-ssh-support
