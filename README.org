@@ -357,6 +357,6 @@
        enable-ssh-support
      #+end_src
      create a file =~/.gnupg/sshcontrol= containing the keygrip of your subkey. For easier signing using this key, add it to the =~/.ssh= directory
-     #+begin_src sh :exports none :noeval
+     #+begin_src sh :exports none :noeval :tangle no
        gpg --export-ssh-key <your id> > ~/.ssh/id_gpg.pub
      #+end_src
