@@ -16,422 +16,422 @@
 #+startup: showall
 * Misc Apps
 ** screenrc
-:PROPERTIES:
-:header-args: :tangle ~/.config/screen/config :mkdirp t :padline no
-:END:
+   :PROPERTIES:
+   :header-args: :tangle ~/.config/screen/config :mkdirp t :padline no
+   :END:
 *** heading
-#+begin_src conf
-  # ~/.config/screen/screenrc
-  # By default, screen will look for initialization in
-  # either /usr/local/etc/screenrc or /etc/screenrc, or to wherever
-  # the environment variable ${SYSSCREENRC} is set.
-  # As for the default user configuration file is default to
-  # ${HOME}/.screenrc or to ${SCREENRC} if defined.
-  # so without the environment variable, this file won't be loaded.
-  # As always, when in doubt, see man 1 screen
-  #
-  # Note: all these commands started with the escape key,
-  # default to 'c-a' (ctrl-a)
-#+end_src
+    #+begin_src conf
+      # ~/.config/screen/screenrc
+      # By default, screen will look for initialization in
+      # either /usr/local/etc/screenrc or /etc/screenrc, or to wherever
+      # the environment variable ${SYSSCREENRC} is set.
+      # As for the default user configuration file is default to
+      # ${HOME}/.screenrc or to ${SCREENRC} if defined.
+      # so without the environment variable, this file won't be loaded.
+      # As always, when in doubt, see man 1 screen
+      #
+      # Note: all these commands started with the escape key,
+      # default to 'c-a' (ctrl-a)
+    #+end_src
 *** autodetach
-Don't detach screen when it receives a hangup signal. Useful for /ssh/.
-#+begin_src conf
-  autodetach on # default: on
-#+end_src
+    Don't detach screen when it receives a hangup signal. Useful for /ssh/.
+    #+begin_src conf
+      autodetach on # default: on
+    #+end_src
 *** Don't display the copyright page
-We get it, yadda yadda yadda...
-#+begin_src conf
-  startup_message off # default: on
-#+end_src
+    We get it, yadda yadda yadda...
+    #+begin_src conf
+      startup_message off # default: on
+    #+end_src
 *** Change the default scrollback value for new windows
-#+begin_src conf
-  defscrollback 10000 # default: 100
-#+end_src
+    #+begin_src conf
+      defscrollback 10000 # default: 100
+    #+end_src
 *** hardstatus
-#+begin_src conf
-  hardstatus alwayslastline
-  hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m-%d %{W}%c %{g}]'']'
-#+end_src
-*from the manual page*
-This command configures the use and emulation of the terminal's hardstatus line. If the flag is set to =off= these messages are overlaid in reverse video mode at the display line. The default setting is =on=.
-The second form tells screen what to do if the terminal doesn't have a hardstatus  line  (i.e.  the  termcap/terminfo capabilities "hs", "ts", "fs" and "ds" are not set). When =firstline= / =lastline= is used, screen will  reserve the first/last line of the display for the hardstatus. Message uses screen's message mechanism and ignore tells  screen  never to  display the hardstatus. If you prepend the word always to the type (e.g., =alwayslastline=), screen will use the type even if the terminal supports a hardstatus.
-The third form specifies the contents of the hardstatus line. =%h= is used as default string, i.e., the stored hardstatus of the current window  (settable  via =ESC]0;<string>^G or ESC_<string>ESC\=) is displayed. You can customize this to any string you like including the escapes from the =STRING ESCAPES= chapter. If you leave out the argument string, the current string is displayed.
+    #+begin_src conf
+      hardstatus alwayslastline
+      hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m-%d %{W}%c %{g}]'']'
+    #+end_src
+    *from the manual page*
+    This command configures the use and emulation of the terminal's hardstatus line. If the flag is set to =off= these messages are overlaid in reverse video mode at the display line. The default setting is =on=.
+    The second form tells screen what to do if the terminal doesn't have a hardstatus  line  (i.e.  the  termcap/terminfo capabilities "hs", "ts", "fs" and "ds" are not set). When =firstline= / =lastline= is used, screen will  reserve the first/last line of the display for the hardstatus. Message uses screen's message mechanism and ignore tells  screen  never to  display the hardstatus. If you prepend the word always to the type (e.g., =alwayslastline=), screen will use the type even if the terminal supports a hardstatus.
+    The third form specifies the contents of the hardstatus line. =%h= is used as default string, i.e., the stored hardstatus of the current window  (settable  via =ESC]0;<string>^G or ESC_<string>ESC\=) is displayed. You can customize this to any string you like including the escapes from the =STRING ESCAPES= chapter. If you leave out the argument string, the current string is displayed.
 *** 256 colors
-#+begin_src conf
-  attrcolor b ".I"
-  termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
-  defbce on
-#+end_src
-- attrcolor :: This command can be used to highlight attributes by changing the color of the text. If the attribute attrib is in use, the specified attribute/color modifier is also applied. If no modifier is given, the current one is deleted. See the =STRING ESCAPES= chapter for the syntax of the modifier. Screen understands two pseudo-attributes, =i=  stands for high-intensity foreground color and =I= for high-intensity background color.
-- termcapinfo :: Use  this command to modify your terminal's termcap entry without going through all the hassles involved in creating a custom termcap  entry. Plus, you can optionally customize the termcap generated for the windows. You have to place these commands in one of the screenrc startup files, as they are meaningless once the terminal emulator is booted.
-- bce :: Change background-color-erase setting. If bce is set to on, all characters cleared by an erase/insert/scroll/clear operation will be displayed  in  the  current  background color. Otherwise the default background color is used.
-- defbce :: Same as the bce command except that the default setting for new windows is changed. Initial setting is =off=.
+    #+begin_src conf
+      attrcolor b ".I"
+      termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+      defbce on
+    #+end_src
+    - attrcolor :: This command can be used to highlight attributes by changing the color of the text. If the attribute attrib is in use, the specified attribute/color modifier is also applied. If no modifier is given, the current one is deleted. See the =STRING ESCAPES= chapter for the syntax of the modifier. Screen understands two pseudo-attributes, =i=  stands for high-intensity foreground color and =I= for high-intensity background color.
+    - termcapinfo :: Use  this command to modify your terminal's termcap entry without going through all the hassles involved in creating a custom termcap  entry. Plus, you can optionally customize the termcap generated for the windows. You have to place these commands in one of the screenrc startup files, as they are meaningless once the terminal emulator is booted.
+    - bce :: Change background-color-erase setting. If bce is set to on, all characters cleared by an erase/insert/scroll/clear operation will be displayed  in  the  current  background color. Otherwise the default background color is used.
+    - defbce :: Same as the bce command except that the default setting for new windows is changed. Initial setting is =off=.
 *** disable multiuser
-#+begin_src conf
-  multiuser off
-#+end_src
+    #+begin_src conf
+      multiuser off
+    #+end_src
 *** butterfile
-The file to use for commands "readbuf" ('<') and  "writebuf" ('>')
-#+begin_src conf
-  bufferfile ${SCREENDIR}/.screen_exchange
-#+end_src
+    The file to use for commands "readbuf" ('<') and  "writebuf" ('>')
+    #+begin_src conf
+      bufferfile ${SCREENDIR}/.screen_exchange
+    #+end_src
 *** shell
-Default process started in screen's windows. Makes it possible to use a different shell inside screen than is set as the default login shell. If begins with a '-' character, the shell will be started as a login shell.
-#+begin_src conf
-  shell -${SHELL}
-#+end_src
+    Default process started in screen's windows. Makes it possible to use a different shell inside screen than is set as the default login shell. If begins with a '-' character, the shell will be started as a login shell.
+    #+begin_src conf
+      shell -${SHELL}
+    #+end_src
 *** emulate .logout message
-#+begin_src conf
-  pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
-#+end_src
+    #+begin_src conf
+      pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
+    #+end_src
 *** ignore displays that block on output
-#+begin_src conf
-  defnonblock on
-#+end_src
+    #+begin_src conf
+      defnonblock on
+    #+end_src
 *** layouts
-#+begin_src conf
-  layout autosave on
-  layout new one
-  select 1
-  layout new two
-  select 1
-  split
-  resize -v +8
-  focus down
-  select 4
-  focus up
-  layout new three
-  select 1
-  split
-  resize -v +7
-  focus down
-  select 3
-  split -v
-  resize -h +10
-  focus right
-  select 4
-  focus up
+    #+begin_src conf
+      layout autosave on
+      layout new one
+      select 1
+      layout new two
+      select 1
+      split
+      resize -v +8
+      focus down
+      select 4
+      focus up
+      layout new three
+      select 1
+      split
+      resize -v +7
+      focus down
+      select 3
+      split -v
+      resize -h +10
+      focus right
+      select 4
+      focus up
 
-  layout attach one
-  layout select one
-#+end_src
+      layout attach one
+      layout select one
+    #+end_src
 *** mouse tracking
-mouse tracking allows to switch region focus by clicking
-#+begin_src conf
-  mousetrack on
-#+end_src
+    mouse tracking allows to switch region focus by clicking
+    #+begin_src conf
+      mousetrack on
+    #+end_src
 *** xterm tweaks
-Xterm understands both im/ic and doesn't have a status line. Note: Do not specify im and ic in the real termcap/info file as some programs (e.g. vi) will not work anymore.
-#+begin_src conf
-  termcap  xterm hs@:cs=\E[%i%d;%dr:im=\E[4h:ei=\E[4l
-  terminfo xterm hs@:cs=\E[%i%p1%d;%p2%dr:im=\E[4h:ei=\E[4
-#+end_src
+    Xterm understands both im/ic and doesn't have a status line. Note: Do not specify im and ic in the real termcap/info file as some programs (e.g. vi) will not work anymore.
+    #+begin_src conf
+      termcap  xterm hs@:cs=\E[%i%d;%dr:im=\E[4h:ei=\E[4l
+      terminfo xterm hs@:cs=\E[%i%p1%d;%p2%dr:im=\E[4h:ei=\E[4
+    #+end_src
 *** tell screen that xterm can switch to dark background and has function keys
-#+begin_src conf
-  termcapinfo xterm 'VR=\E[?5h:VN=\E[?5l'
-  termcapinfo xterm 'k1=\E[11~:k2=\E[12~:k3=\E[13~:k4=\E[14~'
-  termcapinfo xterm 'kh=\EOH:kI=\E[2~:kD=\E[3~:kH=\EOF:kP=\E[5~:kN=\E[6~'
-#+end_src
+    #+begin_src conf
+      termcapinfo xterm 'VR=\E[?5h:VN=\E[?5l'
+      termcapinfo xterm 'k1=\E[11~:k2=\E[12~:k3=\E[13~:k4=\E[14~'
+      termcapinfo xterm 'kh=\EOH:kI=\E[2~:kD=\E[3~:kH=\EOF:kP=\E[5~:kN=\E[6~'
+    #+end_src
 *** special xterm hardstatus: use the window title.
-#+begin_src conf
-  termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
-#+end_src
+    #+begin_src conf
+      termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+    #+end_src
 *** advertise hardstatus support to $TERMCAP
-#+begin_src conf
-  termcapinfo  * '' 'hs:ts=\E_:fs=\E\\:ds=\E_\E\\'
-  termcapinfo xterm* ti@:te@
-#+end_src
+    #+begin_src conf
+      termcapinfo  * '' 'hs:ts=\E_:fs=\E\\:ds=\E_\E\\'
+      termcapinfo xterm* ti@:te@
+    #+end_src
 *** alternate screen support
-If  set  to on, "alternate screen" support is enabled in virtual terminals, just like in xterm. Initial setting is =off=.
-#+begin_src conf
-  altscreen on
-#+end_src
+    If  set  to on, "alternate screen" support is enabled in virtual terminals, just like in xterm. Initial setting is =off=.
+    #+begin_src conf
+      altscreen on
+    #+end_src
 ** rofi
-Rofi is a window switcher, application launcher, /ssh/ dialog, /dmenu/ replacement and more.
+   Rofi is a window switcher, application launcher, /ssh/ dialog, /dmenu/ replacement and more.
 *** ~/.config/rofi/config.rasi
-:PROPERTIES:
-:header-args: :tangle ~/.config/rofi/config.rasi :mkdirp t :padline no
-:END:
+    :PROPERTIES:
+    :header-args: :tangle ~/.config/rofi/config.rasi :mkdirp t :padline no
+    :END:
 **** header
-Make it so /Emacs/ will load this file as an =.css= file.
-#+begin_src css
-  /* -*-css-*- */
-#+end_src
+     Make it so /Emacs/ will load this file as an =.css= file.
+     #+begin_src css
+       /* -*-css-*- */
+     #+end_src
 **** source wal colors
-#+begin_src css
-  @theme "~/.cache/wal/colors-rofi-dark.rasi"
-#+end_src
+     #+begin_src css
+       @theme "~/.cache/wal/colors-rofi-dark.rasi"
+     #+end_src
 **** configuration block
-#+begin_src css
-  configuration {
-      modi: "window,drun,run,ssh,combi,keys,filebrowser,windowcd";
-      show-icons: true;
-      font: "Fantasque Sans Mono 12";
-      location: 5; /* bottom-right */
-      yoffset: -40; /* just above Emacs mode-line */
-      xoffset: 0;
-      window-command: "wmctrl -i -R {window}";
-      icon-theme: "Tango";
-      drun-url-launcher: "xdg-open";
-      timeout {
-          action: "kb-cancel";
-          delay:  0;
-      }
-      filebrowser {
-          directories-first: true;
-          sorting-method:    "name";
-      }
-  }
-#+end_src
+     #+begin_src css
+       configuration {
+           modi: "window,drun,run,ssh,combi,keys,filebrowser,windowcd";
+           show-icons: true;
+           font: "Fantasque Sans Mono 12";
+           location: 5; /* bottom-right */
+           yoffset: -40; /* just above Emacs mode-line */
+           xoffset: 0;
+           window-command: "wmctrl -i -R {window}";
+           icon-theme: "Tango";
+           drun-url-launcher: "xdg-open";
+           timeout {
+               action: "kb-cancel";
+               delay:  0;
+           }
+           filebrowser {
+               directories-first: true;
+               sorting-method:    "name";
+           }
+       }
+     #+end_src
 *** ~/.config/rofi/themes/prompt.rasi
-:PROPERTIES:
-:header-args: :tangle ~/.config/rofi/themes/prompt.rasi :mkdirp t
-:END:
+    :PROPERTIES:
+    :header-args: :tangle ~/.config/rofi/themes/prompt.rasi :mkdirp t
+    :END:
 **** header
-#+begin_src css
-  /* -*-css-*- */
-#+end_src
+     #+begin_src css
+       /* -*-css-*- */
+     #+end_src
 **** configuration
-#+begin_src css
-  configuration {
-      location: 5; /* bottom-right */
-      yoffset: -40; /* just above Emacs mode-line */
-      xoffset: 0;
-  }
-#+end_src
+     #+begin_src css
+       configuration {
+           location: 5; /* bottom-right */
+           yoffset: -40; /* just above Emacs mode-line */
+           xoffset: 0;
+       }
+     #+end_src
 **** window
-#+begin_src css
-  window {
-      border: 1;
-      width: 15%;
-      padding: 5;
-      children: [ linebox ];
-  }
-#+end_src
+     #+begin_src css
+       window {
+           border: 1;
+           width: 15%;
+           padding: 5;
+           children: [ linebox ];
+       }
+     #+end_src
 **** linebox
-#+begin_src css
-  linebox {
-      orientation: horizontal;
-      children: [ prompt, entry, listview ];
-  }
-#+end_src
+     #+begin_src css
+       linebox {
+           orientation: horizontal;
+           children: [ prompt, entry, listview ];
+       }
+     #+end_src
 **** prompt
-#+begin_src css
-  prompt {
-      horizontal-align: 0;
-      placeholder: "huh?";
-      placeholder-color: @alternate-normal-bg;
-      padding: 1px;
-      text-color: @normal-fg;
-  }
-#+end_src
+     #+begin_src css
+       prompt {
+           horizontal-align: 0;
+           placeholder: "huh?";
+           placeholder-color: @alternate-normal-bg;
+           padding: 1px;
+           text-color: @normal-fg;
+       }
+     #+end_src
 **** textbox
-#+begin_src css
-  #textbox {
-      blink: true;
-      text-color: @foreground;
-  }
-  entry {
-      spacing: 0;
-  }
-#+end_src
+     #+begin_src css
+       #textbox {
+           blink: true;
+           text-color: @foreground;
+       }
+       entry {
+           spacing: 0;
+       }
+     #+end_src
 **** inputbar
-#+begin_src css
-  #inputbar {
-      children:   [ prompt,textbox-prompt-sep,entry,case-indicator ];
-  }
-#+end_src
+     #+begin_src css
+       #inputbar {
+           children:   [ prompt,textbox-prompt-sep,entry,case-indicator ];
+       }
+     #+end_src
 **** textbox-prompt-sep
-#+begin_src css
-  textbox-prompt-sep {
-      expand:     true;
-      str:        ":";
-      text-color: @normal-foreground;
-      margin:     0 0.3em 0 0;
-  }
-#+end_src
+     #+begin_src css
+       textbox-prompt-sep {
+           expand:     true;
+           str:        ":";
+           text-color: @normal-foreground;
+           margin:     0 0.3em 0 0;
+       }
+     #+end_src
 **** entry
-#+begin_src css
-  entry {
-      expand: true;
-      width: 1mm;
-      padding: 0px 1% 3px 2%;
-      text-color: @normal-foreground;
-  }
-#+end_src
+     #+begin_src css
+       entry {
+           expand: true;
+           width: 1mm;
+           padding: 0px 1% 3px 2%;
+           text-color: @normal-foreground;
+       }
+     #+end_src
 **** case-indicator
-#+begin_src css
-  #case-indicator {
-      spacing: 0;
-      text-color: @normal-foreground;
-  }
-#+end_src
+     #+begin_src css
+       #case-indicator {
+           spacing: 0;
+           text-color: @normal-foreground;
+       }
+     #+end_src
 **** listview
-#+begin_src css
-  listview {
-      column: 1;
-      lines: 2;
-      layout: vertical;
-      dynamic: true;
-      spacing: 5px;
-  }
-#+end_src
+     #+begin_src css
+       listview {
+           column: 1;
+           lines: 2;
+           layout: vertical;
+           dynamic: true;
+           spacing: 5px;
+       }
+     #+end_src
 **** button.selected
-#+begin_src css
-  button.selected {
-      background-color: @selected-normal-background;
-      text-color: @selected-normal-foreground;
-  }
-#+end_src
+     #+begin_src css
+       button.selected {
+           background-color: @selected-normal-background;
+           text-color: @selected-normal-foreground;
+       }
+     #+end_src
 **** element-*
-#+begin_src css
-  element-text {
-      background-color: transparent;
-      text-color: inherit;
-      cursor: inherit;
-      highlight: inherit;
-  }
+     #+begin_src css
+       element-text {
+           background-color: transparent;
+           text-color: inherit;
+           cursor: inherit;
+           highlight: inherit;
+       }
 
-  element-icon {
-      background-color: transparent;
-      text-color: inherit;
-      cursor: inherit;
-      highlight: inherit;
-  }
+       element-icon {
+           background-color: transparent;
+           text-color: inherit;
+           cursor: inherit;
+           highlight: inherit;
+       }
 
-  element normal.normal {
-      background-color: @normal-background;
-      text-color:       @normal-foreground;
-  }
+       element normal.normal {
+           background-color: @normal-background;
+           text-color:       @normal-foreground;
+       }
 
-  element normal.urgent {
-      background-color: @urgent-background;
-      text-color:       @urgent-foreground;
-  }
+       element normal.urgent {
+           background-color: @urgent-background;
+           text-color:       @urgent-foreground;
+       }
 
-  element normal.active {
-      background-color: @active-background;
-      text-color:       @active-foreground;
-  }
+       element normal.active {
+           background-color: @active-background;
+           text-color:       @active-foreground;
+       }
 
-  element selected.normal {
-      background-color: @selected-normal-background;
-      text-color:       @selected-normal-foreground;
-  }
+       element selected.normal {
+           background-color: @selected-normal-background;
+           text-color:       @selected-normal-foreground;
+       }
 
-  element selected.urgent {
-      background-color: @selected-urgent-background;
-      text-color:       @selected-urgent-foreground;
-  }
-  element selected.active {
-      background-color: @selected-active-background;
-      text-color:       @selected-active-foreground;
-  }
-  element alternate.normal {
-      background-color: @alternate-normal-background;
-      text-color:       @alternate-normal-foreground;
-  }
-  element alternate.urgent {
-      background-color: @alternate-urgent-background;
-      text-color:       @alternate-urgent-foreground;
-  }
-  element alternate.active {
-      background-color: @alternate-active-background;
-      text-color:       @alternate-urgent-foreground;
-  }
-#+end_src
+       element selected.urgent {
+           background-color: @selected-urgent-background;
+           text-color:       @selected-urgent-foreground;
+       }
+       element selected.active {
+           background-color: @selected-active-background;
+           text-color:       @selected-active-foreground;
+       }
+       element alternate.normal {
+           background-color: @alternate-normal-background;
+           text-color:       @alternate-normal-foreground;
+       }
+       element alternate.urgent {
+           background-color: @alternate-urgent-background;
+           text-color:       @alternate-urgent-foreground;
+       }
+       element alternate.active {
+           background-color: @alternate-active-background;
+           text-color:       @alternate-urgent-foreground;
+       }
+     #+end_src
 ** GnuPG
 *** references
-- https://gist.github.com/mcattarinussi/834fc4b641ff4572018d0c665e5a94d3
+    - https://gist.github.com/mcattarinussi/834fc4b641ff4572018d0c665e5a94d3
 *** ~/.gnupg/gpg-agent.conf
-:PROPERTIES:
-:header-args: :tangle ~/.gnupg/gpg-agent.conf :mkdirp t :padline no
-:END:
+    :PROPERTIES:
+    :header-args: :tangle ~/.gnupg/gpg-agent.conf :mkdirp t :padline no
+    :END:
 **** looback pinentry
-Disallow or allow clients to use the loopback pinentry features; see the option =pinentry-mode= for details. Allow is the default.
-#+begin_src conf
-  allow-loopback-pinentry
-#+end_src
+     Disallow or allow clients to use the loopback pinentry features; see the option =pinentry-mode= for details. Allow is the default.
+     #+begin_src conf
+       allow-loopback-pinentry
+     #+end_src
 **** allow emacs pinentry
-Tell Pinentry to allow features to divert the passphrase entry to a running Emacs instance. How this is exactly handled depends on the version of the used Pinentry.
-#+begin_src conf
-  allow-emacs-pinentry
-#+end_src
+     Tell Pinentry to allow features to divert the passphrase entry to a running Emacs instance. How this is exactly handled depends on the version of the used Pinentry.
+     #+begin_src conf
+       allow-emacs-pinentry
+     #+end_src
 **** enable ssh-support
-#+begin_src conf
-  enable-ssh-support
-#+end_src
-create a file =~/.gnupg/sshcontrol= containing the keygrip of your subkey. For easier signing using this key, add it to the =~/.ssh= directory
-#+begin_src sh :exports none :noeval :tangle no
-  gpg --export-ssh-key <your id> > ~/.ssh/id_gpg.pub
-#+end_src
+     #+begin_src conf
+       enable-ssh-support
+     #+end_src
+     create a file =~/.gnupg/sshcontrol= containing the keygrip of your subkey. For easier signing using this key, add it to the =~/.ssh= directory
+     #+begin_src sh :exports none :noeval :tangle no
+       gpg --export-ssh-key <your id> > ~/.ssh/id_gpg.pub
+     #+end_src
 ** xsettingsd
-:PROPERTIES:
-:header-args: :tangle ~/.config/xsettingsd/xsettingsd.conf :mkdirp t
-:END:
-[[https://github.com/derat/xsettingsd][xsettingsd]] is a daemon that implements the XSETTINGS specification.
+   :PROPERTIES:
+   :header-args: :tangle ~/.config/xsettingsd/xsettingsd.conf :mkdirp t
+   :END:
+   [[https://github.com/derat/xsettingsd][xsettingsd]] is a daemon that implements the XSETTINGS specification.
 *** Cursor Theme
-#+begin_src conf
-Gtk/CursorThemeName "ComixCursors-Green"
-#+end_src
+    #+begin_src conf
+      Gtk/CursorThemeName "ComixCursors-Green"
+    #+end_src
 *** event sound
-#+begin_src conf
-Net/EnableEventSounds 1
-#+end_src
+    #+begin_src conf
+      Net/EnableEventSounds 1
+    #+end_src
 *** Input feedback sound
-#+begin_src conf
-Net/EnableInputFeedbackSounds 1
-#+end_src
+    #+begin_src conf
+      Net/EnableInputFeedbackSounds 1
+    #+end_src
 *** icon theme
-#+begin_src conf
-Net/IconThemeName  "Papirus-Dark"
-#+end_src
+    #+begin_src conf
+      Net/IconThemeName  "Papirus-Dark"
+    #+end_src
 *** Sound theme
-#+begin_src conf
-Net/SoundThemeName "freedesktop"
-#+end_src
+    #+begin_src conf
+      Net/SoundThemeName "freedesktop"
+    #+end_src
 *** Theme
-#+begin_src conf
-Net/ThemeName "Arc-Dark"
-#+end_src
+    #+begin_src conf
+      Net/ThemeName "Arc-Dark"
+    #+end_src
 *** antialias
-#+begin_src conf
-Xft/Antialias "1"
-#+end_src
+    #+begin_src conf
+      Xft/Antialias "1"
+    #+end_src
 *** DPI
-#+begin_src conf
-Xft/DPI "-1"
-#+end_src
+    #+begin_src conf
+      Xft/DPI "-1"
+    #+end_src
 *** HintStyle
-#+begin_src conf
-Xft/HintStyle "hintfull"
-#+end_src
+    #+begin_src conf
+      Xft/HintStyle "hintfull"
+    #+end_src
 *** Hinting
-#+begin_src conf
-Xft/HintStyle "1"
-#+end_src
+    #+begin_src conf
+      Xft/HintStyle "1"
+    #+end_src
 *** rgba
-#+begin_src conf
-Xft/RGBA "rgb"
-#+end_src
+    #+begin_src conf
+      Xft/RGBA "rgb"
+    #+end_src
 ** gtk-3
-:PROPERTIES:
-:header-args: :tangle ~/.config/gtk-3.0/settings.ini :mkdirp t
-:END:
-#+begin_src conf
-  gtk-theme-name=Arc-Dark
-  gtk-icon-theme-name=Papirus-Dark
-  gtk-font-name=Sans 10
-  gtk-cursor-theme-name=ComixCursors-Green
-  gtk-cursor-theme-size=0
-  gtk-toolbar-style=GTK_TOOLBAR_BOTH
-  gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
-  gtk-button-images=1
-  gtk-menu-images=1
-  gtk-enable-event-sounds=1
-  gtk-enable-input-feedback-sounds=1
-  gtk-xft-antialias=1
-  gtk-xft-hinting=1
-  gtk-xft-hintstyle=hintfull
-  gtk-xft-rgba=rgb
-#+end_src
+   :PROPERTIES:
+   :header-args: :tangle ~/.config/gtk-3.0/settings.ini :mkdirp t
+   :END:
+   #+begin_src conf
+     gtk-theme-name=Arc-Dark
+     gtk-icon-theme-name=Papirus-Dark
+     gtk-font-name=Sans 10
+     gtk-cursor-theme-name=ComixCursors-Green
+     gtk-cursor-theme-size=0
+     gtk-toolbar-style=GTK_TOOLBAR_BOTH
+     gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
+     gtk-button-images=1
+     gtk-menu-images=1
+     gtk-enable-event-sounds=1
+     gtk-enable-input-feedback-sounds=1
+     gtk-xft-antialias=1
+     gtk-xft-hinting=1
+     gtk-xft-hintstyle=hintfull
+     gtk-xft-rgba=rgb
+   #+end_src
