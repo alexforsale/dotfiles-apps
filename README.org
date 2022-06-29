@@ -408,7 +408,7 @@
     #+end_src
 *** Hinting
     #+begin_src conf
-      Xft/HintStyle "1"
+      Xft/Hinting "1"
     #+end_src
 *** rgba
     #+begin_src conf
@@ -434,6 +434,7 @@
      gtk-xft-hinting=1
      gtk-xft-hintstyle=hintfull
      gtk-xft-rgba=rgb
+     gtk-application-prefer-dark-theme = true
    #+end_src
 ** picom
    :PROPERTIES:
