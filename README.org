@@ -414,3 +414,27 @@ Xft/HintStyle "1"
 #+begin_src conf
 Xft/RGBA "rgb"
 #+end_src
+** gtk-3
+:PROPERTIES:
+:header-args: :tangle ~/.config/gtk-3.0/settings.ini :mkdirp t
+:END:
+#+begin_src conf
+  gtk-theme-name=Arc-Dark
+  gtk-icon-theme-name=Papirus-Dark
+  gtk-font-name=Fira Code 10
+  gtk-cursor-theme-name=ComixCursors-Green
+  gtk-cursor-theme-size=0
+  gtk-toolbar-style = GTK_TOOLBAR_ICONS
+  gtk-toolbar-icon-size="panel-menu=16,16:panel=16,16:gtk-menu=16,16:gtk-large-toolbar=16,16\
+:gtk-small-toolbar=16,16:gtk-button=16,16"
+  gtk-button-images=1
+  gtk-menu-images=1
+  gtk-enable-event-sounds=1
+  gtk-enable-input-feedback-sounds=1
+  gtk-xft-antialias=1
+  gtk-xft-hinting=1
+  gtk-xft-hintstyle=hintfull
+  gtk-xft-rgba=rgb
+  gtk-key-theme-name = Emacs
+  gtk-menu-popup-delay = 100
+#+end_src
