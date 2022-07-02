@@ -392,7 +392,7 @@
     #+end_src
 *** Theme
     #+begin_src conf
-      Net/ThemeName "Arc-Dark"
+      Net/ThemeName "Materia-Dark"
     #+end_src
 *** antialias
     #+begin_src conf
@@ -419,7 +419,7 @@
    :header-args: :tangle ~/.config/gtk-3.0/settings.ini :mkdirp t
    :END:
    #+begin_src conf
-     gtk-theme-name=Arc-Dark
+     gtk-theme-name=Materia-Dark
      gtk-icon-theme-name=Papirus-Dark
      gtk-font-name=Sans 10
      gtk-cursor-theme-name=ComixCursors-Green
