@@ -419,6 +419,7 @@
    :header-args: :tangle ~/.config/gtk-3.0/settings.ini :mkdirp t
    :END:
    #+begin_src conf
+     [Setttings]
      gtk-theme-name=Materia-Dark
      gtk-icon-theme-name=Papirus-Dark
      gtk-font-name=Sans 10
