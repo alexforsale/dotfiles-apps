@@ -372,7 +372,7 @@
    [[https://github.com/derat/xsettingsd][xsettingsd]] is a daemon that implements the XSETTINGS specification.
 *** Cursor Theme
     #+begin_src conf
-      Gtk/CursorThemeName "Adwaita"
+      Gtk/CursorThemeName "ComixCursors-LH-Slim-Green"
     #+end_src
 *** event sound
     #+begin_src conf
@@ -423,7 +423,7 @@
      gtk-theme-name=Materia-Dark
      gtk-icon-theme-name=Papirus-Dark
      gtk-font-name=Sans 10
-     gtk-cursor-theme-name=Adwaita
+     gtk-cursor-theme-name=ComixCursors-LH-Slim-Green
      gtk-cursor-theme-size=16
      gtk-toolbar-style=GTK_TOOLBAR_BOTH
      gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
