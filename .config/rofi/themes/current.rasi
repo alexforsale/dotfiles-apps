@@ -1,1 +1,15 @@
 @theme "solarized_alternate"
+
+// window {
+//   width: 15%;
+// }
+
+listview {
+  fixed-height: false;
+  dynamic: true;
+}
+
+textbox {
+  blink: true;
+  fixed-columns: false;
+}
