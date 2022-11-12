@@ -1,9 +1,12 @@
 // -*-css-*-
 @theme "solarized_alternate"
 
-// window {
-//   width: 15%;
-// }
+window {
+  location: northwest;
+  anchor: northwest;
+  y-offset: 20;
+  // x-offset: 10;
+}
 
 listview {
   fixed-height: false;
