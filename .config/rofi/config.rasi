@@ -2,5 +2,6 @@
 configuration {
   modi: "window,windowcd,drun,run,ssh,combi";
   show-icons: true;
+  font: "Fira Code Retina 8";
 }
 @theme "/dev/null"
