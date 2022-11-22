@@ -9,19 +9,19 @@
 rounded = 0
 border_width = 0
 border_sides = TBLR
-background_color = #000000 60
-border_color = #000000 30
-background_color_hover = #000000 60
-border_color_hover = #000000 30
-background_color_pressed = #000000 60
-border_color_pressed = #000000 30
+background_color = #073642 60
+border_color = [100]#073642 30
+background_color_hover = #073642 60
+border_color_hover = #073642 30
+background_color_pressed = #073642 60
+border_color_pressed = #073642 30
 
 # Background 2: Default task, Iconified task
 rounded = 4
 border_width = 1
 border_sides = TBLR
-background_color = #777777 20
-border_color = #777777 30
+background_color = #6c7c80 20
+border_color = #6c7c80 30
 background_color_hover = #aaaaaa 22
 border_color_hover = #eaeaea 44
 background_color_pressed = #555555 4
@@ -62,7 +62,7 @@ border_color_pressed = #000000 100
 
 #-------------------------------------
 # Panel
-panel_items = LTSC
+panel_items = LTSBC
 panel_size = 100% 30
 panel_margin = 0 0
 panel_padding = 2 0 2
@@ -79,7 +79,7 @@ autohide_hide_timeout = 0.5
 autohide_height = 2
 strut_policy = follow_size
 panel_window_name = tint2
-disable_transparency = 1
+disable_transparency = 0
 mouse_effects = 1
 font_shadow = 0
 mouse_hover_icon_asb = 100 0 10
@@ -148,11 +148,14 @@ launcher_icon_asb = 100 0 0
 launcher_icon_theme_override = 0
 startup_notifications = 1
 launcher_tooltip = 1
-launcher_item_app = tint2conf.desktop
+launcher_item_app = xterm.desktop
+launcher_item_app = emacsclient.desktop
 launcher_item_app = firefox.desktop
-launcher_item_app = iceweasel.desktop
-launcher_item_app = chromium-browser.desktop
-launcher_item_app = google-chrome.desktop
+launcher_item_app = org.gnome.Evolution.desktop
+#launcher_item_app = iceweasel.desktop
+#launcher_item_app = chromium-browser.desktop
+#launcher_item_app = google-chrome.desktop
+launcher_item_app = tint2conf.desktop
 
 #-------------------------------------
 # Clock
