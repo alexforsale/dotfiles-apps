@@ -1,0 +1,19 @@
+// -*-css-*-
+@theme "solarized_alternate"
+
+window {
+  location: southwest;
+  anchor: southwest;
+  y-offset: -20;
+  // x-offset: 10;
+}
+
+listview {
+  fixed-height: false;
+  dynamic: true;
+}
+
+textbox {
+  blink: true;
+  fixed-columns: false;
+}
