@@ -1,56 +1,28 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # original script from https://wiki.archlinux.org/index.php/Dunst
 # <alexforsale@yahoo.com>
-# Arbitrary but unique message id
-msgTag="myvolume"
+# changeBrightness
 
-if [ "$DISTRO" = "freebsd" ];then
-    VIDEO=$(/sbin/sysctl hw.acpi.video | grep 'levels' | cut -d'.' -f4)
-    current_level() {
-        echo $(/sbin/sysctl -n hw.acpi.video.${VIDEO}.brightness)
-    }
-    if [ "${1}" = "up" ] && [ $(current_level) -ne 100 ]; then
-        LEVELS=$(/sbin/sysctl -n hw.acpi.video.${VIDEO}.levels | tr " " "\n" | sort -ug)
-        for levels in ${LEVELS}; do
-            echo "using level ${levels}"
-            if [ ${levels} -le $(current_level) ]; then
-                continue
-            elif [ $(current_level -gt ${levels}) ]; then
-                sudo /sbin/sysctl "hw.acpi.video.${VIDEO}.brightness=${levels}" >/dev/null 2>&1
-                break
-            fi
-        done
-    elif [ "${1}" = "down" ] && [ $(current_level) -ne 0 ]; then
-        LEVELS=$(/sbin/sysctl -n hw.acpi.video.${VIDEO}.levels | tr " " "\n" | sort -rug)
-        for levels in ${LEVELS}; do
-            echo "using level ${levels}"
-            if [ ${levels} -ge $(current_level) ]; then
-                continue
-            elif [ ${levels} -lt $(current_level) ];then
-                sudo /sbin/sysctl "hw.acpi.video.${VIDEO}.brightness=${levels}" >/dev/null 2>&1
-                break
-            fi
-        done
-    fi
-    echo "LEVEL=$(current_level)"
-    dunstify -a "ChangeBrightness:" -u low -i notification-keyboard-brightness \
-        -h string:x-dunst-stack-tag:"${msgTag}" -h int:value:"$(current_level)" ": $(current_level)%" -t 1000
-    canberra-gtk-play -i audio-volume-change -d "changeVolume"
-else
-    case "${1}" in
-        "up")
-            xbacklight +2 > /dev/null
-            ;;
-        "down")
-            xbacklight -2 > /dev/null
-            ;;
-    esac
-    brightness="$(xbacklight)"
+# Arbitrary but unique message tag
+msgTag="mybrightness"
 
-    dunstify -a "ChangeBrightness:" -u low -i notification-keyboard-brightness \
-        -h string:x-dunst-stack-tag:"${msgTag}" -h int:value:"${brightness/.*}" ": ${brightness/.*}%" -t 1000
+# Change the volume using alsa(might differ if you use pulseaudio)
+#amixer -c 0 set Master "$@" > /dev/null
+#pamixer --set-volume "${@}" > /dev/null
+brightnessctl set "${@}" > /dev/null
 
-    # use audio-volume-change from freedesktop
-    # TODO: use different sound theme
-    canberra-gtk-play -i audio-volume-change -d "changeVolume"
-fi
+# Query amixer for the current volume and whether or not the speaker is muted
+#volume="$(amixer -c 0 get Master | tail -1 | awk '{print $4}' | sed 's/[^0-9]*//g')"
+#mute="$(amixer -c 0 get Master | tail -1 | awk '{print $6}' | sed 's/[^a-z]*//g')"
+#volume="$(pamixer --get-volume-human)"
+#mute="$(pamixer --get-mute)"
+max="$(brightnessctl max)"
+current="$(brightnessctl get)"
+percentage="$(awk -v current=${current} -v max=${max} 'BEGIN { print ( (current / max) * 100 )}')"
+
+# Show the brightness notification
+dunstify -a "changeBrightness" -u low -i audio-volume-high -h string:x-dunst-stack-tag:$msgTag \
+    -h int:value:"${percentage}" " Brightness: ${percentage}%"
+
+# Play the brightness changed sound
+canberra-gtk-play -i audio-volume-change -d "changeVolume"

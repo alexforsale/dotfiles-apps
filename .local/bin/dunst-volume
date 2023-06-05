@@ -1,52 +1,38 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # original script from https://wiki.archlinux.org/index.php/Dunst
 # <alexforsale@yahoo.com>
-# Arbitrary but unique message tag
+# changeVolume
+
 msgTag="myvolume"
 
-SINK=$(pactl info | awk -F': ' '/^Default Sink: /{print $2}')
-SINK_INDEX=$(pactl list sinks | \
-    awk '/^Sink #/{gsub("#", ""); idx = $2} /^[ \t]+Name: / {insink = $2 == "'"$SINK"'"; if (insink) { print idx }; exit}')
-BASE_VOLUME=$(pactl list sinks | \
-        awk '/^[ \t]+Name: / {insink = $2 == "'"$SINK"'"} /^[ \t]+Base Volume: / && insink {gsub("%", ""); print $5; exit}')
-step="5"
-#MUTED=$(pactl list sinks | \
-#    awk '/^[ \t]+Name: / {insink = $2 == "'"$SINK"'"} /^[ \t]+Mute: / && insink && $2 ~ /^yes$/ { exitcode=1 }; END { exit !exitcode }')
-
-if [ "${1}" = "up" ]; then
-    pactl set-sink-volume "${SINK}" "+${step}%"
-elif [ "${1}" = "down" ]; then
-    pactl set-sink-volume "${SINK}" "-${step}%"
-elif [ "${1}" = "toggle" ]; then
-    pactl set-sink-mute "$SINK" toggle
+# args = -i % or -d %
+pamixer "${@}" > /dev/null
+volume="$(pamixer --get-volume)"
+mute="$(pamixer --get-mute)"
+if [ "${mute}" == "true" ]; then
+    icon="audio-volume-muted"
+    symbol=""
+elif [ "${mute}" == "false" ] &&
+         [ "${volume}" -gt 0 ] &&
+         [ "${volume}" -le 25 ]; then
+    icon="audio-volume-low"
+    symbol=""
+elif [ "${mute}" == "false" ] &&
+         [ "${volume}" -gt 25 ] &&
+         [ "${volume}" -le 75 ]; then
+    icon="audio-volume-medium"
+    symbol=""
+elif [ "${mute}" == "false" ] &&
+         [ "${volume}" -gt 75 ]; then
+    icon="audio-volume-high"
+    symbol=""
 fi
 
-MUTED=$(pactl list sinks | grep -A 6 $SINK | awk '/^[ \t]+Mute/ {print $2}')
-VOLUME=$(pactl list sinks | \
-    awk '/^[ \t]+Name: / {insink = $2 == "'"$SINK"'"} /^[ \t]+Volume: / && insink {gsub("%,?", ""); print $5; exit}')
+if [[ $volume == 0 || "$mute" == "true" ]]; then
+    dunstify -a "changeVolume" -u low -i "${icon}" -h string:x-dunst-stack-tag:$msgTag "${symbol} Volume muted"
+else
+    dunstify -a "changeVolume" -u low -i "${icon}" -h string:x-dunst-stack-tag:$msgTag \
+    -h int:value:"$volume" "${symbol} Volume: ${volume}%"
+fi
 
-rate=$(awk -vbase_volume="${BASE_VOLUME}" -vvolume="${VOLUME}" 'BEGIN {print (volume/base_volume) *100}')
-# Play the volume changed sound
 canberra-gtk-play -i audio-volume-change -d "changeVolume"
-
-if [ "${1}" = "up" ] ||
-       [ "${1}" = "down" ]; then
-    if [ $rate -eq 0 ]; then
-        icon="audio-volume-muted"
-        symbol=""
-    elif [ $rate -gt 0 ] &&
-             [ $rate -le 25 ]; then
-        icon="audio-volume-low"
-        symbol=""
-    elif [ $rate -gt 25 ] &&
-             [ $rate -le 75 ]; then
-        icon="audio-volume-medium"
-        symbol=""
-    elif [ $rate -gt 75 ]; then
-        icon="audio-volume-high"
-        symbol=""
-    fi
-    dunstify -a "volume" -u low -i ${icon} -h string:x-dunst-stack-tag:"${msgTag}" int:volume:value:"$VOLUME" "${symbol} ${VOLUME}%" -t 1000
-elif [ "${1}" = "toggle" ]; then
-    dunstify -a "volume" -u low -i audio-volume-muted -h string:x-dunst-stack-tag:"${msgTag}" "${symbol} Mute: ${MUTED}" -t 1000
-fi

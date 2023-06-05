@@ -164,6 +164,18 @@
 #    summary = "foobar"
 #    history_ignore = yes
 
+[changeBrightness]
+  appname = changeBrightness
+  history_ignore = yes
+  timeout = 1
+  urgency = low
+
+[changeVolume]
+  appname = changeVolume
+  history_ignore = yes
+  timeout = 1
+  urgency = low
+
 #[skip-display]
 #    # This notification will not be displayed, but will be included in the history
 #    summary = "foobar"
