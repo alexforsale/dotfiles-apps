@@ -30,7 +30,7 @@
     stack_duplicates = true
     hide_duplicate_count = true
     show_indicators = true
-    icon_path = /usr/share/icons/Adwaita/16x16/status/:/usr/share/icons/Adwaita/16x16/devices/:/usr/share/icons/Papirus/16x16/status/:/usr/share/icons/Papirus/16x16/devices/:
+    #icon_path = /usr/share/icons/Adwaita/16x16/status/:/usr/share/icons/Adwaita/16x16/devices/:/usr/share/icons/Papirus/16x16/status/:/usr/share/icons/Papirus/16x16/devices/:
     icon_theme = "breeze-dark,Papirus"
     enable_recursive_icon_lookup = true
     sticky_history = true
