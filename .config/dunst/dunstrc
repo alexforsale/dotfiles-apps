@@ -2,28 +2,30 @@
     monitor = 0
     follow = mouse
     enable_posix_regex = false
-    width = (0, 300)
-    # height
+    width = (100,300)
+    height = 300
     notification_limit = 0
     origin = top-right
     scale = 0
+    offset = 2x21
     progress_bar = true
     indicate_hidden = true
     #shrink = true
-    transparency = 0
+    transparency = 20
     separator_height = 2
     padding = 8
     horizontal_padding = 8
     text_icon_padding = 0
-    frame_width = 3
+    frame_width = 0
     gap_size = 0
     separator_color = auto
     sort = true
     idle_threshold = 120
-    font = "Fira Code Retina" 9
+    font = "Fira Code Retina" 11
     line_height = 0
     markup = full
     format = "<b>%s</b>\n%b"
+    alignment = left
     vertical_alignment = center
     show_age_threshold = 60
     ignore_newline = false
@@ -31,7 +33,7 @@
     hide_duplicate_count = true
     show_indicators = true
     #icon_path = /usr/share/icons/Adwaita/16x16/status/:/usr/share/icons/Adwaita/16x16/devices/:/usr/share/icons/Papirus/16x16/status/:/usr/share/icons/Papirus/16x16/devices/:
-    icon_theme = "breeze-dark,Papirus"
+    icon_theme = "Papirus,breeze-dark"
     enable_recursive_icon_lookup = true
     sticky_history = true
     history_length = 20
@@ -41,10 +43,10 @@
     title = Dunst
     class = Dunst
     force_xinerama = false
-    corner_radius = 0
-    mouse_left_click = do_action
-    mouse_middle_click = close_all
-    mouse_right_click = close_current
+    corner_radius = 10
+    mouse_left_click = close_current
+    mouse_middle_click = do_action
+    mouse_right_click = close_all
     ignore_dbusclose = false
     word_wrap = yes
     ellipsize = middle
@@ -58,23 +60,23 @@
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
     background = "#073642"
-    foreground = "#abb2bf"
-    timeout = 10
+    foreground = "#b16286"
+    timeout = 3
     # Icon for notifications with low urgency, uncomment to enable
     #icon = /path/to/icon
 
 [urgency_normal]
     background = "#073642"
-    foreground = "#abb2bf"
-    timeout = 10
+    foreground = "#b58900"
+    timeout = 5
     # Icon for notifications with normal urgency, uncomment to enable
     #icon = /path/to/icon
 
 [urgency_critical]
-    background = "#d33682"
-    foreground = "#eee8d5"
-    frame_color = "#000000"
-    timeout = 0
+    background = "#f44747"
+    foreground = "#073642"
+    #frame_color = "#000000"
+    timeout = 10
     # Icon for notifications with critical urgency, uncomment to enable
     #icon = /path/to/icon
 
