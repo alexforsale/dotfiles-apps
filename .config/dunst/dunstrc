@@ -1,6 +1,6 @@
 [global]
     monitor = 0
-    follow = mouse
+    follow = none
     enable_posix_regex = false
     width = (100,300)
     height = 300
