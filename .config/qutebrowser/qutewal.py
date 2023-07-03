@@ -3,29 +3,33 @@
 import json
 import os
 
+# pylint: disable=C0111
+c = c  # noqa: F821 pylint: disable=E0602,C0103
+config = config  # noqa: F821 pylint: disable=E0602,C0103
+
 qutewal_dynamic_loading = False
 
-home = os.getenv('HOME')
-colors_relative = '.cache/wal/colors.json'
+home = os.getenv("HOME")
+colors_relative = ".cache/wal/colors.json"
 colors_absolute = os.path.join(home, colors_relative)
-daemon_relative = '.config/qutebrowser/qutewald.py'
+daemon_relative = ".config/qutebrowser/qutewald.py"
 daemon_absolute = os.path.join(home, daemon_relative)
 
 if os.path.isfile(colors_absolute):
     with open(colors_absolute) as colorfile:
         colors = json.load(colorfile)
-        cursor = colors['special']['cursor']
-        background = colors['special']['background']
-        foreground = colors['special']['foreground']
-        black = colors['colors']['color0']
-        red = colors['colors']['color1']
-        green = colors['colors']['color2']
-        yellow = colors['colors']['color3']
-        blue = colors['colors']['color4']
-        magenta = colors['colors']['color5']
-        cyan = colors['colors']['color6']
-        white = colors['colors']['color7']
-        gray = colors['colors']['color8']
+        cursor = colors["special"]["cursor"]
+        background = colors["special"]["background"]
+        foreground = colors["special"]["foreground"]
+        black = colors["colors"]["color0"]
+        red = colors["colors"]["color1"]
+        green = colors["colors"]["color2"]
+        yellow = colors["colors"]["color3"]
+        blue = colors["colors"]["color4"]
+        magenta = colors["colors"]["color5"]
+        cyan = colors["colors"]["color6"]
+        white = colors["colors"]["color7"]
+        gray = colors["colors"]["color8"]
 
     # Background color of the completion widget category headers.
     # Type: QssColor
@@ -106,7 +110,7 @@ if os.path.isfile(colors_absolute):
     #   - hsv: Interpolate in the HSV color system.
     #   - hsl: Interpolate in the HSL color system.
     #   - none: Don't show a gradient.
-    c.colors.downloads.system.bg = 'none'
+    c.colors.downloads.system.bg = "none"
 
     # Background color for hints. Note that you can use a `rgba(...)` value
     # for transparency.
@@ -175,7 +179,7 @@ if os.path.isfile(colors_absolute):
 
     # # Border used around UI elements in prompts.
     # # Type: String
-    c.colors.prompts.border = '1px solid ' + background
+    c.colors.prompts.border = "1px solid " + background
 
     # Foreground color for prompts.
     # Type: QssColor
@@ -310,7 +314,7 @@ if os.path.isfile(colors_absolute):
     #   - hsv: Interpolate in the HSV color system.
     #   - hsl: Interpolate in the HSL color system.
     #   - none: Don't show a gradient.
-    c.colors.tabs.indicator.system = 'none'
+    c.colors.tabs.indicator.system = "none"
 
     # Background color of unselected odd tabs.
     # Type: QtColor
@@ -341,7 +345,7 @@ if os.path.isfile(colors_absolute):
     # Type: QtColor
     c.colors.webpage.bg = foreground
 
-    if qutewal_dynamic_loading or bool(os.getenv('QUTEWAL_DYNAMIC_LOADING')):
+    if qutewal_dynamic_loading or bool(os.getenv("QUTEWAL_DYNAMIC_LOADING")):
         import signal
         import subprocess
         import prctl
@@ -349,4 +353,5 @@ if os.path.isfile(colors_absolute):
         # start iqutefy to refresh colors on the fly
         qutewald = subprocess.Popen(
             [daemon_absolute, colors_absolute],
-            preexec_fn=lambda: prctl.set_pdeathsig(signal.SIGTERM))
+            preexec_fn=lambda: prctl.set_pdeathsig(signal.SIGTERM),
+        )

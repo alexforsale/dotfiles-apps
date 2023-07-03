@@ -3,7 +3,6 @@
 import os
 import signal
 import sys
-from pathlib import Path
 
 import daemon
 import psutil
@@ -12,11 +11,12 @@ from inotify_simple import INotify, flags
 
 
 def cleanup():
+    """Cleanup."""
     os.remove(pidfile)
     sys.exit()
 
 
-pidfile = '/tmp/iqutefy.pid'
+pidfile = "/tmp/iqutefy.pid"
 
 # check if pidfile refers to dead process
 # if so, remove it
@@ -27,9 +27,10 @@ if os.path.isfile(pidfile):
         os.remove(pidfile)
 
 with daemon.DaemonContext(
-        detach_process=False,
-        pidfile=PIDLockFile(pidfile),
-        signal_map={signal.SIGTERM: cleanup}):
+    detach_process=False,
+    pidfile=PIDLockFile(pidfile),
+    signal_map={signal.SIGTERM: cleanup},
+):
     inotify = INotify()
     watch_flags = flags.CREATE | flags.MODIFY
     wd = inotify.add_watch(sys.argv[1], watch_flags)
@@ -38,7 +39,7 @@ with daemon.DaemonContext(
     # inotify iterator runs out immediately
     while True:
         for event in inotify.read():
-            os.system('qutebrowser :config-source')
+            os.system("qutebrowser :config-source")
 
     # kill after qutebrowser exits
     # not reached on SIGKILL
