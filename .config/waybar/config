@@ -150,6 +150,7 @@
     "clock#date": {
         // "timezone": "America/New_York",
         "format": " {:%Y/%m/%d(%a)}",
+        "on-click": "alacritty --class khal -e khal interactive",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
         // "format-alt": "{:%Y-%m-%d}"
     },
