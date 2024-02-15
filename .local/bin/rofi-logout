@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+question=$(echo "󰌾 lock|󰍃 logout|󰜉 reboot|󰐥 shutdown" | rofi -sep "|" \
+    -dmenu -i -p 'System: ' "" \
+    -hide-scrollbar \
+    -eh 1 \
+    -width 25 \
+    -line-padding 10 \
+    -padding 20 \
+    -lines 4 \
+    -location 3 \
+    -xoffset 0 -yoffset 30 \
+    -font "Fantasque Sans Mono 10" \
+    -color-enabled true)
+
+case $question in
+    *lock)
+        case $DESKTOP_SESSION in
+            hyprland)
+                hyprctl dispatcher exit
+                ;;
+            *)
+                if [ "$(pgrep -x lightdm)" ] && [ "$(command -v light-locker)" ]; then
+                    light-locker-command -l
+                fi
+                ;;
+        esac
+        ;;
+    *logout)
+        case $DESKTOP_SESSION in
+            hyprland)
+                hyprctl exit
+                ;;
+            openbox)
+                openbox --exit
+                ;;
+            i3)
+                i3-msg exit
+                ;;
+        esac
+        ;;
+    *reboot)
+        if [[ $(command -v systemctl) ]]; then
+            systemctl reboot
+        else
+            shutdown -r now
+        fi
+        ;;
+    *shutdown)
+        if [[ $(command -v systemctl) ]]; then
+            systemctl poweroff
+        else
+            poweroff
+        fi
+        ;;
+    *)
+        exit 0  # do nothing on wrong response
+        ;;
+esac
