@@ -14,11 +14,11 @@ listview {
     lines: 6;
 }
 
-inputbar {
-    children: [textbox-prompt];
-}
+/* inputbar { */
+/*     children: [textbox-prompt]; */
+/* } */
 
-textbox-prompt {
-    str: "Apps";
-    text-color: inherit;
-}
+/* textbox-prompt { */
+/*     str: "Apps"; */
+/*     text-color: inherit; */
+/* } */
