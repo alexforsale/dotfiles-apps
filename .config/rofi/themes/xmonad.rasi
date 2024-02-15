@@ -5,7 +5,7 @@ window {
   location: southwest;
   anchor: southwest;
   y-offset: -20;
-  // x-offset: 10;
+  /* x-offset: 10; */
 }
 
 listview {

@@ -1,0 +1,12 @@
+/* -*-css -*- */
+@theme "nord"
+
+window {
+    location: northeast;
+    anchor: center;
+    width: 20%;
+}
+
+listview {
+    lines: 6;
+}

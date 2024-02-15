@@ -1,4 +1,4 @@
-//-*-css-*-
+/* -*-css -*- */
 @theme "current"
 window {
   border: 1;

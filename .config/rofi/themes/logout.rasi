@@ -1,0 +1,19 @@
+/* -*-css -*- */
+@theme "nord"
+
+window {
+    location: northeast;
+    anchor:   center;
+    transparency: "screenshot";
+    width: 10%;
+    padding: 10px;
+    border:  0px;
+    border-radius: 6px;
+    spacing: 0;
+    children: [mainbox];
+}
+
+listview {
+    columns: 1;
+    lines: 4;
+}
