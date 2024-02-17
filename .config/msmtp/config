@@ -1,4 +1,9 @@
+# Set default values for all following accounts.
 defaults
+auth           on
+tls            on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+logfile        /tmp/msmtp.log
 
 account gmail
 host smtp.gmail.com
@@ -31,15 +36,21 @@ passwordeval pass login.yahoo.com/app_pass/alexforsale@yahoo.com
 account zum
 host localhost
 port 1025
-user kristian.alexander@zumstar.co.id
+tls off
+tls_starttls off
+auth plain
+user ZUM\kristian.alexander
 from kristian.alexander@zumstar.co.id
 passwordeval pass zumstar.co.id/kristian.alexander
 
 account mkn
+tls off
+tls_starttls off
+auth plain
 host localhost
 port 1026
-user kristian.alexander@zumstar.co.id
-from kristian.alexander@zumstar.co.id
+user MKN\kristian.alexander
+from kristian.alexander@mkncorp.com
 passwordeval pass mkncorp.com/kristian.alexander
 
 account default : yahoo
