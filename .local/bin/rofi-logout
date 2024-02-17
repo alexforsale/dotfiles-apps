@@ -23,7 +23,7 @@ case $question in
     *logout)
         case $DESKTOP_SESSION in
             hyprland)
-                hyprctl exit
+                hyprctl dispatcher exit
                 ;;
             openbox)
                 openbox --exit
