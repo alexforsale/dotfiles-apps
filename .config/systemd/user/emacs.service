@@ -9,7 +9,7 @@ ExecStart=/usr/bin/emacs --fg-daemon
 ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
 #Environment=SSH_AUTH_SOCK=%t/keyring/ssh
 Restart=on-failure
-TimeoutSec=900
+#TimeoutSec=900
 
 [Install]
 WantedBy=default.target graphical-session.target

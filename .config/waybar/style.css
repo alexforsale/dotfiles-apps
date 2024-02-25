@@ -1,6 +1,6 @@
 /* Nord */
 @define-color background rgba(46, 52, 64, 1);
-@define-color background2 rgba(46, 52, 64, 0.2);
+@define-color background2 rgba(46, 52, 64, 0.75);
 @define-color cyan rgba(136, 192, 208, 1);
 @define-color cyan2 rgba(136, 192, 208, 0.6);
 @define-color red rgba(191, 97, 106, 1);
@@ -25,17 +25,19 @@
 /*@define-color workspaces @bg;*/
 /*@define-color workspaces @nord_dark_font;*/
 /*@define-color workspacesfocused #434C5E;*/
-@define-color workspacesfocused #4C566A;
+@define-color workspacebutton @white;
 @define-color tray @workspacesfocused;
 @define-color sound #EBCB8B;
 @define-color network #5D7096;
 @define-color memory #546484;
 @define-color cpu rgba(89, 106, 141, 1);
+@define-color keyboard rgba(163, 190, 140, 1);
+@define-color battery rgba(180, 142, 173, 1);
 @define-color temp #4D5C78;
 @define-color layout rgba(94, 129, 172, 1);
-@define-color battery #88c0d0;
-@define-color date #434C5E;
-@define-color time #434C5E;
+@define-color wireplumber #88c0d0;
+@define-color date rgba(136, 192, 208, 1);
+@define-color time rgba(180, 142, 173, 1);
 @define-color backlight rgba(67, 76, 94, 1);
 @define-color nord_bg rgba(67, 76, 94, 1);
 @define-color nord_bg_blue #546484;
@@ -46,7 +48,7 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
     font-family: FontAwesome, JetBrainsMonoNL Nerd Font Mono;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 @keyframes blink {
@@ -58,7 +60,8 @@
 
 
 window#waybar {
-    background-color: transparent;
+    background-color: @background2;
+    /* background-color: transparent; */
     /* border-bottom: 3px solid @cyan; */
     color: @white;
     transition-property: background-color;
@@ -70,7 +73,7 @@ window#waybar.hidden {
 }
 
 #waybar.empty #window {
-    background-color: transparent;
+    /* background-color: transparent; */
 }
 
 #window {
@@ -99,7 +102,45 @@ tooltip {
 }
 
 tooltip label {
+    /* color: @white; */
+}
+
+label:focus {
+    background-color: @background;
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#keyboard-state,
+#mode,
+#submap,
+#mpd {
+    margin: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    background-color: transparent;
     color: @white;
+}
+
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+.modules-right > widget:last-child > #workspaces {
+    margin-right: 0;
 }
 
 #workspaces {
@@ -107,38 +148,41 @@ tooltip label {
 }
 
 #workspaces button {
+    color: @nord_light;
     /* padding: 0 4px; */
-    color: @white;
+    color: @workspacebutton;
     font-size: 14px;
     font-weight: bold;
 }
 
 #workspaces button.empty {
-    color: @cyan;
+    /* color: @cyan; */
 }
 
 #workspaces button.active {
     background: inherit;
     border-top: 2px solid @magenta;
     font-weight: bold;
+    color: @magenta;
 }
 
 #workspaces button:hover {
 }
 
 #workspaces button.focused {
-    background-color: @black;
+    /* background-color: @black; */
     color: @red;
-    border-top: 2px solid @red;
+    /* border-top: 2px solid @red; */
 }
 
 #workspaces button.urgent {
-    background-color: #eb4d4b;
+    background-color: @red;
 }
 
 #mode {
-    background-color: @black;
-    border-bottom: 3px solid @white;
+    color: @mode;
+    /* background-color: @black; */
+    /* border-bottom: 3px solid @white; */
 }
 
 #submap {
@@ -147,46 +191,52 @@ tooltip label {
 
 #mpris {
     padding: 0 4px;
-    color: @red;
+    font-size: 9px;
+    color: @warning;
 }
 
 #idle_inhibitor {
     color: @blue;
 }
 
+#idle_inhibitor.activated {
+    color: @foreground;
+}
+
 #backlight {
-    background-color: @red2;
+    /* background-color: @red2; */
 }
 
 #pulseaudio {
-    background-color: @magenta2;
+    /* background-color: @magenta2; */
 }
 
 #wireplumber {
-    background-color: @magenta2;
+    /* background-color: @magenta2; */
+    color: @wireplumber;
 }
 
 #network {
-    background-color: @cyan2;
+    /* background-color: @cyan2; */
 }
 
 #keyboard-state {
-    background-color: @red2;
+    /* background-color: @red2; */
 }
 
 #battery {
-    color: @black;
-    background-color: @yellow2;
+    color: @battery;
+    /* background-color: @yellow2; */
 }
 
-#battery.charging {
-    color: @yellow;
-    background-color: @green2;
+#battery.charging, #battery.plugged {
+    /* color: @yellow; */
+    background-color: @background;
 }
 
 #battery.warning:not(.charging) {
-    background: @red;
-    color: @white;
+    /* background: @red; */
+    /* color: @white; */
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: steps(12);
@@ -194,12 +244,62 @@ tooltip label {
     animation-direction: alternate;
 }
 
-#custom-pacman {
-    color: @black;
-    background-color: @green2;
+#battery.critical:not(.charging) {
+    background-color: @red;
+    color: @white;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
 }
 
-#clock {
-    color: @white;
-    background-color: @magenta2;
+#custom-pacman {
+    /* color: @black; */
+    /* background-color: @green2; */
+}
+
+#clock.date {
+    color: @date;
+    /* background-color: @magenta2; */
+}
+
+#clock.time {
+    color: @time;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: @red;
+}
+
+#network {
+    color: @network;
+}
+
+#network.wifi {
+}
+
+#network.ethernet {
+    color: @green;
+}
+
+#network.linked {
+    color: @yellow;
+}
+
+#network.disconnected {
+    color: @red;
+}
+
+#backlight{
+    color: @yellow;
+}
+
+#keyboard-state {
+    color: @keyboard;
 }
