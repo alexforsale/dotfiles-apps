@@ -12,7 +12,6 @@
 #+exclude_tags: noexport
 #+creator: Emacs 27.2 (Org mode 9.5.2)
 #+cite_export:
-#+property: EXPORT_FILE_NAME: index.html
 #+startup: showall
 
 #+begin_html

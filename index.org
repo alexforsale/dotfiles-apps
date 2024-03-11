@@ -14,7 +14,8 @@
 #+cite_export:
 #+property: EXPORT_FILE_NAME: index.html
 #+startup: showall
-#+property: header-args :mkdirp yes
+#+setupfile: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
 * About
 This repository is where I keep configuration for various apps (hence the name) that doesn't really need its own separate repository but still usable for different window managers.
 * Apps
