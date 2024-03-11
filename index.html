@@ -3,196 +3,18 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-03-11 Mon 15:03 -->
+<!-- 2024-03-11 Mon 15:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>index</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Kristian Alexander P" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
-</style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
 </head>
 <body>
 <div id="content">
@@ -201,60 +23,61 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org9b7997c">About</a></li>
-<li><a href="#org20fef4a">Apps</a>
+<li><a href="#orgf623ced">About</a></li>
+<li><a href="#org3b31a9f">Apps</a>
 <ul>
-<li><a href="#orge0cb42c">GnuPG Agent</a></li>
-<li><a href="#org4b072c0">waybar</a></li>
-<li><a href="#org253a143">vdirsyncer</a></li>
-<li><a href="#orgf98eea0">Tmux</a></li>
-<li><a href="#org4148abb">Tint2</a></li>
-<li><a href="#orgde5899a">systemd</a></li>
-<li><a href="#orga32fa6f">swaylock</a></li>
-<li><a href="#org97c3f81">swappy</a></li>
-<li><a href="#orgaf53622">screen</a></li>
-<li><a href="#org92ead66">rofi-rbw</a></li>
-<li><a href="#orgdb1b5fa">rofi-pass</a></li>
-<li><a href="#org7afc49c">Rofi</a></li>
-<li><a href="#orgb0fe424">picom</a></li>
-<li><a href="#org95a28d6">offlineimap</a></li>
-<li><a href="#orgfd686af">msmtp</a></li>
-<li><a href="#orgcbb1292">GTK</a></li>
-<li><a href="#org4ea1eda">Dunst</a></li>
-<li><a href="#orgca75369">astroid</a></li>
-<li><a href="#org507da11">alacritty</a></li>
+<li><a href="#orgfb0bd7e">GnuPG Agent</a></li>
+<li><a href="#org03296df">waybar</a></li>
+<li><a href="#org665d1cb">vdirsyncer</a></li>
+<li><a href="#org11792dc">Tmux</a></li>
+<li><a href="#org82b2771">Tint2</a></li>
+<li><a href="#org63e9226">systemd</a></li>
+<li><a href="#orga9627d2">swaylock</a></li>
+<li><a href="#org88d6ab9">swappy</a></li>
+<li><a href="#orgc71ccd7">screen</a></li>
+<li><a href="#orgab9e3dc">rofi-rbw</a></li>
+<li><a href="#orgd91ce99">rofi-pass</a></li>
+<li><a href="#org4673926">Rofi</a></li>
+<li><a href="#orgd5054bd">picom</a></li>
+<li><a href="#org5ef9139">offlineimap</a></li>
+<li><a href="#orga349d8f">msmtp</a></li>
+<li><a href="#org05cd145">GTK</a></li>
+<li><a href="#org92e9f85">Dunst</a></li>
+<li><a href="#org1276096">astroid</a></li>
+<li><a href="#org0588a86">alacritty</a></li>
 </ul>
 </li>
-<li><a href="#org68f2d48">Scripts</a>
+<li><a href="#org1670f1d">Scripts</a>
 <ul>
-<li><a href="#orgb61ab7d">offlineimap-helper</a></li>
-<li><a href="#org28d66a1">dunst-backlight</a></li>
-<li><a href="#org72e0a13">dunst-volume</a></li>
+<li><a href="#org2121a8e">offlineimap-helper</a></li>
+<li><a href="#orgfe36650">dunst-backlight</a></li>
+<li><a href="#orgb3f3779">dunst-volume</a></li>
 </ul>
 </li>
-<li><a href="#org4262f9a">Misc</a>
+<li><a href="#org8952b37">Misc</a>
 <ul>
-<li><a href="#org72febf1">org-protocol desktop file</a></li>
+<li><a href="#org2356a7c">org-protocol desktop file</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org9b7997c" class="outline-2">
-<h2 id="org9b7997c">About</h2>
-<div class="outline-text-2" id="text-org9b7997c">
+
+<div id="outline-container-orgf623ced" class="outline-2">
+<h2 id="orgf623ced">About</h2>
+<div class="outline-text-2" id="text-orgf623ced">
 <p>
 This repository is where I keep configuration for various apps (hence the name) that doesn't really need its own separate repository but still usable for different window managers.
 </p>
 </div>
 </div>
-<div id="outline-container-org20fef4a" class="outline-2">
-<h2 id="org20fef4a">Apps</h2>
-<div class="outline-text-2" id="text-org20fef4a">
+<div id="outline-container-org3b31a9f" class="outline-2">
+<h2 id="org3b31a9f">Apps</h2>
+<div class="outline-text-2" id="text-org3b31a9f">
 </div>
-<div id="outline-container-orge0cb42c" class="outline-3">
-<h3 id="orge0cb42c">GnuPG Agent</h3>
-<div class="outline-text-3" id="text-orge0cb42c">
+<div id="outline-container-orgfb0bd7e" class="outline-3">
+<h3 id="orgfb0bd7e">GnuPG Agent</h3>
+<div class="outline-text-3" id="text-orgfb0bd7e">
 <div class="org-src-container">
 <pre class="src src-conf">allow-emacs-pinentry
 allow-loopback-pinentry
@@ -265,16 +88,16 @@ See the <a href="https://www.gnupg.org/documentation/manuals/gnupg/Agent-Options
 </p>
 </div>
 </div>
-<div id="outline-container-org4b072c0" class="outline-3">
-<h3 id="org4b072c0">waybar</h3>
-<div class="outline-text-3" id="text-org4b072c0">
+<div id="outline-container-org03296df" class="outline-3">
+<h3 id="org03296df">waybar</h3>
+<div class="outline-text-3" id="text-org03296df">
 <p>
 Right now I'm only using <i>Hyprland</i> as a <i>wayland</i> window manager, but I'm also curious about others (<i>sway</i> mostly). So I'll keep these here for the mean time.
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org9029220"></a>config<br />
-<div class="outline-text-4" id="text-org9029220">
+<li><a id="org10854ff"></a>config<br />
+<div class="outline-text-4" id="text-org10854ff">
 <div class="org-src-container">
 <pre class="src src-js"><span class="linenr">  1: </span>{
 <span class="linenr">  2: </span>    <span style="color: #bc8f8f;">"layer"</span>: <span style="color: #bc8f8f;">"top"</span>, <span style="color: #b22222;">// </span><span style="color: #b22222;">Waybar at top layer</span>
@@ -536,8 +359,8 @@ Right now I'm only using <i>Hyprland</i> as a <i>wayland</i> window manager, but
 </div>
 </div>
 </li>
-<li><a id="org336f7f8"></a>style<br />
-<div class="outline-text-4" id="text-org336f7f8">
+<li><a id="org6a77812"></a>style<br />
+<div class="outline-text-4" id="text-org6a77812">
 <div class="org-src-container">
 <pre class="src src-css"><span class="linenr">  1: </span><span style="color: #b22222;">/* </span><span style="color: #b22222;">Nord </span><span style="color: #b22222;">*/</span>
 <span class="linenr">  2: </span><span style="color: #00008b;">@define-color</span> background <span style="color: #ffffff; background-color: #2e3440;">rgba(46, 52, 64, 1)</span>;
@@ -850,9 +673,9 @@ Right now I'm only using <i>Hyprland</i> as a <i>wayland</i> window manager, but
 </li>
 </ul>
 </div>
-<div id="outline-container-org253a143" class="outline-3">
-<h3 id="org253a143">vdirsyncer</h3>
-<div class="outline-text-3" id="text-org253a143">
+<div id="outline-container-org665d1cb" class="outline-3">
+<h3 id="org665d1cb">vdirsyncer</h3>
+<div class="outline-text-3" id="text-org665d1cb">
 <p>
 Used for syncing my calendars.
 </p>
@@ -904,9 +727,9 @@ Used for syncing my calendars.
 </div>
 </div>
 </div>
-<div id="outline-container-orgf98eea0" class="outline-3">
-<h3 id="orgf98eea0">Tmux</h3>
-<div class="outline-text-3" id="text-orgf98eea0">
+<div id="outline-container-org11792dc" class="outline-3">
+<h3 id="org11792dc">Tmux</h3>
+<div class="outline-text-3" id="text-org11792dc">
 <p>
 I still prefer <i>screen</i>, but everyone think this is more superior, better see it for my self. This configuration requires <a href="https://github.com/tmux-plugins/tpm/">tpm</a> or Tmux Plugin Manager, though it still usable without it.
 </p>
@@ -920,8 +743,8 @@ Note that I don't use plugins at the moment, I still want to explore its builtin
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org11f02ee"></a>tmux.conf<br />
-<div class="outline-text-4" id="text-org11f02ee">
+<li><a id="orgbb188f7"></a>tmux.conf<br />
+<div class="outline-text-4" id="text-orgbb188f7">
 <div class="org-src-container">
 <pre class="src src-conf"><span class="linenr">  1: </span><span style="color: #b22222;"># </span><span style="color: #b22222;">General Configuration</span>
 <span class="linenr">  2: </span>set -g default-terminal <span style="color: #bc8f8f;">"screen-256color"</span>
@@ -1057,8 +880,8 @@ Note that I don't use plugins at the moment, I still want to explore its builtin
 </div>
 </div>
 </li>
-<li><a id="orgec38451"></a>tmux.conf.local<br />
-<div class="outline-text-4" id="text-orgec38451">
+<li><a id="org84016b2"></a>tmux.conf.local<br />
+<div class="outline-text-4" id="text-org84016b2">
 <div class="org-src-container">
 <pre class="src src-conf"><span class="linenr">  1: </span><span style="color: #b22222;"># </span><span style="color: #b22222;">: &lt;&lt; EOF</span>
 <span class="linenr">  2: </span><span style="color: #b22222;"># </span><span style="color: #b22222;">https://github.com/gpakosz/.tmux</span>
@@ -1478,9 +1301,9 @@ Note that I don't use plugins at the moment, I still want to explore its builtin
 </li>
 </ul>
 </div>
-<div id="outline-container-org4148abb" class="outline-3">
-<h3 id="org4148abb">Tint2</h3>
-<div class="outline-text-3" id="text-org4148abb">
+<div id="outline-container-org82b2771" class="outline-3">
+<h3 id="org82b2771">Tint2</h3>
+<div class="outline-text-3" id="text-org82b2771">
 <p>
 A light panel for <i>Xorg</i>. Still prefer other like <i>polybar</i>, but the simplicity of tint2 really attracts me.
 </p>
@@ -1692,13 +1515,13 @@ A light panel for <i>Xorg</i>. Still prefer other like <i>polybar</i>, but the s
 </div>
 </div>
 </div>
-<div id="outline-container-orgde5899a" class="outline-3">
-<h3 id="orgde5899a">systemd</h3>
-<div class="outline-text-3" id="text-orgde5899a">
+<div id="outline-container-org63e9226" class="outline-3">
+<h3 id="org63e9226">systemd</h3>
+<div class="outline-text-3" id="text-org63e9226">
 </div>
 <ul class="org-ul">
-<li><a id="org2f8c953"></a>Emacs user unit file<br />
-<div class="outline-text-4" id="text-org2f8c953">
+<li><a id="org3da255f"></a>Emacs user unit file<br />
+<div class="outline-text-4" id="text-org3da255f">
 <p>
 I used this for auto starting <i>Emacs</i> once my window manager is started.
 </p>
@@ -1724,9 +1547,9 @@ I used this for auto starting <i>Emacs</i> once my window manager is started.
 </li>
 </ul>
 </div>
-<div id="outline-container-orga32fa6f" class="outline-3">
-<h3 id="orga32fa6f">swaylock</h3>
-<div class="outline-text-3" id="text-orga32fa6f">
+<div id="outline-container-orga9627d2" class="outline-3">
+<h3 id="orga9627d2">swaylock</h3>
+<div class="outline-text-3" id="text-orga9627d2">
 <p>
 Another lock screen for <i>wayland</i>.
 </p>
@@ -1792,9 +1615,9 @@ Another lock screen for <i>wayland</i>.
 </div>
 </div>
 </div>
-<div id="outline-container-org97c3f81" class="outline-3">
-<h3 id="org97c3f81">swappy</h3>
-<div class="outline-text-3" id="text-org97c3f81">
+<div id="outline-container-org88d6ab9" class="outline-3">
+<h3 id="org88d6ab9">swappy</h3>
+<div class="outline-text-3" id="text-org88d6ab9">
 <p>
 Wayland native snapshot editing tools.
 </p>
@@ -1813,9 +1636,9 @@ Wayland native snapshot editing tools.
 </div>
 </div>
 </div>
-<div id="outline-container-orgaf53622" class="outline-3">
-<h3 id="orgaf53622">screen</h3>
-<div class="outline-text-3" id="text-orgaf53622">
+<div id="outline-container-orgc71ccd7" class="outline-3">
+<h3 id="orgc71ccd7">screen</h3>
+<div class="outline-text-3" id="text-orgc71ccd7">
 <div class="org-src-container">
 <pre class="src src-conf"><span style="color: #b22222;"># </span><span style="color: #b22222;">~/.config/screen/screenrc</span>
 <span style="color: #b22222;"># </span><span style="color: #b22222;">By default, screen will look for initialization in</span>
@@ -1882,9 +1705,9 @@ My ultimate terminal multiplexer, for this to work you'll need you'll need to se
 </p>
 </div>
 </div>
-<div id="outline-container-org92ead66" class="outline-3">
-<h3 id="org92ead66">rofi-rbw</h3>
-<div class="outline-text-3" id="text-org92ead66">
+<div id="outline-container-orgab9e3dc" class="outline-3">
+<h3 id="orgab9e3dc">rofi-rbw</h3>
+<div class="outline-text-3" id="text-orgab9e3dc">
 <p>
 Rofi frontend for rbw (CLI for bitwarden), though I don't think it really needs a configuration file. I actually migrating from <i>bitwarden</i> to pass.
 </p>
@@ -1897,9 +1720,9 @@ Rofi frontend for rbw (CLI for bitwarden), though I don't think it really needs 
 </div>
 </div>
 </div>
-<div id="outline-container-orgdb1b5fa" class="outline-3">
-<h3 id="orgdb1b5fa">rofi-pass</h3>
-<div class="outline-text-3" id="text-orgdb1b5fa">
+<div id="outline-container-orgd91ce99" class="outline-3">
+<h3 id="orgd91ce99">rofi-pass</h3>
+<div class="outline-text-3" id="text-orgd91ce99">
 <p>
 Frontend for <i>pass</i>.
 </p>
@@ -2007,16 +1830,16 @@ Frontend for <i>pass</i>.
 </div>
 </div>
 </div>
-<div id="outline-container-org7afc49c" class="outline-3">
-<h3 id="org7afc49c">Rofi</h3>
-<div class="outline-text-3" id="text-org7afc49c">
+<div id="outline-container-org4673926" class="outline-3">
+<h3 id="org4673926">Rofi</h3>
+<div class="outline-text-3" id="text-org4673926">
 <p>
 A <i>dmenu</i> replacement, it can act as a window switcher, or an application launcher.
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org02c3dda"></a>config.rasi<br />
-<div class="outline-text-4" id="text-org02c3dda">
+<li><a id="org5ce83b9"></a>config.rasi<br />
+<div class="outline-text-4" id="text-org5ce83b9">
 <div class="org-src-container">
 <pre class="src src-css"><span class="linenr"> 1: </span><span style="color: #b22222;">/* </span><span style="color: #b22222;">-*-css-*- </span><span style="color: #b22222;">*/</span>
 <span class="linenr"> 2: </span><span style="color: #0000ff;">configuration </span>{
@@ -2048,10 +1871,10 @@ The main configuration file for <i>rofi</i>.
 </p>
 </div>
 </li>
-<li><a id="org78dbba5"></a>themes<br />
+<li><a id="orgd77dff4"></a>themes<br />
 <ul class="org-ul">
-<li><a id="org9394be4"></a>nord<br />
-<div class="outline-text-5" id="text-org9394be4">
+<li><a id="org0e18ee1"></a>nord<br />
+<div class="outline-text-5" id="text-org0e18ee1">
 <div class="org-src-container">
 <pre class="src src-css"><span class="linenr">  1: </span><span style="color: #b22222;">/* </span><span style="color: #b22222;">-*-css-*- </span><span style="color: #b22222;">*/</span>
 <span class="linenr">  2: </span><span style="color: #b22222;">/**</span>
@@ -2193,9 +2016,9 @@ I forgot where I got this.
 </li>
 </ul>
 </div>
-<div id="outline-container-orgb0fe424" class="outline-3">
-<h3 id="orgb0fe424">picom</h3>
-<div class="outline-text-3" id="text-orgb0fe424">
+<div id="outline-container-orgd5054bd" class="outline-3">
+<h3 id="orgd5054bd">picom</h3>
+<div class="outline-text-3" id="text-orgd5054bd">
 <p>
 Compositor for <i>X11</i>.
 </p>
@@ -2658,9 +2481,9 @@ Compositor for <i>X11</i>.
 </div>
 </div>
 </div>
-<div id="outline-container-org95a28d6" class="outline-3">
-<h3 id="org95a28d6">offlineimap</h3>
-<div class="outline-text-3" id="text-org95a28d6">
+<div id="outline-container-org5ef9139" class="outline-3">
+<h3 id="org5ef9139">offlineimap</h3>
+<div class="outline-text-3" id="text-org5ef9139">
 <p>
 My offlineimap setup for several accounts.
 </p>
@@ -2886,9 +2709,9 @@ My offlineimap setup for several accounts.
 </div>
 </div>
 </div>
-<div id="outline-container-orgfd686af" class="outline-3">
-<h3 id="orgfd686af">msmtp</h3>
-<div class="outline-text-3" id="text-orgfd686af">
+<div id="outline-container-orga349d8f" class="outline-3">
+<h3 id="orga349d8f">msmtp</h3>
+<div class="outline-text-3" id="text-orga349d8f">
 <div class="org-src-container">
 <pre class="src src-conf"><span class="linenr"> 1: </span><span style="color: #b22222;"># </span><span style="color: #b22222;">Set default values for all following accounts.</span>
 <span class="linenr"> 2: </span>defaults
@@ -2950,13 +2773,13 @@ My offlineimap setup for several accounts.
 </div>
 </div>
 </div>
-<div id="outline-container-orgcbb1292" class="outline-3">
-<h3 id="orgcbb1292">GTK</h3>
-<div class="outline-text-3" id="text-orgcbb1292">
+<div id="outline-container-org05cd145" class="outline-3">
+<h3 id="org05cd145">GTK</h3>
+<div class="outline-text-3" id="text-org05cd145">
 </div>
 <ul class="org-ul">
-<li><a id="orgafaedb5"></a>gtk-2.0<br />
-<div class="outline-text-4" id="text-orgafaedb5">
+<li><a id="orgbd35742"></a>gtk-2.0<br />
+<div class="outline-text-4" id="text-orgbd35742">
 <div class="org-src-container">
 <pre class="src src-conf"><span class="linenr"> 1: </span><span style="color: #b22222;"># </span><span style="color: #b22222;">DO NOT EDIT! This file will be overwritten by LXAppearance.</span>
 <span class="linenr"> 2: </span><span style="color: #b22222;"># </span><span style="color: #b22222;">Any customization should be done in ~/.gtkrc-2.0.mine instead.</span>
@@ -2981,8 +2804,8 @@ My offlineimap setup for several accounts.
 </div>
 </div>
 </li>
-<li><a id="org5dc5a08"></a>gtk-3.0<br />
-<div class="outline-text-4" id="text-org5dc5a08">
+<li><a id="org8bac175"></a>gtk-3.0<br />
+<div class="outline-text-4" id="text-org8bac175">
 <div class="org-src-container">
 <pre class="src src-conf"><span class="linenr"> 1: </span>[<span style="color: #228b22;">Settings</span>]
 <span class="linenr"> 2: </span><span style="color: #b8860b;">gtk-theme-name</span>=Breeze-Dark
@@ -3007,8 +2830,8 @@ My offlineimap setup for several accounts.
 </div>
 </div>
 </li>
-<li><a id="orgaa22f4d"></a>gtk-4.0<br />
-<div class="outline-text-4" id="text-orgaa22f4d">
+<li><a id="org0a052e6"></a>gtk-4.0<br />
+<div class="outline-text-4" id="text-org0a052e6">
 <div class="org-src-container">
 <pre class="src src-conf">[<span style="color: #228b22;">Settings</span>]
 <span style="color: #b8860b;">gtk-theme-name</span>=Breeze-Dark
@@ -3034,9 +2857,9 @@ My offlineimap setup for several accounts.
 </li>
 </ul>
 </div>
-<div id="outline-container-org4ea1eda" class="outline-3">
-<h3 id="org4ea1eda">Dunst</h3>
-<div class="outline-text-3" id="text-org4ea1eda">
+<div id="outline-container-org92e9f85" class="outline-3">
+<h3 id="org92e9f85">Dunst</h3>
+<div class="outline-text-3" id="text-org92e9f85">
 <div class="org-src-container">
 <pre class="src src-conf"><span class="linenr">  1: </span><span style="color: #b22222;"># </span><span style="color: #b22222;">-*- eval: (rainbow-mode 1) -*-</span>
 <span class="linenr">  2: </span><span style="color: #b22222;"># </span><span style="color: #b22222;">See dunst(5) for all configuration options</span>
@@ -5391,9 +5214,9 @@ My offlineimap setup for several accounts.
 </div>
 </div>
 </div>
-<div id="outline-container-orgca75369" class="outline-3">
-<h3 id="orgca75369">astroid</h3>
-<div class="outline-text-3" id="text-orgca75369">
+<div id="outline-container-org1276096" class="outline-3">
+<h3 id="org1276096">astroid</h3>
+<div class="outline-text-3" id="text-org1276096">
 <div class="org-src-container">
 <pre class="src src-js">{
     <span style="color: #bc8f8f;">"astroid"</span>: {
@@ -5634,13 +5457,13 @@ My offlineimap setup for several accounts.
 </div>
 </div>
 </div>
-<div id="outline-container-org507da11" class="outline-3">
-<h3 id="org507da11">alacritty</h3>
-<div class="outline-text-3" id="text-org507da11">
+<div id="outline-container-org0588a86" class="outline-3">
+<h3 id="org0588a86">alacritty</h3>
+<div class="outline-text-3" id="text-org0588a86">
 </div>
 <ul class="org-ul">
-<li><a id="org57bc8dd"></a>alacritty.toml<br />
-<div class="outline-text-4" id="text-org57bc8dd">
+<li><a id="orgb9432c9"></a>alacritty.toml<br />
+<div class="outline-text-4" id="text-orgb9432c9">
 <div class="org-src-container">
 <pre class="src src-toml"><span class="linenr"> 1: </span>import = ["~/.config/alacritty/themes/nord.toml"]
 <span class="linenr"> 2: </span>live_config_reload = true
@@ -5668,10 +5491,10 @@ My offlineimap setup for several accounts.
 </div>
 </div>
 </li>
-<li><a id="org71e13cc"></a>THemes<br />
+<li><a id="org64915f5"></a>THemes<br />
 <ul class="org-ul">
-<li><a id="org249c382"></a>nord<br />
-<div class="outline-text-5" id="text-org249c382">
+<li><a id="org9f7a408"></a>nord<br />
+<div class="outline-text-5" id="text-org9f7a408">
 <div class="org-src-container">
 <pre class="src src-toml"># -*- eval: (rainbow-mode 1) -*-
 # Colors (Nord)
@@ -5711,13 +5534,13 @@ white   = '#ECEFF4'
 </ul>
 </div>
 </div>
-<div id="outline-container-org68f2d48" class="outline-2">
-<h2 id="org68f2d48">Scripts</h2>
-<div class="outline-text-2" id="text-org68f2d48">
+<div id="outline-container-org1670f1d" class="outline-2">
+<h2 id="org1670f1d">Scripts</h2>
+<div class="outline-text-2" id="text-org1670f1d">
 </div>
-<div id="outline-container-orgb61ab7d" class="outline-3">
-<h3 id="orgb61ab7d">offlineimap-helper</h3>
-<div class="outline-text-3" id="text-orgb61ab7d">
+<div id="outline-container-org2121a8e" class="outline-3">
+<h3 id="org2121a8e">offlineimap-helper</h3>
+<div class="outline-text-3" id="text-org2121a8e">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #bc8f8f;">"""Offlineimap helper script"""</span>
 
@@ -5753,9 +5576,9 @@ This is a helper script for my <i>offlineimap</i> configuration
 </p>
 </div>
 </div>
-<div id="outline-container-org28d66a1" class="outline-3">
-<h3 id="org28d66a1">dunst-backlight</h3>
-<div class="outline-text-3" id="text-org28d66a1">
+<div id="outline-container-orgfe36650" class="outline-3">
+<h3 id="orgfe36650">dunst-backlight</h3>
+<div class="outline-text-3" id="text-orgfe36650">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #b22222;"># </span><span style="color: #b22222;">original script from https://wiki.archlinux.org/index.php/Dunst</span>
 <span style="color: #b22222;"># </span><span style="color: #b22222;"><a href="mailto:alexforsale%40yahoo.com">&lt;alexforsale@yahoo.com&gt;</a></span>
@@ -5789,9 +5612,9 @@ canberra-gtk-play -i audio-volume-change -d <span style="color: #bc8f8f;">"chang
 </div>
 </div>
 </div>
-<div id="outline-container-org72e0a13" class="outline-3">
-<h3 id="org72e0a13">dunst-volume</h3>
-<div class="outline-text-3" id="text-org72e0a13">
+<div id="outline-container-orgb3f3779" class="outline-3">
+<h3 id="orgb3f3779">dunst-volume</h3>
+<div class="outline-text-3" id="text-orgb3f3779">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #b22222;"># </span><span style="color: #b22222;">original script from https://wiki.archlinux.org/index.php/Dunst</span>
 <span style="color: #b22222;"># </span><span style="color: #b22222;"><a href="mailto:alexforsale%40yahoo.com">&lt;alexforsale@yahoo.com&gt;</a></span>
@@ -5835,13 +5658,13 @@ canberra-gtk-play -i audio-volume-change -d <span style="color: #bc8f8f;">"chang
 </div>
 </div>
 </div>
-<div id="outline-container-org4262f9a" class="outline-2">
-<h2 id="org4262f9a">Misc</h2>
-<div class="outline-text-2" id="text-org4262f9a">
+<div id="outline-container-org8952b37" class="outline-2">
+<h2 id="org8952b37">Misc</h2>
+<div class="outline-text-2" id="text-org8952b37">
 </div>
-<div id="outline-container-org72febf1" class="outline-3">
-<h3 id="org72febf1">org-protocol desktop file</h3>
-<div class="outline-text-3" id="text-org72febf1">
+<div id="outline-container-org2356a7c" class="outline-3">
+<h3 id="org2356a7c">org-protocol desktop file</h3>
+<div class="outline-text-3" id="text-org2356a7c">
 <div class="org-src-container">
 <pre class="src src-conf"><span class="linenr">1: </span>[<span style="color: #228b22;">Desktop Entry</span>]
 <span class="linenr">2: </span><span style="color: #b8860b;">Name</span>=Org-Protocol
@@ -5859,7 +5682,7 @@ canberra-gtk-play -i audio-volume-change -d <span style="color: #bc8f8f;">"chang
 <div id="postamble" class="status">
 <p class="date">Date: 2024-03-11 Mon 00:00</p>
 <p class="author">Author: Kristian Alexander P</p>
-<p class="date">Created: 2024-03-11 Mon 15:03</p>
+<p class="date">Created: 2024-03-11 Mon 15:05</p>
 </div>
 </body>
 </html>
