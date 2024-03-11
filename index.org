@@ -1,0 +1,3603 @@
+#+options: ':nil *:t -:t ::t <:t H:2 \n:nil ^:t arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:nil
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+title: index
+#+date: <2024-03-11 Mon>
+#+author: Kristian Alexander P
+#+email: alexforsale@yahoo.com
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 29.2 (Org mode 9.6.15)
+#+cite_export:
+#+property: EXPORT_FILE_NAME: index.html
+#+startup: showall
+#+property: header-args :mkdirp yes
+* About
+This repository is where I keep configuration for various apps (hence the name) that doesn't really need its own separate repository but still usable for different window managers.
+* Apps
+** GnuPG Agent
+:PROPERTIES:
+:header-args: :tangle .gnupg/gpg-agent.conf :mkdirp yes
+:END:
+#+begin_src conf
+  allow-emacs-pinentry
+  allow-loopback-pinentry
+#+end_src
+See the [[https://www.gnupg.org/documentation/manuals/gnupg/Agent-Options.html][documentation]] for full options.
+** waybar
+Right now I'm only using /Hyprland/ as a /wayland/ window manager, but I'm also curious about others (/sway/ mostly). So I'll keep these here for the mean time.
+*** config
+:PROPERTIES:
+:header-args: :tangle .config/waybar/config :mkdirp yes
+:END:
+
+#+begin_src js -n
+  {
+      "layer": "top", // Waybar at top layer
+      "output": ["eDP-1", "DP-1", "DP-2", "DP-3", "DP-4", "DP-5", "HDMI-A-1"],
+      "position": "top", // Waybar position (top|bottom|left|right)
+      "height": 34, // Waybar height (to be removed for auto height)
+      // "width": 1280, // Waybar width
+      "spacing": 4, // Gaps between modules (4px)
+      // Choose the order of the modules
+      "modules-left": [
+          "hyprland/workspaces",
+          "hyprland/submap",
+          "mpris"
+          // "custom/media"
+      ],
+      "modules-center": [
+          "hyprland/window"
+      ],
+      "modules-right": [
+          // "mpd",
+          "idle_inhibitor",
+          "backlight",
+          // "pulseaudio",
+          "wireplumber",
+          "network",
+          // "cpu",
+          // "memory",
+          // "temperature",
+          "keyboard-state",
+          // "hyprland/language",
+          "battery",
+          "custom/pacman",
+          "clock#date",
+          "clock#time",
+          "tray"
+      ],
+      // Modules configuration
+      // "sway/workspaces": {
+      //     "disable-scroll": true,
+      //     "all-outputs": true,
+      //     "warp-on-scroll": false,
+      //     "format": "{name}: {icon}",
+      //     "format-icons": {
+      //         "1": "",
+      //         "2": "",
+      //         "3": "",
+      //         "4": "",
+      //         "5": "",
+      //         "urgent": "",
+      //         "focused": "",
+      //         "default": ""
+      //     }
+      // },
+      "mpris": {
+          "format": "{player_icon} {title}",
+          "format-paused": "{status_icon} <i>{title}</i>",
+          "player-icons": {
+               "default": "▶",
+               "mpv": "🎵"
+          },
+          "status-icons": {
+                  "paused": "⏸"
+          },
+      },
+      "backlight": {
+          "format": " {percent}%",
+          "interval": 2,
+          "on-scroll-up": "brightnessctl set +1%",
+          "on-scroll-down": "brightnessctl set 1%-"
+      },
+      "hyprland/workspaces": {
+          "format": "{id}: {icon}",
+          "format-icons": {
+              "1": "",
+              "2": "",
+              "3": "󰖟",
+              "4": "󰺻",
+              "5": "󰈔",
+              "6": "󰦑",
+              "7": "",
+              "8": "󰑔",
+              "9": "",
+              "10": ""
+          },
+          "active-only": false
+      },
+      "hyprland/language": {
+          "format": "{}",
+          "format-en": "en",
+          "keyboard-name": "at-translated-set-2-keyboard"
+      },
+      "hyprland/window": {
+          "format": "{}",
+          "rewrite": {
+              "(.*) — Mozilla Firefox": "🌎 $1",
+              "(.*) - (GNU Emacs at.*)": "$1"
+          },
+          "separate-outputs": true
+      },
+      "hyprland/submap": {
+          "format": "{}",
+          "max-length": 8,
+          "tooltip": false
+      },
+      "keyboard-state": {
+          "numlock": false,
+          "capslock": true,
+          "format": "{name} {icon}",
+          "format-icons": {
+              "locked": "",
+              "unlocked": ""
+          }
+      },
+      "mpd": {
+          // "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
+          "format": "  {title} - {artist} {stateIcon} [{elapsedTime:%M:%S}/{totalTime:%M:%S}] {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}[{songPosition}/{queueLength}] [{volume}%]",
+          "format-disconnected": "Disconnected ",
+          "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
+          "unknown-tag": "N/A",
+          "interval": 2,
+          "consume-icons": {
+              "on": " "
+          },
+          "random-icons": {
+              "off": "<span color=\"#f53c3c\"></span> ",
+              "on": " "
+          },
+          "repeat-icons": {
+              "on": " "
+          },
+          "single-icons": {
+              "on": "1 "
+          },
+          "state-icons": {
+              "paused": "",
+              "playing": ""
+          },
+          "tooltip-format": "MPD (connected)",
+          "tooltip-format-disconnected": "MPD (disconnected)"
+      },
+      "idle_inhibitor": {
+          "format": "{icon}",
+          "format-icons": {
+              "activated": "",
+              "deactivated": ""
+          }
+      },
+      "tray": {
+          // "icon-size": 21,
+          "spacing": 10
+      },
+      "clock#date": {
+          // "timezone": "America/New_York",
+          "format": " {:%Y/%m/%d(%a)}",
+          "on-click": "alacritty --class khal -e khal interactive",
+          "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+          // "format-alt": "{:%Y-%m-%d}"
+      },
+      "clock#time": {
+          "interval": 1,
+          "format": "{:%H:%M:%S}",
+          "tooltip": false
+      },
+      "cpu": {
+          "format": "{usage}% ",
+          "tooltip": false
+      },
+      "memory": {
+          "format": "{}% "
+      },
+      "temperature": {
+          // "thermal-zone": 2,
+          // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+          "critical-threshold": 80,
+          // "format-critical": "{temperatureC}°C {icon}",
+          "format": "{temperatureC}°C {icon}",
+          "format-icons": ["", "", ""]
+      },
+      "backlight": {
+          // "device": "acpi_video1",
+          "format": "{icon} {percent}%",
+          "format-icons": ["", "", "", "", "", "", "", "", ""]
+      },
+      "battery": {
+          "states": {
+              // "good": 95,
+              "warning": 30,
+              "critical": 15
+          },
+          "format": " {icon} {capacity}%",
+          "format-charging": " {capacity}%",
+          "format-plugged": " {capacity}%",
+          "format-alt": "{icon} {time}",
+          // "format-good": "", // An empty format will hide the module
+          // "format-full": "",
+          "format-icons": ["", "", "", "", ""]
+      },
+      "battery#bat2": {
+          "bat": "BAT2"
+      },
+      "network": {
+          // "interface": "wlp2*", // (Optional) To force the use of this interface
+          "format": "{ifname}",
+          "format-wifi": "{essid} ({signalStrength}%) ",
+          "format-ethernet": "{ipaddr}/{cidr} ",
+          "tooltip-format": "{ifname} via {gwaddr} ",
+          "format-linked": "{ifname} (No IP) ",
+          "format-disconnected": "Disconnected ⚠",
+          "format-alt": "{ifname}: {ipaddr}/{cidr} ({bandwidthUpBits} - {bandwidthDownBits})"
+      },
+      "wireplumber": {
+          "format": "{icon} {volume}%",
+          "format-icons": ["󰕿", "󰖀", "󰕾"],
+          "format-muted": "",
+          "on-click": "helvum",
+          "on-click-right": "pavucontrol",
+          "scroll-step": 0.2
+      },
+      "pulseaudio": {
+          // "scroll-step": 1, // %, can be a float
+          "format": "{volume}% {icon} {format_source}",
+          "format-bluetooth": "{volume}% {icon} {format_source}",
+          "format-bluetooth-muted": " {icon} {format_source}",
+          "format-muted": " {format_source}",
+          "format-source": "{volume}% ",
+          "format-source-muted": "",
+          "format-icons": {
+              "headphone": "",
+              "hands-free": "",
+              "headset": "",
+              "phone": "",
+              "portable": "",
+              "car": "",
+              "default": ["", "", ""]
+          },
+          "on-click": "pavucontrol"
+      },
+      "custom/pacman": {
+          "format": " {} update available",
+          "exec": "checkupdates | wc -l",
+          "exec-if": "test $(checkupdates | wc -l) -ne 0",
+          "interval": 3600,
+          "on-click": "checkupdates; pkill -SIGRTMIN+8 waybar"
+      },
+      "custom/media": {
+          "format": "{icon} {}",
+          "return-type": "json",
+          "max-length": 40,
+          "format-icons": {
+              "spotify": "",
+              "default": "🎜"
+          },
+          "escape": true,
+          "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
+          // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+      }
+  }
+#+end_src
+*** style
+:PROPERTIES:
+:header-args: :tangle .config/waybar/style.css
+:END:
+
+#+begin_src css -n
+  /* Nord */
+  @define-color background rgba(46, 52, 64, 1);
+  @define-color background2 rgba(46, 52, 64, 0.75);
+  @define-color cyan rgba(136, 192, 208, 1);
+  @define-color cyan2 rgba(136, 192, 208, 0.6);
+  @define-color red rgba(191, 97, 106, 1);
+  @define-color red2 rgba(191, 97, 106, 0.6);
+  @define-color foreground rgba(216, 222, 233, 1);
+  @define-color black rgba(59, 66, 82, 1);
+  @define-color green rgba(163, 190, 140, 1);
+  @define-color green2 rgba(163, 190, 140, 0.3);
+  @define-color yellow rgba(235, 203, 139, 1);
+  @define-color yellow2 rgba(235, 203, 139, 0.45);
+  @define-color blue rgba(129, 161, 193, 1);
+  @define-color blue2 rgba(129, 161, 193, 0.45);
+  @define-color magenta rgba(180, 142, 173, 1);
+  @define-color magenta2 rgba(180, 142, 173, 0.5);
+  @define-color white rgba(229, 233, 240, 1);
+
+  @define-color light #D8DEE9;
+  /*@define-color dark @nord_dark_font;*/
+  @define-color warning #ebcb8b;
+  @define-color critical #BF616A;
+  @define-color mode #434C5E;
+  /*@define-color workspaces @bg;*/
+  /*@define-color workspaces @nord_dark_font;*/
+  /*@define-color workspacesfocused #434C5E;*/
+  @define-color workspacebutton @white;
+  @define-color tray @workspacesfocused;
+  @define-color sound #EBCB8B;
+  @define-color network #5D7096;
+  @define-color memory #546484;
+  @define-color cpu rgba(89, 106, 141, 1);
+  @define-color keyboard rgba(163, 190, 140, 1);
+  @define-color battery rgba(180, 142, 173, 1);
+  @define-color temp #4D5C78;
+  @define-color layout rgba(94, 129, 172, 1);
+  @define-color wireplumber #88c0d0;
+  @define-color date rgba(136, 192, 208, 1);
+  @define-color time rgba(180, 142, 173, 1);
+  @define-color backlight rgba(67, 76, 94, 1);
+  @define-color nord_bg rgba(67, 76, 94, 1);
+  @define-color nord_bg_blue #546484;
+  @define-color nord_light #D8DEE9;
+  @define-color nord_light_font #D8DEE9;
+  @define-color nord_dark_font #434C5E;
+
+  ,* {
+      /* `otf-font-awesome` is required to be installed for icons */
+      font-family: FontAwesome, JetBrainsMonoNL Nerd Font Mono;
+      font-size: 13px;
+  }
+
+  @keyframes blink {
+      to {
+          background-color: @white;
+          color: @black;
+      }
+  }
+
+
+  window#waybar {
+      background-color: @background2;
+      /* background-color: transparent; */
+      /* border-bottom: 3px solid @cyan; */
+      color: @white;
+      transition-property: background-color;
+      transition-duration: .5s;
+  }
+
+  window#waybar.hidden {
+      opacity: 0.2;
+  }
+
+  #waybar.empty #window {
+      /* background-color: transparent; */
+  }
+
+  #window {
+      margin: 0px;
+      font-size:14px;
+      font-weight: bold;
+  }
+
+  button {
+      /* Use box-shadow instead of border so the text isn't offset */
+      /* box-shadow: inset 0 -3px transparent; */
+      /* Avoid rounded borders under each button name */
+      border: none;
+      border-radius: 0;
+  }
+
+  /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+  button:hover {
+      background: inherit;
+      border-top: 2px solid @red;
+  }
+
+  tooltip {
+      background: @background;
+      border: 1px solid @cyan;
+  }
+
+  tooltip label {
+      /* color: @white; */
+  }
+
+  label:focus {
+      background-color: @background;
+  }
+
+  #clock,
+  #battery,
+  #cpu,
+  #memory,
+  #disk,
+  #temperature,
+  #backlight,
+  #network,
+  #pulseaudio,
+  #wireplumber,
+  #custom-media,
+  #tray,
+  #mode,
+  #idle_inhibitor,
+  #scratchpad,
+  #keyboard-state,
+  #mode,
+  #submap,
+  #mpd {
+      margin: 2px;
+      padding-left: 4px;
+      padding-right: 4px;
+      background-color: transparent;
+      color: @white;
+  }
+
+  .modules-left > widget:first-child > #workspaces {
+      margin-left: 0;
+  }
+
+  .modules-right > widget:last-child > #workspaces {
+      margin-right: 0;
+  }
+
+  #workspaces {
+      margin: 0px;
+  }
+
+  #workspaces button {
+      color: @nord_light;
+      /* padding: 0 4px; */
+      color: @workspacebutton;
+      font-size: 14px;
+      font-weight: bold;
+  }
+
+  #workspaces button.empty {
+      /* color: @cyan; */
+  }
+
+  #workspaces button.active {
+      background: inherit;
+      border-top: 2px solid @magenta;
+      font-weight: bold;
+      color: @magenta;
+  }
+
+  #workspaces button:hover {
+  }
+
+  #workspaces button.focused {
+      /* background-color: @black; */
+      color: @red;
+      /* border-top: 2px solid @red; */
+  }
+
+  #workspaces button.urgent {
+      background-color: @red;
+  }
+
+  #mode {
+      color: @mode;
+      /* background-color: @black; */
+      /* border-bottom: 3px solid @white; */
+  }
+
+  #submap {
+      color: @yellow;
+  }
+
+  #mpris {
+      padding: 0 4px;
+      font-size: 9px;
+      color: @warning;
+  }
+
+  #idle_inhibitor {
+      color: @blue;
+  }
+
+  #idle_inhibitor.activated {
+      color: @foreground;
+  }
+
+  #backlight {
+      /* background-color: @red2; */
+  }
+
+  #pulseaudio {
+      /* background-color: @magenta2; */
+  }
+
+  #wireplumber {
+      /* background-color: @magenta2; */
+      color: @wireplumber;
+  }
+
+  #network {
+      /* background-color: @cyan2; */
+  }
+
+  #keyboard-state {
+      /* background-color: @red2; */
+  }
+
+  #battery {
+      color: @battery;
+      /* background-color: @yellow2; */
+  }
+
+  #battery.charging, #battery.plugged {
+      /* color: @yellow; */
+      background-color: @background;
+  }
+
+  #battery.warning:not(.charging) {
+      /* background: @red; */
+      /* color: @white; */
+      animation-name: blink;
+      animation-duration: 0.5s;
+      animation-timing-function: steps(12);
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+  }
+
+  #battery.critical:not(.charging) {
+      background-color: @red;
+      color: @white;
+      animation-name: blink;
+      animation-duration: 0.5s;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+  }
+
+  #custom-pacman {
+      /* color: @black; */
+      /* background-color: @green2; */
+  }
+
+  #clock.date {
+      color: @date;
+      /* background-color: @magenta2; */
+  }
+
+  #clock.time {
+      color: @time;
+  }
+
+  #tray > .passive {
+      -gtk-icon-effect: dim;
+  }
+
+  #tray > .needs-attention {
+      -gtk-icon-effect: highlight;
+      background-color: @red;
+  }
+
+  #network {
+      color: @network;
+  }
+
+  #network.wifi {
+  }
+
+  #network.ethernet {
+      color: @green;
+  }
+
+  #network.linked {
+      color: @yellow;
+  }
+
+  #network.disconnected {
+      color: @red;
+  }
+
+  #backlight{
+      color: @yellow;
+  }
+
+  #keyboard-state {
+      color: @keyboard;
+  }
+#+end_src
+** vdirsyncer
+:PROPERTIES:
+:header-args: :tangle .config/vdirsyncer/config :mkdirp t
+:END:
+Used for syncing my calendars.
+#+begin_src conf -n
+  [general]
+  # A folder where vdirsyncer can store some metadata about each pair.
+  status_path = "~/.local/share/vdirsyncer/status/"
+
+  # CALDAV
+  [pair zumstar_calendar]
+  a = "zumstar_calendar_local"
+  b = "zumstar_calendar_remote"
+  collections = ["from a", "from b"]
+
+  [pair mkncorp_calendar]
+  a = "mkncorp_calendar_local"
+  b = "mkncorp_calendar_remote"
+  collections = ["from a", "from b"]
+
+  # Calendars also have a color property
+  metadata = ["displayname", "color"]
+
+  [storage zumstar_calendar_local]
+  type = "filesystem"
+  path = "~/.local/share/calendars/zumstar"
+  fileext = ".ics"
+
+  [storage zumstar_calendar_remote]
+  type = "caldav"
+  url = "http://localhost:1080/users/kristian.alexander@zumstar.co.id/calendar"
+  username = "kristian.alexander"
+  # The password can also be fetched from the system password storage, netrc or a
+  # custom command. See http://vdirsyncer.pimutils.org/en/stable/keyring.html
+  password.fetch = ["command", "pass", "show", "zumstar.co.id/kristian.alexander"]
+
+  [storage mkncorp_calendar_local]
+  type = "filesystem"
+  path = "~/.local/share/calendars/mkncorp"
+  fileext = ".ics"
+
+  [storage mkncorp_calendar_remote]
+  type = "caldav"
+  url = "http://localhost:1081/users/kristian.alexander@mkncorp.com/calendar"
+  username = "kristian.alexander"
+  # The password can also be fetched from the system password storage, netrc or a
+  # custom command. See http://vdirsyncer.pimutils.org/en/stable/keyring.html
+  password.fetch = ["command", "pass", "show", "mkncorp.com/kristian.alexander"]
+#+end_src
+** Tmux
+I still prefer /screen/, but everyone think this is more superior, better see it for my self. This configuration requires [[https://github.com/tmux-plugins/tpm/][tpm]] or Tmux Plugin Manager, though it still usable without it.
+#+caption: do this after stowing
+#+begin_src sh
+  cd ~/.config/tmux
+  git clone https://github.com/tmux-plugins/tpm.git plugins/tpm
+#+end_src
+Note that I don't use plugins at the moment, I still want to explore its builtin capabilities first before venturing into plugins.
+*** tmux.conf
+:PROPERTIES:
+:header-args: :tangle .config/tmux/tmux.conf :mkdirp t
+:END:
+#+begin_src conf -n
+  # General Configuration
+  set -g default-terminal "screen-256color"
+  if 'infocmp -x tmux-256color > /dev/null 2>&1' 'set -g default-terminal "tmux-256color"'
+
+  # list of plugins
+
+  # https://github.com/tmux-plugins/tpm
+  set -g @plugin 'tmux-plugins/tpm'
+
+  # https://github.com/laishulu/emacs-tmux-pane
+  set -g @plugin 'laishulu/emacs-tmux-pane'
+
+  setw -g xterm-keys on
+  set -s escape-time 10                     # faster command sequences
+  set -sg repeat-time 600                   # increase repeat timeout
+  set -s focus-events on
+
+  unbind C-b
+  set -g prefix C-a                        # GNU-Screen compatible prefix
+  bind a send-prefix
+  bind C-a send-prefix
+
+  set -q -g status-utf8 on                  # expect UTF-8 (tmux < 2.2)
+  setw -q -g utf8 on
+
+  set -g history-limit 5000                 # boost history
+
+  # edit configuration
+  bind e new-window -n "~/.tmux.conf.local" sh -c '${EDITOR:-vim} ~/.tmux.conf.local && tmux source ~/.tmux.conf && tmux display "~/.tmux.conf sourced"'
+
+  # reload configuration
+  bind-key C-r source-file ~/.tmux.conf \; display-message "Tmux config reloaded!"
+
+  # -- display -------------------------------------------------------------------
+
+  #set -g base-index 1           # start windows numbering at 1
+  #setw -g pane-base-index 1     # make pane numbering consistent with windows
+
+  setw -g automatic-rename on   # rename window to reflect current program
+  set -g renumber-windows on    # renumber windows when a window is closed
+
+  set -g set-titles on          # set terminal title
+
+  set -g display-panes-time 800 # slightly longer pane indicators display time
+  set -g display-time 1000      # slightly longer status messages display time
+
+  set -g status-interval 10     # redraw status line every 10 second
+
+  # clear both screen and history
+  bind -n C-l send-keys C-l \; run 'sleep 0.2' \; clear-history
+
+  # activity
+  set -g monitor-activity on
+  set -g visual-activity off
+
+  # -- navigation ----------------------------------------------------------------
+
+  # create session
+  bind C-c new-session
+
+  # find session
+  bind C-f command-prompt -p find-session 'switch-client -t %%'
+
+  # session navigation
+  bind BTab switch-client -l  # move to last session
+
+  # split current window horizontally
+  bind - split-window -v
+  # split current window vertically
+  bind _ split-window -h
+
+  # pane navigation
+  bind -r h select-pane -L  # move left
+  bind -r j select-pane -D  # move down
+  bind -r k select-pane -U  # move up
+  bind -r l select-pane -R  # move right
+  bind > swap-pane -D       # swap current pane with the next one
+  bind < swap-pane -U       # swap current pane with the previous one
+
+  # pane resizing
+  bind -r H resize-pane -L 2
+  bind -r J resize-pane -D 2
+  bind -r K resize-pane -U 2
+  bind -r L resize-pane -R 2
+
+  # window navigation
+  #unbind n
+  #unbind p
+  bind C-p previous-window # select previous window
+  bind p previous-window # select previous window
+  bind C-n next-window     # select next window
+  bind n next-window     # select next window
+  bind Tab last-window        # move to last active window
+
+  # mouse
+  set -g mouse on
+
+  # -- copy mode -----------------------------------------------------------------
+
+  bind Enter copy-mode # enter copy mode
+
+  run -b 'tmux bind -t vi-copy v begin-selection 2> /dev/null || true'
+  run -b 'tmux bind -T copy-mode-vi v send -X begin-selection 2> /dev/null || true'
+  run -b 'tmux bind -t vi-copy C-v rectangle-toggle 2> /dev/null || true'
+  run -b 'tmux bind -T copy-mode-vi C-v send -X rectangle-toggle 2> /dev/null || true'
+  run -b 'tmux bind -t vi-copy y copy-selection 2> /dev/null || true'
+  run -b 'tmux bind -T copy-mode-vi y send -X copy-selection-and-cancel 2> /dev/null || true'
+  run -b 'tmux bind -t vi-copy Escape cancel 2> /dev/null || true'
+  run -b 'tmux bind -T copy-mode-vi Escape send -X cancel 2> /dev/null || true'
+  run -b 'tmux bind -t vi-copy H start-of-line 2> /dev/null || true'
+  run -b 'tmux bind -T copy-mode-vi H send -X start-of-line 2> /dev/null || true'
+  run -b 'tmux bind -t vi-copy L end-of-line 2> /dev/null || true'
+  run -b 'tmux bind -T copy-mode-vi L send -X end-of-line 2> /dev/null || true'
+
+  # copy to X11 clipboard
+  if -b 'command -v xsel > /dev/null 2>&1' 'bind y run -b "tmux save-buffer - | xsel -i -b"'
+  if -b '! command -v xsel > /dev/null 2>&1 && command -v xclip > /dev/null 2>&1' 'bind y run -b "tmux save-buffer - | xclip -i -selection clipboard >/dev/null 2>&1"'
+  # copy to Wayland clipboard
+  if -b 'command -v wl-copy > /dev/null 2>&1' 'bind y run -b "tmux save-buffer - | wl-copy"'
+  # copy to macOS clipboard
+  if -b 'command -v pbcopy > /dev/null 2>&1' 'bind y run -b "tmux save-buffer - | pbcopy"'
+  if -b 'command -v reattach-to-user-namespace > /dev/null 2>&1' 'bind y run -b "tmux save-buffer - | reattach-to-user-namespace pbcopy"'
+  # copy to Windows clipboard
+  if -b 'command -v clip.exe > /dev/null 2>&1' 'bind y run -b "tmux save-buffer - | clip.exe"'
+  if -b '[ -c /dev/clipboard ]' 'bind y run -b "tmux save-buffer - > /dev/clipboard"'
+
+  source -q ~/.config/tmux/tmux.conf.local
+
+  # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+  run '~/.config/tmux/plugins/tpm/tpm'
+#+end_src
+*** tmux.conf.local
+:PROPERTIES:
+:header-args: :tangle .config/tmux/tmux.conf.local
+:END:
+
+#+begin_src conf -n
+  # : << EOF
+  # https://github.com/gpakosz/.tmux
+  # (‑●‑●)> dual licensed under the WTFPL v2 license and the MIT license,
+  #         without any warranty.
+  #         Copyright 2012— Gregory Pakosz (@gpakosz).
+
+
+  # -- navigation ----------------------------------------------------------------
+
+  # if you're running tmux within iTerm2
+  #   - and tmux is 1.9 or 1.9a
+  #   - and iTerm2 is configured to let option key act as +Esc
+  #   - and iTerm2 is configured to send [1;9A -> [1;9D for option + arrow keys
+  # then uncomment the following line to make Meta + arrow keys mapping work
+  #set -ga terminal-overrides "*:kUP3=\e[1;9A,*:kDN3=\e[1;9B,*:kRIT3=\e[1;9C,*:kLFT3=\e[1;9D"
+
+
+  # -- windows & pane creation ---------------------------------------------------
+
+  # new window retains current path, possible values are:
+  #   - true
+  #   - false (default)
+  #   - disabled (do not modify new-window bindings)
+  tmux_conf_new_window_retain_current_path=false
+
+  # new pane retains current path, possible values are:
+  #   - true (default)
+  #   - false
+  #   - disabled (do not modify split-window bindings)
+  tmux_conf_new_pane_retain_current_path=true
+
+  # new pane tries to reconnect ssh sessions, possible values are:
+  #   - true
+  #   - false (default)
+  #   - disabled (do not modify split-window bindings)
+  tmux_conf_new_pane_reconnect_ssh=false
+
+  # prompt for session name when creating a new session, possible values are:
+  #   - true
+  #   - false (default)
+  #   - disabled (do not modify new-session bindings)
+  tmux_conf_new_session_prompt=false
+
+
+  # -- display -------------------------------------------------------------------
+
+  # RGB 24-bit colour support (tmux >= 2.2), possible values are:
+  #  - true
+  #  - false
+  #  - auto (default)
+  #
+  # automatic detection relies on the COLORTERM environment variable being defined
+  # to 'truecolor' or '24bit' or '$ tput colors' answering '16777216'
+  # see https://github.com/termstandard/colors
+  tmux_conf_24b_colour=auto
+
+  # default theme
+  #tmux_conf_theme_colour_1="#073642"    # dark gray
+  #tmux_conf_theme_colour_2="#dc322f"    # gray
+  #tmux_conf_theme_colour_3="#859900"    # light gray
+  #tmux_conf_theme_colour_4="#b58900"    # light blue
+  #tmux_conf_theme_colour_5="#268bd2"    # yellow
+  #tmux_conf_theme_colour_6="#d33682"    # dark gray
+  #tmux_conf_theme_colour_7="#2aa198"    # white
+  #tmux_conf_theme_colour_8="#eee8d5"    # dark gray
+  #tmux_conf_theme_colour_9="#ffff00"    # yellow
+  #tmux_conf_theme_colour_10="#6c7c80"   # pink
+  #tmux_conf_theme_colour_11="#5fff00"   # green
+  #tmux_conf_theme_colour_12="#8a8a8a"   # light gray
+  #tmux_conf_theme_colour_13="#e4e4e4"   # white
+  #tmux_conf_theme_colour_14="#080808"   # dark gray
+  #tmux_conf_theme_colour_15="#080808"   # dark gray
+  #tmux_conf_theme_colour_16="#d70000"   # red
+  #tmux_conf_theme_colour_17="#e4e4e4"   # white
+
+  # window style
+  #tmux_conf_theme_window_fg="default"
+  #tmux_conf_theme_window_bg="default"
+
+  # highlight focused pane (tmux >= 2.1), possible values are:
+  #   - true
+  #   - false (default)
+  tmux_conf_theme_highlight_focused_pane=true
+
+  # focused pane colours:
+  #tmux_conf_theme_focused_pane_bg="$tmux_conf_theme_colour_2"
+
+  # pane border style, possible values are:
+  #   - thin (default)
+  #   - fat
+  tmux_conf_theme_pane_border_style=thin
+
+  # pane borders colours:
+  #tmux_conf_theme_pane_border="$tmux_conf_theme_colour_2"
+  #tmux_conf_theme_pane_active_border="$tmux_conf_theme_colour_4"
+
+  # pane indicator colours (when you hit <prefix> + q)
+  #tmux_conf_theme_pane_indicator="$tmux_conf_theme_colour_4"
+  #tmux_conf_theme_pane_active_indicator="$tmux_conf_theme_colour_4"
+
+  # status line style
+  #tmux_conf_theme_message_fg="$tmux_conf_theme_colour_1"
+  #tmux_conf_theme_message_bg="$tmux_conf_theme_colour_5"
+  tmux_conf_theme_message_attr="bold"
+
+  # status line command style (<prefix> : Escape)
+  #tmux_conf_theme_message_command_fg="$tmux_conf_theme_colour_5"
+  #tmux_conf_theme_message_command_bg="$tmux_conf_theme_colour_1"
+  tmux_conf_theme_message_command_attr="bold"
+
+  # window modes style
+  #tmux_conf_theme_mode_fg="$tmux_conf_theme_colour_1"
+  #tmux_conf_theme_mode_bg="$tmux_conf_theme_colour_5"
+  tmux_conf_theme_mode_attr="bold"
+
+  # status line style
+  #tmux_conf_theme_status_fg="$tmux_conf_theme_colour_3"
+  #tmux_conf_theme_status_bg="$tmux_conf_theme_colour_1"
+  tmux_conf_theme_status_attr="none"
+
+  # terminal title
+  #   - built-in variables are:
+  #     - #{circled_window_index}
+  #     - #{circled_session_name}
+  #     - #{hostname}
+  #     - #{hostname_ssh}
+  #     - #{hostname_full}
+  #     - #{hostname_full_ssh}
+  #     - #{username}
+  #     - #{username_ssh}
+  tmux_conf_theme_terminal_title="#h ❐ #S ● #I #W"
+
+  # window status style
+  #   - built-in variables are:
+  #     - #{circled_window_index}
+  #     - #{circled_session_name}
+  #     - #{hostname}
+  #     - #{hostname_ssh}
+  #     - #{hostname_full}
+  #     - #{hostname_full_ssh}
+  #     - #{username}
+  #     - #{username_ssh}
+  tmux_conf_theme_window_status_fg="$tmux_conf_theme_colour_3"
+  tmux_conf_theme_window_status_bg="$tmux_conf_theme_colour_1"
+  tmux_conf_theme_window_status_attr="none"
+  tmux_conf_theme_window_status_format="#I #W"
+  #tmux_conf_theme_window_status_format="#{circled_window_index} #W"
+  #tmux_conf_theme_window_status_format="#I #W#{?window_bell_flag,🔔,}#{?window_zoomed_flag,🔍,}"
+
+  # window current status style
+  #   - built-in variables are:
+  #     - #{circled_window_index}
+  #     - #{circled_session_name}
+  #     - #{hostname}
+  #     - #{hostname_ssh}
+  #     - #{hostname_full}
+  #     - #{hostname_full_ssh}
+  #     - #{username}
+  #     - #{username_ssh}
+  #tmux_conf_theme_window_status_current_fg="$tmux_conf_theme_colour_1"
+  #tmux_conf_theme_window_status_current_bg="$tmux_conf_theme_colour_4"
+  tmux_conf_theme_window_status_current_attr="bold"
+  tmux_conf_theme_window_status_current_format="#I #W"
+  #tmux_conf_theme_window_status_current_format="#{circled_window_index} #W"
+  #tmux_conf_theme_window_status_current_format="#I #W#{?window_zoomed_flag,🔍,}"
+
+  # window activity status style
+  tmux_conf_theme_window_status_activity_fg="default"
+  tmux_conf_theme_window_status_activity_bg="default"
+  tmux_conf_theme_window_status_activity_attr="underscore"
+
+  # window bell status style
+  #tmux_conf_theme_window_status_bell_fg="$tmux_conf_theme_colour_5"
+  tmux_conf_theme_window_status_bell_bg="default"
+  tmux_conf_theme_window_status_bell_attr="blink,bold"
+
+  # window last status style
+  #tmux_conf_theme_window_status_last_fg="$tmux_conf_theme_colour_4"
+  #tmux_conf_theme_window_status_last_bg="$tmux_conf_theme_colour_2"
+  tmux_conf_theme_window_status_last_attr="none"
+
+  # status left/right sections separators
+  tmux_conf_theme_left_separator_main=""
+  tmux_conf_theme_left_separator_sub="|"
+  tmux_conf_theme_right_separator_main=""
+  tmux_conf_theme_right_separator_sub="|"
+  #tmux_conf_theme_left_separator_main='\uE0B0'  # /!\ you don't need to install Powerline
+  #tmux_conf_theme_left_separator_sub='\uE0B1'   #   you only need fonts patched with
+  #tmux_conf_theme_right_separator_main='\uE0B2' #   Powerline symbols or the standalone
+  #tmux_conf_theme_right_separator_sub='\uE0B3'  #   PowerlineSymbols.otf font, see README.md
+
+  # status left/right content:
+  #   - separate main sections with "|"
+  #   - separate subsections with ","
+  #   - built-in variables are:
+  #     - #{battery_bar}
+  #     - #{battery_hbar}
+  #     - #{battery_percentage}
+  #     - #{battery_status}
+  #     - #{battery_vbar}
+  #     - #{circled_session_name}
+  #     - #{hostname_ssh}
+  #     - #{hostname}
+  #     - #{hostname_full}
+  #     - #{hostname_full_ssh}
+  #     - #{loadavg}
+  #     - #{mouse}
+  #     - #{pairing}
+  #     - #{prefix}
+  #     - #{root}
+  #     - #{synchronized}
+  #     - #{uptime_y}
+  #     - #{uptime_d} (modulo 365 when #{uptime_y} is used)
+  #     - #{uptime_h}
+  #     - #{uptime_m}
+  #     - #{uptime_s}
+  #     - #{username}
+  #     - #{username_ssh}
+  tmux_conf_theme_status_left=" ❐ #S | ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} "
+  tmux_conf_theme_status_right=" #{prefix}#{mouse}#{pairing}#{synchronized}#{?battery_status,#{battery_status},}#{?battery_bar, #{battery_bar},}#{?battery_percentage, #{battery_percentage},} , %R , %d %b | #{username}#{root} | #{hostname} "
+
+  # status left style
+  #tmux_conf_theme_status_left_fg="$tmux_conf_theme_colour_6,$tmux_conf_theme_colour_7,$tmux_conf_theme_colour_8"
+  #tmux_conf_theme_status_left_bg="$tmux_conf_theme_colour_9,$tmux_conf_theme_colour_10,$tmux_conf_theme_colour_11"
+  tmux_conf_theme_status_left_attr="bold,none,none"
+
+  # status right style
+  #tmux_conf_theme_status_right_fg="$tmux_conf_theme_colour_12,$tmux_conf_theme_colour_13,$tmux_conf_theme_colour_14"
+  #tmux_conf_theme_status_right_bg="$tmux_conf_theme_colour_15,$tmux_conf_theme_colour_16,$tmux_conf_theme_colour_17"
+  tmux_conf_theme_status_right_attr="none,none,bold"
+
+  # pairing indicator
+  tmux_conf_theme_pairing="⚇"                 # U+2687
+  tmux_conf_theme_pairing_fg="none"
+  tmux_conf_theme_pairing_bg="none"
+  tmux_conf_theme_pairing_attr="none"
+
+  # prefix indicator
+  tmux_conf_theme_prefix="⌨"                  # U+2328
+  tmux_conf_theme_prefix_fg="none"
+  tmux_conf_theme_prefix_bg="none"
+  tmux_conf_theme_prefix_attr="none"
+
+  # mouse indicator
+  tmux_conf_theme_mouse="↗"                   # U+2197
+  tmux_conf_theme_mouse_fg="none"
+  tmux_conf_theme_mouse_bg="none"
+  tmux_conf_theme_mouse_attr="none"
+
+  # root indicator
+  tmux_conf_theme_root="!"
+  tmux_conf_theme_root_fg="none"
+  tmux_conf_theme_root_bg="none"
+  tmux_conf_theme_root_attr="bold,blink"
+
+  # synchronized indicator
+  tmux_conf_theme_synchronized="⚏"            # U+268F
+  tmux_conf_theme_synchronized_fg="none"
+  tmux_conf_theme_synchronized_bg="none"
+  tmux_conf_theme_synchronized_attr="none"
+
+  # battery bar symbols
+  tmux_conf_battery_bar_symbol_full="◼"
+  tmux_conf_battery_bar_symbol_empty="◻"
+  #tmux_conf_battery_bar_symbol_full="♥"
+  #tmux_conf_battery_bar_symbol_empty="·"
+
+  # battery bar length (in number of symbols), possible values are:
+  #   - auto
+  #   - a number, e.g. 5
+  tmux_conf_battery_bar_length="auto"
+
+  # battery bar palette, possible values are:
+  #   - gradient (default)
+  #   - heat
+  #   - "colour_full_fg,colour_empty_fg,colour_bg"
+  tmux_conf_battery_bar_palette="gradient"
+  #tmux_conf_battery_bar_palette="#d70000,#e4e4e4,#000000"   # red, white, black
+
+  # battery hbar palette, possible values are:
+  #   - gradient (default)
+  #   - heat
+  #   - "colour_low,colour_half,colour_full"
+  tmux_conf_battery_hbar_palette="gradient"
+  #tmux_conf_battery_hbar_palette="#d70000,#ff5f00,#5fff00"  # red, orange, green
+
+  # battery vbar palette, possible values are:
+  #   - gradient (default)
+  #   - heat
+  #   - "colour_low,colour_half,colour_full"
+  tmux_conf_battery_vbar_palette="gradient"
+  #tmux_conf_battery_vbar_palette="#d70000,#ff5f00,#5fff00"  # red, orange, green
+
+  # symbols used to indicate whether battery is charging or discharging
+  tmux_conf_battery_status_charging="↑"       # U+2191
+  tmux_conf_battery_status_discharging="↓"    # U+2193
+  #tmux_conf_battery_status_charging="🔌"     # U+1F50C
+  #tmux_conf_battery_status_discharging="🔋"  # U+1F50B
+
+  # clock style (when you hit <prefix> + t)
+  # you may want to use %I:%M %p in place of %R in tmux_conf_theme_status_right
+  #tmux_conf_theme_clock_colour="$tmux_conf_theme_colour_4"
+  tmux_conf_theme_clock_style="24"
+
+
+  # -- clipboard -----------------------------------------------------------------
+
+  # in copy mode, copying selection also copies to the OS clipboard
+  #   - true
+  #   - false (default)
+  #   - disabled
+  # on macOS, this requires installing reattach-to-user-namespace, see README.md
+  # on Linux, this requires xsel, xclip or wl-copy
+  tmux_conf_copy_to_os_clipboard=true
+
+
+  # -- user customizations -------------------------------------------------------
+  # this is the place to override or undo settings
+
+  # increase history size
+  #set -g history-limit 10000
+
+  # start with mouse mode enabled
+  #set -g mouse on
+
+  # force Vi mode
+  #   really you should export VISUAL or EDITOR environment variable, see manual
+  #set -g status-keys vi
+  #set -g mode-keys vi
+
+  # replace C-b by C-a instead of using both prefixes
+  # set -gu prefix2
+  # unbind C-a
+  # unbind C-b
+  # set -g prefix C-a
+  # bind C-a send-prefix
+
+  # if you don't want Oh my tmux! to alter a binding, use #!important
+  # bind v new-window -c #{pane_current_path} #!important
+
+  # move status line to top
+  #set -g status-position top
+
+
+  # -- tpm -----------------------------------------------------------------------
+
+  # while I don't use tpm myself, many people requested official support so here
+  # is a seamless integration that automatically installs plugins in parallel
+
+  # whenever a plugin introduces a variable to be used in 'status-left' or
+  # 'status-right', you can use it in 'tmux_conf_theme_status_left' and
+  # 'tmux_conf_theme_status_right' variables.
+
+  # by default, launching tmux will update tpm and all plugins
+  #   - true (default)
+  #   - false
+  tmux_conf_update_plugins_on_launch=true
+
+  # by default, reloading the configuration will update tpm and all plugins
+  #   - true (default)
+  #   - false
+  tmux_conf_update_plugins_on_reload=true
+
+  # by default, reloading the configuration will uninstall tpm and plugins when no
+  # plugins are enabled
+  #   - true (default)
+  #   - false
+  tmux_conf_uninstall_plugins_on_reload=true
+
+  # /!\ the tpm bindings differ slightly from upstream:
+  #   - installing plugins: <prefix> + I
+  #   - uninstalling plugins: <prefix> + Alt + u
+  #   - updating plugins: <prefix> + u
+
+  # /!\ do not add set -g @plugin 'tmux-plugins/tpm'
+  # /!\ do not add run '~/.tmux/plugins/tpm/tpm'
+
+  # to enable a plugin, use the 'set -g @plugin' syntax:
+  # visit https://github.com/tmux-plugins for available plugins
+  #set -g @plugin 'tmux-plugins/tmux-copycat'
+  #set -g @plugin 'tmux-plugins/tmux-cpu'
+  #set -g @plugin 'tmux-plugins/tmux-resurrect'
+  #set -g @plugin 'tmux-plugins/tmux-continuum'
+  #set -g @continuum-restore 'on'
+
+
+  # -- custom variables ----------------------------------------------------------
+
+  # to define a custom #{foo} variable, define a POSIX shell function between the
+  # '# EOF' and the '# "$@"' lines. Please note that the opening brace { character
+  # must be on the same line as the function name otherwise the parse won't detect
+  # it.
+  #
+  # then, use #{foo} in e.g. the 'tmux_conf_theme_status_left' or the
+  # 'tmux_conf_theme_status_right' variables.
+
+  # # /!\ do not remove the following line
+  # EOF
+  #
+  # # /!\ do not "uncomment" the functions: the leading "# " characters are needed
+  #
+  # weather() {                                         # see https://github.com/chubin/wttr.in#one-line-output
+  #   curl -f -s -m 2 'wttr.in?format=3' || printf '\n' # /!\ make sure curl is installed
+  #   sleep 900                                         # sleep for 15 minutes, throttle network requests whatever the value of status-interval
+  # }
+  #
+  # online() {
+  #   ping -c 1 1.1.1.1 >/dev/null 2>&1 && printf '✔' || printf '✘'
+  # }
+  #
+  # "$@"
+  # # /!\ do not remove the previous line
+#+end_src
+** Tint2
+:PROPERTIES:
+:header-args: :tangle .config/tint2/tint2rc :mkdirp t
+:END:
+A light panel for /Xorg/. Still prefer other like /polybar/, but the simplicity of tint2 really attracts me.
+#+begin_src conf -n
+  #---- Generated by tint2conf aeaf ----
+  # See https://gitlab.com/o9000/tint2/wikis/Configure for
+  # full documentation of the configuration options.
+  #-------------------------------------
+  # Gradients
+  #-------------------------------------
+  # Backgrounds
+  # Background 1: Panel
+  rounded = 0
+  border_width = 0
+  border_sides = TBLR
+  background_color = #073642 60
+  border_color = [100]#073642 30
+  background_color_hover = #073642 60
+  border_color_hover = #073642 30
+  background_color_pressed = #073642 60
+  border_color_pressed = #073642 30
+
+  # Background 2: Default task, Iconified task
+  rounded = 4
+  border_width = 1
+  border_sides = TBLR
+  background_color = #6c7c80 20
+  border_color = #6c7c80 30
+  background_color_hover = #aaaaaa 22
+  border_color_hover = #eaeaea 44
+  background_color_pressed = #555555 4
+  border_color_pressed = #eaeaea 44
+
+  # Background 3: Active task
+  rounded = 4
+  border_width = 1
+  border_sides = TBLR
+  background_color = #777777 20
+  border_color = #ffffff 40
+  background_color_hover = #aaaaaa 22
+  border_color_hover = #eaeaea 44
+  background_color_pressed = #555555 4
+  border_color_pressed = #eaeaea 44
+
+  # Background 4: Urgent task
+  rounded = 4
+  border_width = 1
+  border_sides = TBLR
+  background_color = #aa4400 100
+  border_color = #aa7733 100
+  background_color_hover = #cc7700 100
+  border_color_hover = #aa7733 100
+  background_color_pressed = #555555 4
+  border_color_pressed = #aa7733 100
+
+  # Background 5: Tooltip
+  rounded = 1
+  border_width = 1
+  border_sides = TBLR
+  background_color = #222222 100
+  border_color = #333333 100
+  background_color_hover = #ffffaa 100
+  border_color_hover = #000000 100
+  background_color_pressed = #ffffaa 100
+  border_color_pressed = #000000 100
+
+  #-------------------------------------
+  # Panel
+  panel_items = LTSBC
+  panel_size = 100% 30
+  panel_margin = 0 0
+  panel_padding = 2 0 2
+  panel_background_id = 1
+  wm_menu = 1
+  panel_dock = 0
+  panel_position = bottom center horizontal
+  panel_layer = top
+  panel_monitor = all
+  panel_shrink = 0
+  autohide = 0
+  autohide_show_timeout = 0
+  autohide_hide_timeout = 0.5
+  autohide_height = 2
+  strut_policy = follow_size
+  panel_window_name = tint2
+  disable_transparency = 0
+  mouse_effects = 1
+  font_shadow = 0
+  mouse_hover_icon_asb = 100 0 10
+  mouse_pressed_icon_asb = 100 0 0
+
+  #-------------------------------------
+  # Taskbar
+  taskbar_mode = single_desktop
+  taskbar_hide_if_empty = 0
+  taskbar_padding = 0 0 2
+  taskbar_background_id = 0
+  taskbar_active_background_id = 0
+  taskbar_name = 1
+  taskbar_hide_inactive_tasks = 0
+  taskbar_hide_different_monitor = 0
+  taskbar_hide_different_desktop = 0
+  taskbar_always_show_all_desktop_tasks = 0
+  taskbar_name_padding = 4 2
+  taskbar_name_background_id = 0
+  taskbar_name_active_background_id = 0
+  taskbar_name_font_color = #e3e3e3 100
+  taskbar_name_active_font_color = #ffffff 100
+  taskbar_distribute_size = 0
+  taskbar_sort_order = none
+  task_align = left
+
+  #-------------------------------------
+  # Task
+  task_text = 1
+  task_icon = 1
+  task_centered = 1
+  urgent_nb_of_blink = 100000
+  task_maximum_size = 150 35
+  task_padding = 2 2 4
+  task_tooltip = 1
+  task_thumbnail = 0
+  task_thumbnail_size = 210
+  task_font_color = #ffffff 100
+  task_background_id = 2
+  task_active_background_id = 3
+  task_urgent_background_id = 4
+  task_iconified_background_id = 2
+  mouse_left = toggle_iconify
+  mouse_middle = none
+  mouse_right = close
+  mouse_scroll_up = toggle
+  mouse_scroll_down = iconify
+
+  #-------------------------------------
+  # System tray (notification area)
+  systray_padding = 0 4 2
+  systray_background_id = 0
+  systray_sort = ascending
+  systray_icon_size = 24
+  systray_icon_asb = 100 0 0
+  systray_monitor = 1
+  systray_name_filter =
+
+  #-------------------------------------
+  # Launcher
+  launcher_padding = 2 4 2
+  launcher_background_id = 0
+  launcher_icon_background_id = 0
+  launcher_icon_size = 24
+  launcher_icon_asb = 100 0 0
+  launcher_icon_theme_override = 0
+  startup_notifications = 1
+  launcher_tooltip = 1
+  launcher_item_app = xterm.desktop
+  launcher_item_app = emacsclient.desktop
+  launcher_item_app = firefox.desktop
+  launcher_item_app = org.gnome.Evolution.desktop
+  #launcher_item_app = iceweasel.desktop
+  #launcher_item_app = chromium-browser.desktop
+  #launcher_item_app = google-chrome.desktop
+  launcher_item_app = tint2conf.desktop
+
+  #-------------------------------------
+  # Clock
+  time1_format = %H:%M
+  time2_format = %A %d %B
+  time1_timezone =
+  time2_timezone =
+  clock_font_color = #ffffff 100
+  clock_padding = 2 0
+  clock_background_id = 0
+  clock_tooltip =
+  clock_tooltip_timezone =
+  clock_lclick_command =
+  clock_rclick_command = orage
+  clock_mclick_command =
+  clock_uwheel_command =
+  clock_dwheel_command =
+
+  #-------------------------------------
+  # Battery
+  battery_tooltip = 1
+  battery_low_status = 10
+  battery_low_cmd = xmessage 'tint2: Battery low!'
+  battery_full_cmd =
+  battery_font_color = #ffffff 100
+  bat1_format =
+  bat2_format =
+  battery_padding = 1 0
+  battery_background_id = 0
+  battery_hide = 101
+  battery_lclick_command =
+  battery_rclick_command =
+  battery_mclick_command =
+  battery_uwheel_command =
+  battery_dwheel_command =
+  ac_connected_cmd =
+  ac_disconnected_cmd =
+
+  #-------------------------------------
+  # Tooltip
+  tooltip_show_timeout = 0.5
+  tooltip_hide_timeout = 0.1
+  tooltip_padding = 4 4
+  tooltip_background_id = 5
+  tooltip_font_color = #dddddd 100
+#+end_src
+** systemd
+*** Emacs user unit file
+:PROPERTIES:
+:header-args: :tangle .config/systemd/user/emacs.service :mkdirp t
+:END:
+
+I used this for auto starting /Emacs/ once my window manager is started.
+#+begin_src conf -n
+  [Unit]
+  Description=Emacs text editor
+  Documentation=info:emacs man:emacs(1) https://gnu.org/software/emacs/
+  After=graphical-session.target
+
+  [Service]
+  Type=forking
+  ExecStart=/usr/bin/emacs --fg-daemon
+  ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
+  #Environment=SSH_AUTH_SOCK=%t/keyring/ssh
+  Restart=on-failure
+  #TimeoutSec=900
+
+  [Install]
+  WantedBy=default.target graphical-session.target
+#+end_src
+** swaylock
+:PROPERTIES:
+:header-args: :tangle .config/swaylock/config :mkdirp t
+:END:
+
+Another lock screen for /wayland/.
+#+begin_src conf -n
+  image=~/.local/share/wallpapers/nord/linux-friends-4k.png
+  scaling=stretch
+  show-keyboard-layout
+  font=JetBrainsMonoNL Nerd Font Mono
+  font-size=16
+  indicator-radius=50
+  indicator-thickness=10
+  indicator-idle-visible
+  indicator-caps-lock
+  indicator-x-position=80
+  indicator-y-position=80
+
+  # background
+
+  # foreground
+  layout-text-color=0xD8DEE9
+  text-color=0xD8DEE9
+
+  # cyan
+  bs-hl-color=0x88C0D0
+
+  # red
+  caps-lock-bs-hl-color=0xBF616A
+  caps-lock-key-hl-color=0xB48EAD
+  inside-caps-lock-color=0xBF616A
+  line-caps-lock-color=0xBF616A
+  text-wrong-color=0xB48EAD
+  ring-caps-lock-color=BF616A
+  text-caps-lock-color=0xBF616A
+
+  # black
+
+  # grey
+  ring-color=0x4C566A
+  inside-color=0x4C566A
+  inside-clear-color=0x4C566A
+  layout-bg-color=0x4C566A
+  separator-color=0x4C566A
+  layout-border-color=0x4C566A
+  line-color=0x4C566A
+
+  # cyan
+  inside-ver-color=0x88C0D0
+  key-hl-color=0x88C0D0
+
+  # magenta
+  inside-wrong-color=0xB48EAD
+  line-wrong-color=0xB48EAD
+  ring-wrong-color=0xB48EAD
+
+  # blue
+  line-clear-color=0x81A1C1
+  text-ver-color=0x81A1C1
+  line-ver-color=0x81A1C1
+  ring-clear-color=0x81A1C1
+  ring-ver-color=0x81A1C1
+  text-clear-color=0x81A1C1
+#+end_src
+** swappy
+:PROPERTIES:
+:header-args: :tangle .config/swappy/config :mkdirp t
+:END:
+Wayland native snapshot editing tools.
+#+begin_src conf -n
+  [Default]
+  save_dir=$HOME/Pictures/Screenshots
+  save_filename_format=swappy-%Y%m%d-%H%M%S.png
+  show_panel=false
+  line_size=5
+  text_size=20
+  text_font=sans-serif
+  paint_mode=brush
+  early_exit=false
+  fill_shape=false
+#+end_src
+** screen
+:PROPERTIES:
+:header-args: :tangle .config/screen/config :mkdirp t
+:END:
+#+begin_src conf
+  # ~/.config/screen/screenrc
+  # By default, screen will look for initialization in
+  # either /usr/local/etc/screenrc or /etc/screenrc, or to wherever
+  # the environment variable ${SYSSCREENRC} is set.
+  # As for the default user configuration file is default to
+  # ${HOME}/.screenrc or to ${SCREENRC} if defined.
+  # so without the environment variable, this file won't be loaded.
+  # As always, when in doubt, see man 1 screen
+  #
+  # Note: all these commands started with the escape key,
+  # default to 'c-a' (ctrl-a)
+  autodetach on # default: on
+  startup_message off # default: on
+  defscrollback 10000 # default: 100
+  hardstatus alwayslastline
+  hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m-%d %{W}%c %{g}]'']'
+  attrcolor b ".I"
+  termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+  defbce on
+  multiuser off
+  bufferfile ${SCREENDIR}/.screen_exchange
+  shell -${SHELL}
+  pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
+  defnonblock on
+  layout autosave on
+  layout new one
+  select 1
+  layout new two
+  select 1
+  split
+  resize -v +8
+  focus down
+  select 4
+  focus up
+  layout new three
+  select 1
+  split
+  resize -v +7
+  focus down
+  select 3
+  split -v
+  resize -h +10
+  focus right
+  select 4
+  focus up
+
+  layout attach one
+  layout select one
+  mousetrack on
+  termcap  xterm hs@:cs=\E[%i%d;%dr:im=\E[4h:ei=\E[4l
+  terminfo xterm hs@:cs=\E[%i%p1%d;%p2%dr:im=\E[4h:ei=\E[4
+  termcapinfo xterm 'VR=\E[?5h:VN=\E[?5l'
+  termcapinfo xterm 'k1=\E[11~:k2=\E[12~:k3=\E[13~:k4=\E[14~'
+  termcapinfo xterm 'kh=\EOH:kI=\E[2~:kD=\E[3~:kH=\EOF:kP=\E[5~:kN=\E[6~'
+  termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+  termcapinfo  * '' 'hs:ts=\E_:fs=\E\\:ds=\E_\E\\'
+  termcapinfo xterm* ti@:te@
+  altscreen on
+#+end_src
+My ultimate terminal multiplexer, for this to work you'll need you'll need to set the environment variable =SCREENRC=, I set this so I don't have to use the default location (~/.screenrc~).
+** rofi-rbw
+:PROPERTIES:
+:header-args: :tangle .config/rofi-rbw.rc
+:END:
+Rofi frontend for rbw (CLI for bitwarden), though I don't think it really needs a configuration file. I actually migrating from /bitwarden/ to pass.
+#+begin_src conf -n
+  selector=rofi
+  clipboarder=wl-copy
+  typer=wtype
+  action=copy
+#+end_src
+** rofi-pass
+:PROPERTIES:
+:header-args: :tangle .config/rofi-pass/config :mkdirp t
+:END:
+Frontend for /pass/.
+#+begin_src conf -n
+  # permanently set alternative root dir. Use ":" to separate multiple roots
+  # which can be switched at runtime with shift+left/right
+  # root=/path/to/root
+
+  # rofi command. Make sure to have "$@" as last argument
+  _rofi () {
+      rofi -theme pass -i -no-auto-select "$@"
+  }
+
+  # default command to generate passwords
+  _pwgen () {
+          pwgen -y "$@"
+  }
+
+  # image viewer to display qrcode of selected entry
+  # qrencode is needed to generate the image and a viewer
+  # that can read from pipes. Known viewers to work are feh and display
+  _image_viewer () {
+      feh -
+  #    display
+  }
+
+  # xdotool needs the keyboard layout to be set using setxkbmap
+  # You can do this in your autostart scripts (e.g. xinitrc)
+
+  # If for some reason, you cannot do this, you can set the command here.
+  # and set fix_layout to true
+  fix_layout=false
+
+  layout_cmd () {
+    setxkbmap us
+  }
+
+  # fields to be used
+  URL_field='url'
+  USERNAME_field='user'
+  AUTOTYPE_field='autotype'
+
+  # delay to be used for :delay keyword
+  delay=2
+
+  # rofi-pass needs to close itself before it can type passwords. Set delay here.
+  wait=0.2
+
+  # delay between keypresses when typing (in ms)
+  xdotool_delay=12
+
+  ## Programs to be used
+  # Editor
+  EDITOR='gvim -f'
+
+  # Browser
+  BROWSER='xdg-open'
+
+  ## Misc settings
+
+  default_do='menu' # menu, autotype, copyPass, typeUser, typePass, copyUser, copyUrl, viewEntry, typeMenu, actionMenu, copyMenu, openUrl
+  auto_enter='false'
+  notify='false'
+  default_autotype='user :tab pass'
+
+  # color of the help messages
+  # leave empty for autodetection
+  help_color="#4872FF"
+
+  # Clipboard settings
+  # Possible options: primary, clipboard, both
+  clip=primary
+
+  # Seconds before clearing pass from clipboard
+  clip_clear=45
+
+  ## Options for generating new password entries
+
+  # open new password entries in editor
+  edit_new_pass="true"
+
+  # default_user is also used for password files that have no user field.
+  #default_user="${ROFI_PASS_DEFAULT_USER-$(whoami)}"
+  #default_user2=mary_ann
+  #password_length=12
+
+  # Custom Keybindings
+  autotype="Alt+1"
+  type_user="Alt+2"
+  type_pass="Alt+3"
+  open_url="Alt+4"
+  copy_name="Alt+u"
+  copy_url="Alt+l"
+  copy_pass="Alt+p"
+  show="Alt+o"
+  copy_entry="Alt+2"
+  type_entry="Alt+1"
+  copy_menu="Alt+c"
+  action_menu="Alt+a"
+  type_menu="Alt+t"
+  help="Alt+h"
+  switch="Alt+x"
+  insert_pass="Alt+n"
+#+end_src
+** Rofi
+A /dmenu/ replacement, it can act as a window switcher, or an application launcher.
+*** config.rasi
+:PROPERTIES:
+:header-args: :tangle .config/rofi/config.rasi :mkdirp t
+:END:
+
+#+begin_src css -n
+  /* -*-css-*- */
+  configuration {
+      modi: "window,drun,run,ssh,combi,emoji";
+      show-icons: true;
+      font: "JetBrainsMonoNL Nerd Font Mono 10";
+      line-margin: 10;
+      display-ssh:    "";
+      display-run:    "";
+      display-drun:   "";
+      display-window: "";
+      display-combi:  "";
+      show-icons:     true;
+  }
+  @theme "nord"
+
+  listview {
+      lines: 6;
+      columns: 2;
+  }
+
+  window {
+      width: 30%;
+  }
+#+end_src
+The main configuration file for /rofi/.
+*** themes
+**** nord
+:PROPERTIES:
+:header-args: :tangle .config/rofi/themes/nord.rasi :mkdirp t
+:END:
+
+#+begin_src css -n
+/* -*-css-*- */
+/**
+ * Nordic rofi theme
+ * Adapted by undiabler <undiabler@gmail.com>
+ *
+ * Nord Color palette imported from https://www.nordtheme.com/
+ *
+ */
+
+
+,* {
+        nord0: #2e3440;
+        nord1: #3b4252;
+        nord2: #434c5e;
+        nord3: #4c566a;
+
+        nord4: #d8dee9;
+        nord5: #e5e9f0;
+        nord6: #eceff4;
+
+        nord7: #8fbcbb;
+        nord8: #88c0d0;
+        nord9: #81a1c1;
+        nord10: #5e81ac;
+        nord11: #bf616a;
+
+        nord12: #d08770;
+        nord13: #ebcb8b;
+        nord14: #a3be8c;
+        nord15: #b48ead;
+
+    foreground:  @nord9;
+    backlight:   #ccffeedd;
+    background-color:  transparent;
+
+    highlight:     underline bold #eceff4;
+
+    transparent: rgba(46,52,64,0);
+}
+
+window {
+    location: center;
+    anchor:   center;
+    transparency: "screenshot";
+    padding: 10px;
+    border:  0px;
+    border-radius: 6px;
+
+    background-color: @transparent;
+    spacing: 0;
+    children:  [mainbox];
+    orientation: horizontal;
+}
+
+mainbox {
+    spacing: 0;
+    children: [ inputbar, message, listview ];
+}
+
+message {
+    color: @nord0;
+    padding: 5;
+    border-color: @foreground;
+    border:  0px 2px 2px 2px;
+    background-color: @nord7;
+}
+
+inputbar {
+    color: @nord6;
+    padding: 11px;
+    background-color: #3b4252;
+
+    border: 1px;
+    border-radius:  6px 6px 0px 0px;
+    border-color: @nord10;
+}
+
+entry, prompt, case-indicator {
+    text-font: inherit;
+    text-color:inherit;
+}
+
+prompt {
+    margin: 0px 1em 0em 0em ;
+}
+
+listview {
+    padding: 8px;
+    border-radius: 0px 0px 6px 6px;
+    border-color: @nord10;
+    border: 0px 1px 1px 1px;
+    background-color: rgba(46,52,64,0.9);
+    dynamic: false;
+}
+
+element {
+    padding: 3px;
+    vertical-align: 0.5;
+    border-radius: 4px;
+    background-color: transparent;
+    color: @foreground;
+    text-color: rgb(216, 222, 233);
+}
+
+element selected.normal {
+        background-color: @nord7;
+        text-color: #2e3440;
+}
+
+element-text, element-icon {
+    background-color: inherit;
+    text-color:       inherit;
+}
+
+button {
+    padding: 6px;
+    color: @foreground;
+    horizontal-align: 0.5;
+
+    border: 2px 0px 2px 2px;
+    border-radius: 4px 0px 0px 4px;
+    border-color: @foreground;
+}
+
+button selected normal {
+    border: 2px 0px 2px 2px;
+    border-color: @foreground;
+}
+#+end_src
+
+I forgot where I got this.
+** picom
+:PROPERTIES:
+:header-args: :tangle .config/picom/picom.conf :mkdirp t
+:END:
+Compositor for /X11/.
+#+begin_src conf -n
+  #################################
+  #             Shadows           #
+  #################################
+
+
+  # Enabled client-side shadows on windows. Note desktop windows
+  # (windows with '_NET_WM_WINDOW_TYPE_DESKTOP') never get shadow,
+  # unless explicitly requested using the wintypes option.
+  #
+  # shadow = false
+  shadow = true;
+
+  # The blur radius for shadows, in pixels. (defaults to 12)
+  # shadow-radius = 12
+  shadow-radius = 20;
+
+  # The opacity of shadows. (0.0 - 1.0, defaults to 0.75)
+  # shadow-opacity = .75
+
+  # The left offset for shadows, in pixels. (defaults to -15)
+  # shadow-offset-x = -15
+  shadow-offset-x = -20;
+
+  # The top offset for shadows, in pixels. (defaults to -15)
+  # shadow-offset-y = -15
+  shadow-offset-y = -20;
+
+  # Avoid drawing shadows on dock/panel windows. This option is deprecated,
+  # you should use the *wintypes* option in your config file instead.
+  #
+  # no-dock-shadow = false
+
+  # Don't draw shadows on drag-and-drop windows. This option is deprecated,
+  # you should use the *wintypes* option in your config file instead.
+  #
+  # no-dnd-shadow = false
+
+  # Red color value of shadow (0.0 - 1.0, defaults to 0).
+  # shadow-red = 0
+
+  # Green color value of shadow (0.0 - 1.0, defaults to 0).
+  # shadow-green = 0
+
+  # Blue color value of shadow (0.0 - 1.0, defaults to 0).
+  # shadow-blue = 0
+
+  # Do not paint shadows on shaped windows. Note shaped windows
+  # here means windows setting its shape through X Shape extension.
+  # Those using ARGB background is beyond our control.
+  # Deprecated, use
+  #   shadow-exclude = 'bounding_shaped'
+  # or
+  #   shadow-exclude = 'bounding_shaped && !rounded_corners'
+  # instead.
+  #
+  # shadow-ignore-shaped = ''
+
+  # Specify a list of conditions of windows that should have no shadow.
+  #
+  # examples:
+  #   shadow-exclude = "n:e:Notification";
+  #
+  # shadow-exclude = []
+  shadow-exclude = [
+    "name = 'Notification'",
+    "class_g = 'Conky'",
+    "class_g ?= 'Notify-osd'",
+    "class_g = 'Cairo-clock'",
+    "_GTK_FRAME_EXTENTS@:c",
+    "class_g = 'Rofi'"
+  ];
+
+  # Specify a X geometry that describes the region in which shadow should not
+  # be painted in, such as a dock window region. Use
+  #    shadow-exclude-reg = "x10+0+0"
+  # for example, if the 10 pixels on the bottom of the screen should not have shadows painted on.
+  #
+  # shadow-exclude-reg = ""
+
+  # Crop shadow of a window fully on a particular Xinerama screen to the screen.
+  # xinerama-shadow-crop = false
+
+
+  #################################
+  #           Fading              #
+  #################################
+
+
+  # Fade windows in/out when opening/closing and when opacity changes,
+  #  unless no-fading-openclose is used.
+  # fading = false
+  fading = true
+
+  # Opacity change between steps while fading in. (0.01 - 1.0, defaults to 0.028)
+  # fade-in-step = 0.028
+  fade-in-step = 0.03;
+
+  # Opacity change between steps while fading out. (0.01 - 1.0, defaults to 0.03)
+  # fade-out-step = 0.03
+  fade-out-step = 0.03;
+
+  # The time between steps in fade step, in milliseconds. (> 0, defaults to 10)
+  fade-delta = 3
+
+  # Specify a list of conditions of windows that should not be faded.
+  # fade-exclude = []
+
+  # Do not fade on window open/close.
+  no-fading-openclose = false
+
+  # Do not fade destroyed ARGB windows with WM frame. Workaround of bugs in Openbox, Fluxbox, etc.
+  no-fading-destroyed-argb = false
+
+
+  #################################
+  #   Transparency / Opacity      #
+  #################################
+
+
+  # Opacity of inactive windows. (0.1 - 1.0, defaults to 1.0)
+  # inactive-opacity = 1
+  inactive-opacity = 0.9;
+
+  # Opacity of window titlebars and borders. (0.1 - 1.0, disabled by default)
+  # frame-opacity = 1.0
+  frame-opacity = 0.8;
+
+  # Default opacity for dropdown menus and popup menus. (0.0 - 1.0, defaults to 1.0)
+  # menu-opacity = 1.0
+
+  # Let inactive opacity set by -i override the '_NET_WM_OPACITY' values of windows.
+  # inactive-opacity-override = true
+  inactive-opacity-override = false;
+
+  # Default opacity for active windows. (0.0 - 1.0, defaults to 1.0)
+  active-opacity = 1.0
+
+  # Dim inactive windows. (0.0 - 1.0, defaults to 0.0)
+  inactive-dim = 0.0
+
+  # Specify a list of conditions of windows that should always be considered focused.
+  # focus-exclude = []
+  focus-exclude = [ "class_g = 'Cairo-clock'",
+                    "class_g ?= 'rofi'",
+                    "class_g ?= 'Steam'"
+  ];
+
+  # Use fixed inactive dim value, instead of adjusting according to window opacity.
+  # inactive-dim-fixed = 1.0
+
+  # Specify a list of opacity rules, in the format `PERCENT:PATTERN`,
+  # like `50:name *= "Firefox"`. picom-trans is recommended over this.
+  # Note we don't make any guarantee about possible conflicts with other
+  # programs that set '_NET_WM_WINDOW_OPACITY' on frame or client windows.
+  # example:
+  #    opacity-rule = [ "80:class_g = 'URxvt'" ];
+  #
+  # opacity-rule = []
+  opacity-rule = [ "90:name *= '*'",
+                   "99:class_g = 'Emacs' && argb",
+                   "98:class_g = 'Firefox' && argb",
+                   "98:class_g = 'Brave-browser' && argb",
+                   "98:class_g = 'Google-chrome'",
+                   "99:class_g = 'vlc'",
+                   "99:class_g = 'mpv'",
+                   "80:class_g = 'URxvt'",
+                   "80:class_g = 'UXTerm'",
+                   "80:class_g = 'Alacritty'",
+                   "80:class_g = 'XTerm'"
+                  ]
+
+  #################################
+  #     Background-Blurring       #
+  #################################
+
+
+  # Parameters for background blurring, see the *BLUR* section for more information.
+  # blur-method =
+  blur-method = "gaussian"
+  # blur-size = 12
+  blur-size = 12
+  #
+  # blur-deviation = false
+  blur-deviation = 1.0
+
+  # Blur background of semi-transparent / ARGB windows.
+  # Bad in performance, with driver-dependent behavior.
+  # The name of the switch may change without prior notifications.
+  #
+  # blur-background = false
+  # blur-background = true
+
+  # Blur background of windows when the window frame is not opaque.
+  # Implies:
+  #    blur-background
+  # Bad in performance, with driver-dependent behavior. The name may change.
+  #
+  # blur-background-frame = false
+
+
+  # Use fixed blur strength rather than adjusting according to window opacity.
+  # blur-background-fixed = false
+
+
+  # Specify the blur convolution kernel, with the following format:
+  # example:
+  #   blur-kern = "5,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1";
+  #
+  # blur-kern = ''
+  blur-kern = "3x3box";
+
+
+  # Exclude conditions for background blur.
+  # blur-background-exclude = []
+  blur-background-exclude = [
+    "window_type = 'dock'",
+    "window_type = 'desktop'",
+    "_GTK_FRAME_EXTENTS@:c"
+  ];
+
+  #################################
+  #       General Settings        #
+  #################################
+
+  # Daemonize process. Fork to background after initialization. Causes issues with certain (badly-written) drivers.
+  # daemon = false
+
+  # Specify the backend to use: `xrender`, `glx`, or `xr_glx_hybrid`.
+  # `xrender` is the default one.
+  #
+  # backend = 'glx'
+  # backend = "xrender";
+  backend = "glx";
+
+  # Enable/disable VSync.
+  # vsync = false
+  vsync = true
+
+  # Enable remote control via D-Bus. See the *D-BUS API* section below for more details.
+  dbus = false
+
+  # Try to detect WM windows (a non-override-redirect window with no
+  # child that has 'WM_STATE') and mark them as active.
+  #
+  # mark-wmwin-focused = false
+  mark-wmwin-focused = true;
+
+  # Mark override-redirect windows that doesn't have a child window with 'WM_STATE' focused.
+  # mark-ovredir-focused = false
+  mark-ovredir-focused = true;
+
+  # Try to detect windows with rounded corners and don't consider them
+  # shaped windows. The accuracy is not very high, unfortunately.
+  #
+  # detect-rounded-corners = false
+  detect-rounded-corners = true;
+
+  # Detect '_NET_WM_OPACITY' on client windows, useful for window managers
+  # not passing '_NET_WM_OPACITY' of client windows to frame windows.
+  #
+  # detect-client-opacity = false
+  detect-client-opacity = true;
+
+  # Specify refresh rate of the screen. If not specified or 0, picom will
+  # try detecting this with X RandR extension.
+  #
+  # refresh-rate = 60
+  # refresh-rate = 0
+
+  # Limit picom to repaint at most once every 1 / 'refresh_rate' second to
+  # boost performance. This should not be used with
+  #   vsync drm/opengl/opengl-oml
+  # as they essentially does sw-opti's job already,
+  # unless you wish to specify a lower refresh rate than the actual value.
+  #
+  # sw-opti =
+
+  # Use EWMH '_NET_ACTIVE_WINDOW' to determine currently focused window,
+  # rather than listening to 'FocusIn'/'FocusOut' event. Might have more accuracy,
+  # provided that the WM supports it.
+  #
+  # use-ewmh-active-win = false
+  use-ewmh-active-win = true
+
+  # Unredirect all windows if a full-screen opaque window is detected,
+  # to maximize performance for full-screen windows. Known to cause flickering
+  # when redirecting/unredirecting windows.
+  #
+  # unredir-if-possible = false
+
+  # Delay before unredirecting the window, in milliseconds. Defaults to 0.
+  # unredir-if-possible-delay = 0
+
+  # Conditions of windows that shouldn't be considered full-screen for unredirecting screen.
+  # unredir-if-possible-exclude = []
+
+  # Use 'WM_TRANSIENT_FOR' to group windows, and consider windows
+  # in the same group focused at the same time.
+  #
+  # detect-transient = false
+  detect-transient = true
+
+  # Use 'WM_CLIENT_LEADER' to group windows, and consider windows in the same
+  # group focused at the same time. 'WM_TRANSIENT_FOR' has higher priority if
+  # detect-transient is enabled, too.
+  #
+  # detect-client-leader = false
+  detect-client-leader = true
+
+  # Resize damaged region by a specific number of pixels.
+  # A positive value enlarges it while a negative one shrinks it.
+  # If the value is positive, those additional pixels will not be actually painted
+  # to screen, only used in blur calculation, and such. (Due to technical limitations,
+  # with use-damage, those pixels will still be incorrectly painted to screen.)
+  # Primarily used to fix the line corruption issues of blur,
+  # in which case you should use the blur radius value here
+  # (e.g. with a 3x3 kernel, you should use `--resize-damage 1`,
+  # with a 5x5 one you use `--resize-damage 2`, and so on).
+  # May or may not work with *--glx-no-stencil*. Shrinking doesn't function correctly.
+  #
+  # resize-damage = 1
+
+  # Specify a list of conditions of windows that should be painted with inverted color.
+  # Resource-hogging, and is not well tested.
+  #
+  # invert-color-include = []
+
+  # GLX backend: Avoid using stencil buffer, useful if you don't have a stencil buffer.
+  # Might cause incorrect opacity when rendering transparent content (but never
+  # practically happened) and may not work with blur-background.
+  # My tests show a 15% performance boost. Recommended.
+  #
+  # glx-no-stencil = false
+  glx-no-stencil = true
+
+  # GLX backend: Avoid rebinding pixmap on window damage.
+  # Probably could improve performance on rapid window content changes,
+  # but is known to break things on some drivers (LLVMpipe, xf86-video-intel, etc.).
+  # Recommended if it works.
+  #
+  # glx-no-rebind-pixmap = false
+  glx-no-rebind-pixmap = true
+
+  # Disable the use of damage information.
+  # This cause the whole screen to be redrawn everytime, instead of the part of the screen
+  # has actually changed. Potentially degrades the performance, but might fix some artifacts.
+  # The opposing option is use-damage
+  #
+  # no-use-damage = false
+  use-damage = true
+
+  # Use X Sync fence to sync clients' draw calls, to make sure all draw
+  # calls are finished before picom starts drawing. Needed on nvidia-drivers
+  # with GLX backend for some users.
+  #
+  # xrender-sync-fence = false
+
+  # GLX backend: Use specified GLSL fragment shader for rendering window contents.
+  # See `compton-default-fshader-win.glsl` and `compton-fake-transparency-fshader-win.glsl`
+  # in the source tree for examples.
+  #
+  # glx-fshader-win = ''
+
+  # Force all windows to be painted with blending. Useful if you
+  # have a glx-fshader-win that could turn opaque pixels transparent.
+  #
+  # force-win-blend = false
+
+  # Do not use EWMH to detect fullscreen windows.
+  # Reverts to checking if a window is fullscreen based only on its size and coordinates.
+  #
+  # no-ewmh-fullscreen = false
+
+  # Dimming bright windows so their brightness doesn't exceed this set value.
+  # Brightness of a window is estimated by averaging all pixels in the window,
+  # so this could comes with a performance hit.
+  # Setting this to 1.0 disables this behaviour. Requires --use-damage to be disabled. (default: 1.0)
+  #
+  # max-brightness = 1.0
+
+  # Make transparent windows clip other windows like non-transparent windows do,
+  # instead of blending on top of them.
+  #
+  transparent-clipping = false
+
+  # Set the log level. Possible values are:
+  #  "trace", "debug", "info", "warn", "error"
+  # in increasing level of importance. Case doesn't matter.
+  # If using the "TRACE" log level, it's better to log into a file
+  # using *--log-file*, since it can generate a huge stream of logs.
+  #
+  # log-level = "debug"
+  log-level = "warn";
+
+  # Set the log file.
+  # If *--log-file* is never specified, logs will be written to stderr.
+  # Otherwise, logs will to written to the given file, though some of the early
+  # logs might still be written to the stderr.
+  # When setting this option from the config file, it is recommended to use an absolute path.
+  #
+  # log-file = '/path/to/your/log/file'
+
+  # Show all X errors (for debugging)
+  # show-all-xerrors = false
+
+  # Write process ID to a file.
+  # write-pid-path = '/path/to/your/log/file'
+
+  # Window type settings
+  #
+  # 'WINDOW_TYPE' is one of the 15 window types defined in EWMH standard:
+  #     "unknown", "desktop", "dock", "toolbar", "menu", "utility",
+  #     "splash", "dialog", "normal", "dropdown_menu", "popup_menu",
+  #     "tooltip", "notification", "combo", and "dnd".
+  #
+  # Following per window-type options are available: ::
+  #
+  #   fade, shadow:::
+  #     Controls window-type-specific shadow and fade settings.
+  #
+  #   opacity:::
+  #     Controls default opacity of the window type.
+  #
+  #   focus:::
+  #     Controls whether the window of this type is to be always considered focused.
+  #     (By default, all window types except "normal" and "dialog" has this on.)
+  #
+  #   full-shadow:::
+  #     Controls whether shadow is drawn under the parts of the window that you
+  #     normally won't be able to see. Useful when the window has parts of it
+  #     transparent, and you want shadows in those areas.
+  #
+  #   redir-ignore:::
+  #     Controls whether this type of windows should cause screen to become
+  #     redirected again after been unredirected. If you have unredir-if-possible
+  #     set, and doesn't want certain window to cause unnecessary screen redirection,
+  #     you can set this to `true`.
+  #
+  wintypes:
+  {
+    tooltip = { fade = true; shadow = true; opacity = 0.90; focus = true; full-shadow = false; };
+    normal = { full-shadow = false; };
+    dock = { shadow = false; };
+    dnd = { shadow = false; };
+    popup_menu = { shadow = true; focus = false; blur-background = false; opacity = 0.8; };
+    dropdown_menu = { shadow = false; focus = false; opacity = 0.8; };
+    above  = { shadow = true; };
+    splash = { shadow = false; };
+    utility = { focus = false; shadow = false; blur-background = false };
+    notification = { shadow = false; };
+    desktop = { shadow = false; blur-background = false; };
+    menu = { focus = false; };
+    dialog = { shadow = true; };
+  };
+#+end_src
+** offlineimap
+:PROPERTIES:
+:header-args: :tangle .config/offlineimap/config :mkdirp t
+:END:
+My offlineimap setup for several accounts.
+#+begin_src conf -n
+  [general]
+  accounts = gmail, hotmail, ymail, yahoo, mkn, zum
+  maxsyncaccounts = 4
+  socktimeout = 10
+  pythonfile = ~/.local/bin/offlineimap-helper.py
+
+  [Account gmail]
+  localrepository = gmail-local
+  remoterepository = gmail-remote
+  synclabels = yes
+  labelsheader = X-Keywords
+  #postsynchook = notmuch new --verbose
+
+  [Repository gmail-local]
+  Type = GmailMaildir
+  localfolders = ~/.mail/gmail
+  sync_deletes = yes
+  autorefresh = 1
+  quick = 10
+  keepalive = 240
+  holdconnectionopen = yes
+  nametrans = lambda f: re.sub('spam', '[Gmail]/Spam',
+                        re.sub('draft', '[Gmail]/Drafts',
+                        re.sub('inbox', 'INBOX',
+                        re.sub('sent', '[Gmail]/Sent Mail',
+                        re.sub('trash', '[Gmail]/Trash',                      re.sub('archive*', 'Archive',                      re.sub('archive$', '[Gmail]/All Mail', f)))))))
+
+  [Repository gmail-remote]
+  Type = Gmail
+  remoteusereval = get_credentials("gmail", "user")
+  remotepasseval = get_credentials("gmail", "passeval")
+  nametrans = lambda f: re.sub('.*All Mail$', 'archive',
+                        re.sub('^Archive', 'archive',
+                        re.sub('.*Drafts$', 'draft',
+                        re.sub('.*Spam$', 'spam',
+                        re.sub('.*Sent Mail$', 'sent',
+                        re.sub('.*Trash$', 'trash',
+                        re.sub('INBOX', 'inbox', f)))))))
+  folderfilter = lambda foldername: foldername not in ['[Gmail]/Important', '[Gmail]/Starred']
+  maxconnections = 3
+  retrycount = 4
+  sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+  ssl_version = tls1_2
+  usecompression = yes
+
+  [Account yahoo]
+  localrepository = yahoo-local
+  remoterepository = yahoo-remote
+  #postsynchook = notmuch new --verbose
+
+  [Repository yahoo-local]
+  Type = Maildir
+  localfolders = ~/.mail/yahoo
+  sync_deletes = yes
+  autorefresh = 1
+  keepalive = 240
+  holdconnectionopen = yes
+  quick = 10
+  nametrans = lambda f: re.sub('spam', 'Bulk Mail',
+                        re.sub('draft', 'Draft',
+                        re.sub('inbox', 'Inbox',
+                        re.sub('sent', 'Sent',
+                        re.sub('trash', 'Trash',
+                        re.sub('archive', 'Archive', f))))))
+
+  [Repository yahoo-remote]
+  Type = IMAP
+  remotehosteval = get_credentials("yahoo", "host")
+  remoteusereval = get_credentials("yahoo", "user")
+  remotepasseval = get_credentials("yahoo", "passeval")
+  nametrans = lambda f: re.sub('.*Archive', 'archive',
+                        re.sub('.*Draft$', 'draft',
+                        re.sub('.*Bulk Mail$', 'spam',
+                        re.sub('.*Sent$', 'sent',
+                        re.sub('.*Trash$', 'trash',
+                        re.sub('Inbox', 'inbox', f))))))
+
+  maxconnections = 3
+  retrycount = 4
+  sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+  ssl_version = tls1_2
+  usecompression = no
+
+  [Account hotmail]
+  localrepository = hotmail-local
+  remoterepository = hotmail-remote
+  #postsynchook = notmuch new --verbose
+
+  [Repository hotmail-local]
+  Type = Maildir
+  localfolders = ~/.mail/hotmail
+  sync_deletes = yes
+  autorefresh = 1
+  quick = 10
+  keepalive = 240
+  holdconnectionopen = yes
+  nametrans = lambda f: re.sub('spam', 'Junk',
+                        re.sub('draft', 'Drafts',
+                        re.sub('inbox', 'Inbox',
+                        re.sub('sent', 'Sent',
+                        re.sub('trash', 'Deleted',
+                        re.sub('notes', 'Notes',
+                        re.sub('outbox', 'Outbox',
+                        re.sub('archive', 'Archive', f))))))))
+
+  [Repository hotmail-remote]
+  Type = IMAP
+  remotehosteval = get_credentials("hotmail", "host")
+  remoteusereval = get_credentials("hotmail", "user")
+  remotepasseval = get_credentials("hotmail", "passeval")
+  nametrans = lambda f: re.sub('.*Archive', 'archive',
+                        re.sub('.*Drafts$', 'draft',
+                        re.sub('.*Junk$', 'spam',
+                        re.sub('.*Sent$', 'sent',
+                        re.sub('.*Deleted$', 'trash',
+                        re.sub('.*Outbox$', 'outbox',
+                        re.sub('.*Notes$', 'notes',
+                        re.sub('Inbox', 'inbox', f))))))))
+
+  maxconnections = 3
+  retrycount = 4
+  sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+  ssl_version = tls1_2
+  usecompression = no
+
+  [Account ymail]
+  localrepository = ymail-local
+  remoterepository = ymail-remote
+  #postsynchook = notmuch new --verbose
+
+  [Repository ymail-local]
+  Type = Maildir
+  localfolders = ~/.mail/ymail
+  sync_deletes = yes
+  autorefresh = 1
+  quick = 10
+  keepalive = 240
+  holdconnectionopen = yes
+  nametrans = lambda f: re.sub('spam', 'Bulk Mail',
+                        re.sub('draft', 'Draft',
+                        re.sub('inbox', 'Inbox',
+                        re.sub('sent', 'Sent',
+                        re.sub('trash', 'Trash',
+                        re.sub('archive', 'Archive', f))))))
+
+  [Repository ymail-remote]
+  Type = IMAP
+  remotehosteval = get_credentials("ymail", "host")
+  remoteusereval = get_credentials("ymail", "user")
+  remotepasseval = get_credentials("ymail", "passeval")
+  nametrans = lambda f: re.sub('.*Archive', 'archive',
+                        re.sub('.*Draft$', 'draft',
+                        re.sub('.*Bulk Mail$', 'spam',
+                        re.sub('.*Sent$', 'sent',
+                        re.sub('.*Trash$', 'trash',
+                        re.sub('Inbox', 'inbox', f))))))
+
+  maxconnections = 3
+  retrycount = 4
+  sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+  ssl_version = tls1_2
+  usecompression = no
+
+  [Account mkn]
+  localrepository = mkn-local
+  remoterepository = mkn-remote
+  #postsynchook = notmuch new --verbose
+
+  [Repository mkn-local]
+  Type = Maildir
+  localfolders = ~/.mail/mkn
+  sync_deletes = yes
+  autorefresh = 0.5
+  quick = 10
+  keepalive = 240
+  holdconnectionopen = yes
+
+  [Repository mkn-remote]
+  Type = IMAP
+  remotehosteval = get_credentials("mkn", "host")
+  remoteporteval = get_credentials("mkn", "port")
+  remoteusereval = get_credentials("mkn", "user")
+  remotepasseval = get_credentials("mkn", "passeval")
+  maxconnections = 1
+  ssl = no
+  retrycount = 4
+  tls_level = tls_no_ssl
+  #sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+  #ssl_version = tls1_2
+  #usecompression = no
+
+  [Account zum]
+  localrepository = zum-local
+  remoterepository = zum-remote
+  #postsynchook = notmuch new --verbose
+
+  [Repository zum-local]
+  Type = Maildir
+  localfolders = ~/.mail/zum
+  sync_deletes = yes
+  autorefresh = 0.5
+  quick = 10
+  keepalive = 240
+  holdconnectionopen = yes
+  [Repository zum-remote]
+  Type = IMAP
+  remotehosteval = get_credentials("zum", "host")
+  remoteporteval = get_credentials("zum", "port")
+  remoteusereval = get_credentials("zum", "user")
+  remotepasseval = get_credentials("zum", "passeval")
+  maxconnections = 1
+  retrycount = 4
+  ssl = no
+  tls_level = tls_no_ssl
+  #sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+  #ssl_version = tls1_2
+  #usecompression = no
+#+end_src
+** msmtp
+:PROPERTIES:
+:header-args: :tangle .config/msmtp/config :mkdirp t
+:END:
+#+begin_src conf -n
+  # Set default values for all following accounts.
+  defaults
+  auth           on
+  tls            on
+  tls_trust_file /etc/ssl/certs/ca-certificates.crt
+  logfile        /tmp/msmtp.log
+
+  account gmail
+  host smtp.gmail.com
+  port 587
+  user alexarians@gmail.com
+  from alexarians@gmail.com
+  passwordeval pass google.com/app_pass/alexarians@gmail.com
+
+  account hotmail
+  host smtp-mail.outlook.com
+  port 587
+  user christian.alexander@windowslive.com
+  from christian.alexander@windowslive.com
+  passwordeval pass outlook.live.com/christian.alexander@windowslive.com
+
+  account ymail
+  host smtp.mail.yahoo.com
+  port 587
+  user christian.alexander@ymail.com
+  from christian.alexander@ymail.com
+  passwordeval pass login.yahoo.com/app_pass/christian.alexander@ymail.com
+
+  account yahoo
+  host smtp.mail.yahoo.com
+  port 587
+  user alexforsale@yahoo.com
+  from alexforsale@yahoo.com
+  passwordeval pass login.yahoo.com/app_pass/alexforsale@yahoo.com
+
+  account zum
+  host localhost
+  port 1025
+  tls off
+  tls_starttls off
+  auth plain
+  user ZUM\kristian.alexander
+  from kristian.alexander@zumstar.co.id
+  passwordeval pass zumstar.co.id/kristian.alexander
+
+  account mkn
+  tls off
+  tls_starttls off
+  auth plain
+  host localhost
+  port 1026
+  user MKN\kristian.alexander
+  from kristian.alexander@mkncorp.com
+  passwordeval pass mkncorp.com/kristian.alexander
+
+  account default : yahoo
+#+end_src
+** GTK
+*** gtk-2.0
+:PROPERTIES:
+:header-args: :tangle .config/gtk-2.0/gtkrc :mkdirp t
+:END:
+#+begin_src conf -n
+  # DO NOT EDIT! This file will be overwritten by LXAppearance.
+  # Any customization should be done in ~/.gtkrc-2.0.mine instead.
+
+  include "/home/alexforsale/.gtkrc-2.0.mine"
+  gtk-theme-name="Breeze-Dark"
+  gtk-icon-theme-name="Papirus"
+  gtk-font-name="JetBrainsMonoNL Nerd Font Mono 10"
+  gtk-cursor-theme-name="Bibata-Modern-Classic"
+  gtk-cursor-theme-size=0
+  gtk-toolbar-style=GTK_TOOLBAR_BOTH
+  gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
+  gtk-button-images=1
+  gtk-menu-images=1
+  gtk-enable-event-sounds=1
+  gtk-enable-input-feedback-sounds=1
+  gtk-xft-antialias=1
+  gtk-xft-hinting=1
+  gtk-xft-hintstyle="hintmedium"
+  gtk-xft-rgba="rgb"
+#+end_src
+*** gtk-3.0
+:PROPERTIES:
+:header-args: :tangle .config/gtk-3.0/settings.ini :mkdirp t
+:END:
+#+begin_src conf -n
+  [Settings]
+  gtk-theme-name=Breeze-Dark
+  gtk-cursor-theme-size=0
+  gtk-toolbar-style=GTK_TOOLBAR_BOTH
+  gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
+  gtk-button-images=1
+  gtk-menu-images=1
+  gtk-enable-event-sounds=1
+  gtk-enable-input-feedback-sounds=1
+  gtk-xft-antialias=1
+  gtk-xft-hinting=1
+  gtk-xft-hintstyle=hintfull
+  gtk-key-theme-name=Emacs
+  gtk-font-name=JetBrainsMonoNL Nerd Font Mono 10
+  gtk-sound-theme-name=freedesktop
+  gtk-icon-theme-name=Papirus
+  gtk-cursor-theme-name=Bibata-Modern-Classic
+  gtk-application-prefer-dark-theme = true
+  gtk-xft-rgba=rgb
+#+end_src
+*** gtk-4.0
+:PROPERTIES:
+:header-args: :tangle .config/gtk-4.0/settings.ini :mkdirp t
+:END:
+#+begin_src conf
+  [Settings]
+  gtk-theme-name=Breeze-Dark
+  gtk-cursor-theme-size=0
+  gtk-toolbar-style=GTK_TOOLBAR_BOTH
+  gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
+  gtk-button-images=1
+  gtk-menu-images=1
+  gtk-enable-event-sounds=1
+  gtk-enable-input-feedback-sounds=1
+  gtk-xft-antialias=1
+  gtk-xft-hinting=1
+  gtk-xft-hintstyle=hintfull
+  gtk-key-theme-name=Emacs
+  gtk-font-name=JetBrainsMonoNL Nerd Font Mono 10
+  gtk-sound-theme-name=freedesktop
+  gtk-icon-theme-name=Papirus
+  gtk-cursor-theme-name=Bibata-Modern-Classic
+  gtk-application-prefer-dark-theme = true
+#+end_src
+** Dunst
+:PROPERTIES:
+:header-args: :tangle .config/dunst/dunstrc :mkdirp t
+:END:
+
+#+begin_src conf -n
+  # -*- eval: (rainbow-mode 1) -*-
+  # See dunst(5) for all configuration options
+
+  [global]
+      ### Display ###
+
+      # Which monitor should the notifications be displayed on.
+      monitor = 0
+
+      # Display notification on focused monitor.  Possible modes are:
+      #   mouse: follow mouse pointer
+      #   keyboard: follow window with keyboard focus
+      #   none: don't follow anything
+      #
+      # "keyboard" needs a window manager that exports the
+      # _NET_ACTIVE_WINDOW property.
+      # This should be the case for almost all modern window managers.
+      #
+      # If this option is set to mouse or keyboard, the monitor option
+      # will be ignored.
+      follow = none
+
+      ### Geometry ###
+
+      # dynamic width from 0 to 300
+      # width = (0, 300)
+      # constant width of 300
+      width = (0, 600)
+
+      # The maximum height of a single notification, excluding the frame.
+      height = 222
+
+      # Position the notification in the top right corner
+      origin = top-right
+
+      # Offset from the origin
+      offset = 25x50
+
+      # Scale factor. It is auto-detected if value is 0.
+      scale = 0
+
+      # Maximum number of notification (0 means no limit)
+      notification_limit = 20
+
+      ### Progress bar ###
+
+      # Turn on the progess bar. It appears when a progress hint is passed with
+      # for example dunstify -h int:value:12
+      progress_bar = true
+
+      # Set the progress bar height. This includes the frame, so make sure
+      # it's at least twice as big as the frame width.
+      progress_bar_height = 5
+
+      # Set the frame width of the progress bar
+      progress_bar_frame_width = 0
+
+      # Set the minimum width for the progress bar
+      progress_bar_min_width = 0
+
+      # Set the maximum width for the progress bar
+      progress_bar_max_width = 444
+
+      # Corner radius for the progress bar. 0 disables rounded corners.
+      progress_bar_corner_radius = 0
+
+      # Corner radius for the icon image.
+      icon_corner_radius = 0
+
+      # Show how many messages are currently hidden (because of
+      # notification_limit).
+      indicate_hidden = yes
+
+      # The transparency of the window.  Range: [0; 100].
+      # This option will only work if a compositing window manager is
+      # present (e.g. xcompmgr, compiz, etc.). (X11 only)
+      transparency = 3
+
+      # Draw a line of "separator_height" pixel height between two
+      # notifications.
+      # Set to 0 to disable.
+      # If gap_size is greater than 0, this setting will be ignored.
+      separator_height = 2
+
+      # Padding between text and separator.
+      padding = 8
+
+      # Horizontal padding.
+      horizontal_padding = 11
+
+      # Padding between text and icon.
+      text_icon_padding = 0
+
+      # Defines width in pixels of frame around the notification window.
+      # Set to 0 to disable.
+      frame_width = 0
+
+      # Defines color of the frame around the notification window.
+      frame_color = "#e5e9f0"
+
+      # Size of gap to display between notifications - requires a compositor.
+      # If value is greater than 0, separator_height will be ignored and a border
+      # of size frame_width will be drawn around each notification instead.
+      # Click events on gaps do not currently propagate to applications below.
+      gap_size = 0
+
+      # Define a color for the separator.
+      # possible values are:
+      #  * auto: dunst tries to find a color fitting to the background;
+      #  * foreground: use the same color as the foreground;
+      #  * frame: use the same color as the frame;
+      #  * anything else will be interpreted as a X color.
+      separator_color = "#e5e9f0"
+
+      # Sort messages by urgency.
+      sort = yes
+
+      # Don't remove messages, if the user is idle (no mouse or keyboard input)
+      # for longer than idle_threshold seconds.
+      # Set to 0 to disable.
+      # A client can set the 'transient' hint to bypass this. See the rules
+      # section for how to disable this if necessary
+      # idle_threshold = 120
+
+      ### Text ###
+
+      font = JetBrainsMonoNL Nerd Font Mono 10
+
+      # The spacing between lines.  If the height is smaller than the
+      # font height, it will get raised to the font height.
+      line_height = 0
+
+      # Possible values are:
+      # full: Allow a small subset of html markup in notifications:
+      #        <b>bold</b>
+      #        <i>italic</i>
+      #        <s>strikethrough</s>
+      #        <u>underline</u>
+      #
+      #        For a complete reference see
+      #        <https://docs.gtk.org/Pango/pango_markup.html>.
+      #
+      # strip: This setting is provided for compatibility with some broken
+      #        clients that send markup even though it's not enabled on the
+      #        server. Dunst will try to strip the markup but the parsing is
+      #        simplistic so using this option outside of matching rules for
+      #        specific applications *IS GREATLY DISCOURAGED*.
+      #
+      # no:    Disable markup parsing, incoming notifications will be treated as
+      #        plain text. Dunst will not advertise that it has the body-markup
+      #        capability if this is set as a global setting.
+      #
+      # It's important to note that markup inside the format option will be parsed
+      # regardless of what this is set to.
+      markup = full
+
+      # The format of the message.  Possible variables are:
+      #   %a  appname
+      #   %s  summary
+      #   %b  body
+      #   %i  iconname (including its path)
+      #   %I  iconname (without its path)
+      #   %p  progress value if set ([  0%] to [100%]) or nothing
+      #   %n  progress value if set without any extra characters
+      #   %%  Literal %
+      # Markup is allowed
+      format = "<span size='x-large' font_desc='Cantarell,JetBrainsMonoNL Nerd Font Mono 10' weight='bold' foreground='#f9f9f9'>%s</span>\n%b"
+
+      # Alignment of message text.
+      # Possible values are "left", "center" and "right".
+      alignment = left
+
+      # Vertical alignment of message text and icon.
+      # Possible values are "top", "center" and "bottom".
+      vertical_alignment = center
+
+      # Show age of message if message is older than show_age_threshold
+      # seconds.
+      # Set to -1 to disable.
+      show_age_threshold = 60
+
+      # Specify where to make an ellipsis in long lines.
+      # Possible values are "start", "middle" and "end".
+      ellipsize = middle
+
+      # Ignore newlines '\n' in notifications.
+      ignore_newline = no
+
+      # Stack together notifications with the same content
+      stack_duplicates = true
+
+      # Hide the count of stacked notifications with the same content
+      hide_duplicate_count = true
+
+      # Display indicators for URLs (U) and actions (A).
+      show_indicators = yes
+
+      ### Icons ###
+
+      # Recursive icon lookup. You can set a single theme, instead of having to
+      # define all lookup paths.
+      enable_recursive_icon_lookup = true
+
+      # Set icon theme (only used for recursive icon lookup)
+      icon_theme = Papirus
+      # You can also set multiple icon themes, with the leftmost one being used first.
+      # icon_theme = "Adwaita, breeze"
+
+      # Align icons left/right/top/off
+      icon_position = left
+
+      # Scale small icons up to this size, set to 0 to disable. Helpful
+      # for e.g. small files or high-dpi screens. In case of conflict,
+      # max_icon_size takes precedence over this.
+      min_icon_size = 32
+
+      # Scale larger icons down to this size, set to 0 to disable
+      max_icon_size = 128
+
+      # Paths to default icons (only neccesary when not using recursive icon lookup)
+      # icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+
+      ### History ###
+
+      # Should a notification popped up from history be sticky or timeout
+      # as if it would normally do.
+      sticky_history = yes
+
+      # Maximum amount of notifications kept in history
+      history_length = 20
+
+      ### Misc/Advanced ###
+
+      # dmenu path.
+      #dmenu = /usr/bin/dmenu -p dunst:
+      dmenu = rofi -dmenu
+
+      # Browser for opening urls in context menu.
+      browser = /usr/bin/xdg-open
+
+      # Always run rule-defined scripts, even if the notification is suppressed
+      always_run_script = true
+
+      # Define the title of the windows spawned by dunst
+      title = Dunst
+
+      # Define the class of the windows spawned by dunst
+      class = Dunst
+
+      # Define the corner radius of the notification window
+      # in pixel size. If the radius is 0, you have no rounded
+      # corners.
+      # The radius will be automatically lowered if it exceeds half of the
+      # notification height to avoid clipping text and/or icons.
+      corner_radius = 8
+
+      # Ignore the dbus closeNotification message.
+      # Useful to enforce the timeout set by dunst configuration. Without this
+      # parameter, an application may close the notification sent before the
+      # user defined timeout.
+      ignore_dbusclose = false
+
+      ### Wayland ###
+      # These settings are Wayland-specific. They have no effect when using X11
+
+      # Uncomment this if you want to let notications appear under fullscreen
+      # applications (default: overlay)
+      # layer = top
+
+      # Set this to true to use X11 output on Wayland.
+      force_xwayland = false
+
+      ### Legacy
+
+      # Use the Xinerama extension instead of RandR for multi-monitor support.
+      # This setting is provided for compatibility with older nVidia drivers that
+      # do not support RandR and using it on systems that support RandR is highly
+      # discouraged.
+      #
+      # By enabling this setting dunst will not be able to detect when a monitor
+      # is connected or disconnected which might break follow mode if the screen
+      # layout changes.
+      force_xinerama = false
+
+      ### mouse
+
+      # Defines list of actions for each mouse event
+      # Possible values are:
+      # * none: Don't do anything.
+      # * do_action: Invoke the action determined by the action_name rule. If there is no
+      #              such action, open the context menu.
+      # * open_url: If the notification has exactly one url, open it. If there are multiple
+      #             ones, open the context menu.
+      # * close_current: Close current notification.
+      # * close_all: Close all notifications.
+      # * context: Open context menu for the notification.
+      # * context_all: Open context menu for all notifications.
+      # These values can be strung together for each mouse event, and
+      # will be executed in sequence.
+      mouse_left_click = do_action, close_current
+      mouse_middle_click = do_action, close_current
+      mouse_right_click = close_current
+
+  # Experimental features that may or may not work correctly. Do not expect them
+  # to have a consistent behaviour across releases.
+  [experimental]
+      # Calculate the dpi to use on a per-monitor basis.
+      # If this setting is enabled the Xft.dpi value will be ignored and instead
+      # dunst will attempt to calculate an appropriate dpi value for each monitor
+      # using the resolution and physical size. This might be useful in setups
+      # where there are multiple screens with very different dpi values.
+      per_monitor_dpi = false
+
+  [urgency_low]
+      msg_urgency = low
+      background = "#3b4252"
+      foreground = "#4c566a"
+
+  [urgency_normal]
+      msg_urgency = normal
+      background = "#434c5e"
+      foreground = "#e5e9f0"
+
+  [urgency_critical]
+      msg_urgency = critical
+      background = "#bf616a"
+      foreground = "#eceff4"
+
+  # Every section that isn't one of the above is interpreted as a rules to
+  # override settings for certain messages.
+  #
+  # Messages can be matched by
+  #    appname (discouraged, see desktop_entry)
+  #    body
+  #    category
+  #    desktop_entry
+  #    icon
+  #    match_transient
+  #    msg_urgency
+  #    stack_tag
+  #    summary
+  #
+  # and you can override the
+  #    background
+  #    foreground
+  #    format
+  #    frame_color
+  #    fullscreen
+  #    new_icon
+  #    set_stack_tag
+  #    set_transient
+  #    set_category
+  #    timeout
+  #    urgency
+  #    icon_position
+  #    skip_display
+  #    history_ignore
+  #    action_name
+  #    word_wrap
+  #    ellipsize
+  #    alignment
+  #    hide_text
+  #
+  # Shell-like globbing will get expanded.
+  #
+  # Instead of the appname filter, it's recommended to use the desktop_entry filter.
+  # GLib based applications export their desktop-entry name. In comparison to the appname,
+  # the desktop-entry won't get localized.
+  #
+  # SCRIPTING
+  # You can specify a script that gets run when the rule matches by
+  # setting the "script" option.
+  # The script will be called as follows:
+  #   script appname summary body icon urgency
+  # where urgency can be "LOW", "NORMAL" or "CRITICAL".
+  #
+  # NOTE: It might be helpful to run dunst -print in a terminal in order
+  # to find fitting options for rules.
+
+  # Disable the transient hint so that idle_threshold cannot be bypassed from the
+  # client
+  #[transient_disable]
+  #    match_transient = yes
+  #    set_transient = no
+  #
+  # Make the handling of transient notifications more strict by making them not
+  # be placed in history.
+  #[transient_history_ignore]
+  #    match_transient = yes
+  #    history_ignore = yes
+
+  # fullscreen values
+  # show: show the notifications, regardless if there is a fullscreen window opened
+  # delay: displays the new notification, if there is no fullscreen window active
+  #        If the notification is already drawn, it won't get undrawn.
+  # pushback: same as delay, but when switching into fullscreen, the notification will get
+  #           withdrawn from screen again and will get delayed like a new notification
+  #[fullscreen_delay_everything]
+  #    fullscreen = delay
+  #[fullscreen_show_critical]
+  #    msg_urgency = critical
+  #    fullscreen = show
+
+  #[espeak]
+  #    summary = "*"
+  #    script = dunst_espeak.sh
+
+  #[script-test]
+  #    summary = "*script*"
+  #    script = dunst_test.sh
+
+  #[ignore]
+  #    # This notification will not be displayed
+  #    summary = "foobar"
+  #    skip_display = true
+
+  #[history-ignore]
+  #    # This notification will not be saved in history
+  #    summary = "foobar"
+  #    history_ignore = yes
+
+  #[skip-display]
+  #    # This notification will not be displayed, but will be included in the history
+  #    summary = "foobar"
+  #    skip_display = yes
+
+  #[signed_on]
+  #    appname = Pidgin
+  #    summary = "*signed on*"
+  #    urgency = low
+  #
+  #[signed_off]
+  #    appname = Pidgin
+  #    summary = *signed off*
+  #    urgency = low
+  #
+  #[says]
+  #    appname = Pidgin
+  #    summary = *says*
+  #    urgency = critical
+  #
+  #[twitter]
+  #    appname = Pidgin
+  #    summary = *twitter.com*
+  #    urgency = normal
+  #
+  #[stack-volumes]
+  #    appname = "some_volume_notifiers"
+  #    set_stack_tag = "volume"
+  #
+  # vim: ft=cfg
+#+end_src
+** astroid
+:PROPERTIES:
+:header-args: :tangle .config/astroid/config :mkdirp t
+:END:
+#+begin_src js
+  {
+      "astroid": {
+          "config": {
+              "version": "11"
+          },
+          "notmuch_config": "\/home\/mkncorp.com\/kristian.alexander\/.notmuch-config",
+          "debug": {
+              "dryrun_sending": "false"
+          },
+          "hints": {
+              "level": "0"
+          },
+          "log": {
+              "syslog": "false",
+              "stdout": "true",
+              "level": "info"
+          }
+      },
+      "accounts": {
+          "gmail": {
+              "name": "Kristian Alexander P",
+              "email": "alexarians@gmail.com",
+              "gpgkey": "27517709E592F14C5A51D90B972B3C2D613E4AE9",
+              "always_gpg_sign": "true",
+              "sendmail": "msmtp -i -t",
+              "default": "true",
+              "save_sent": "false",
+              "save_sent_to": "\/home\/mkncorp.com\/kristian.alexander\/.mail\/gmail\/sent\/cur\/",
+              "additional_sent_tags": "",
+              "save_drafts_to": "\/home\/mkncorp\/kristian.alexander\/.mail\/gmail\/draft\/",
+              "signature_separate": "false",
+              "signature_file": "",
+              "signature_file_markdown": "",
+              "signature_default_on": "true",
+              "signature_attach": "false",
+              "select_query": ""
+          },
+          "hotmail": {
+              "name": "Kristian Alexander P",
+              "email": "christian.alexander@windowslive.com",
+              "gpgkey": "27517709E592F14C5A51D90B972B3C2D613E4AE9",
+              "always_gpg_sign": "true",
+              "sendmail": "msmtp -i -t",
+              "default": "true",
+              "save_sent": "false",
+              "save_sent_to": "\/home\/mkncorp.com\/kristian.alexander\/.mail\/hotmail\/sent\/cur\/",
+              "additional_sent_tags": "",
+              "save_drafts_to": "\/home\/mkncorp\/kristian.alexander\/.mail\/hotmail\/draft\/",
+              "signature_separate": "false",
+              "signature_file": "",
+              "signature_file_markdown": "",
+              "signature_default_on": "true",
+              "signature_attach": "false",
+              "select_query": ""
+          },
+          "mkn": {
+              "name": "Kristian Alexander P",
+              "email": "kristian.alexander@mkncorp.com",
+              "gpgkey": "27517709E592F14C5A51D90B972B3C2D613E4AE9",
+              "always_gpg_sign": "true",
+              "sendmail": "msmtp -i -t",
+              "default": "true",
+              "save_sent": "false",
+              "save_sent_to": "\/home\/mkncorp.com\/kristian.alexander\/.mail\/mkn\/Sent\/cur\/",
+              "additional_sent_tags": "",
+              "save_drafts_to": "\/home\/mkncorp\/kristian.alexander\/.mail\/mkn\/Drafts\/",
+              "signature_separate": "false",
+              "signature_file": "",
+              "signature_file_markdown": "",
+              "signature_default_on": "true",
+              "signature_attach": "false",
+              "select_query": ""
+          },
+          "yahoo": {
+              "name": "Kristian Alexander P",
+              "email": "alexforsale@yahoo.com",
+              "gpgkey": "27517709E592F14C5A51D90B972B3C2D613E4AE9",
+              "always_gpg_sign": "true",
+              "sendmail": "msmtp -i -t",
+              "default": "true",
+              "save_sent": "false",
+              "save_sent_to": "\/home\/mkncorp.com\/kristian.alexander\/.mail\/yahoo\/sent\/cur\/",
+              "additional_sent_tags": "",
+              "save_drafts_to": "\/home\/mkncorp\/kristian.alexander\/.mail\/yahoo\/draft\/",
+              "signature_separate": "false",
+              "signature_file": "",
+              "signature_file_markdown": "",
+              "signature_default_on": "true",
+              "signature_attach": "false",
+              "select_query": ""
+          },
+          "ymail": {
+              "name": "Kristian Alexander P",
+              "email": "christian.alexander@ymail.com",
+              "gpgkey": "27517709E592F14C5A51D90B972B3C2D613E4AE9",
+              "always_gpg_sign": "true",
+              "sendmail": "msmtp -i -t",
+              "default": "true",
+              "save_sent": "false",
+              "save_sent_to": "\/home\/mkncorp.com\/kristian.alexander\/.mail\/ymail\/sent\/cur\/",
+              "additional_sent_tags": "",
+              "save_drafts_to": "\/home\/mkncorp\/kristian.alexander\/.mail\/ymail\/draft\/",
+              "signature_separate": "false",
+              "signature_file": "",
+              "signature_file_markdown": "",
+              "signature_default_on": "true",
+              "signature_attach": "false",
+              "select_query": ""
+          },
+          "zum": {
+              "name": "Kristian Alexander P",
+              "email": "kristian.alexander@zumstar.co.id",
+              "gpgkey": "27517709E592F14C5A51D90B972B3C2D613E4AE9",
+              "always_gpg_sign": "true",
+              "sendmail": "msmtp -i -t",
+              "default": "true",
+              "save_sent": "false",
+              "save_sent_to": "\/home\/mkncorp.com\/kristian.alexander\/.mail\/zum\/Sent\/cur\/",
+              "additional_sent_tags": "",
+              "save_drafts_to": "\/home\/mkncorp\/kristian.alexander\/.mail\/zum\/Drafts\/",
+              "signature_separate": "false",
+              "signature_file": "",
+              "signature_file_markdown": "",
+              "signature_default_on": "true",
+              "signature_attach": "false",
+              "select_query": ""
+          }
+      },
+      "startup": {
+          "queries": {
+              "gmail": "tag:gmail and tag:inbox",
+              "hotmail": "tag:hotmail and tag:inbox",
+              "mkn": "tag:mkn and tag:inbox",
+              "yahoo": "tag:yahoo and tag:inbox",
+              "ymail": "tag:ymail and tag:inbox",
+              "zum": "tag:mkn and tag:inbox"
+          }
+      },
+      "terminal": {
+          "height": "10",
+          "font_description": "default"
+      },
+      "thread_index": {
+          "page_jump_rows": "6",
+          "sort_order": "newest",
+          "cell": {
+              "font_description": "default",
+              "line_spacing": "2",
+              "date_length": "10",
+              "message_count_length": "4",
+              "authors_length": "20",
+              "subject_color": "#807d74",
+              "subject_color_selected": "#000000",
+              "background_color_selected": "",
+              "background_color_marked": "#fff584",
+              "background_color_marked_selected": "#bcb559",
+              "tags_length": "80",
+              "tags_upper_color": "#e5e5e5",
+              "tags_lower_color": "#333333",
+              "tags_alpha": "0.5",
+              "hidden_tags": "attachment,flagged,unread"
+          }
+      },
+      "general": {
+          "time": {
+              "clock_format": "local",
+              "same_year": "%b %-e",
+              "diff_year": "%x"
+          },
+          "tagbar_move": "tag"
+      },
+      "editor": {
+          "cmd.orig": "gvim -geom 10x10 --servername %2 --socketid %3 -f -c 'set ft=mail' '+set fileencoding=utf-8' '+set ff=unix' '+set enc=utf-8' '+set fo+=w' %1",
+          "cmd": "emacs --parent-id %3 %1",
+          "external_editor": "false",
+          "charset": "utf-8",
+          "save_draft_on_force_quit": "true",
+          "attachment_words": "attach",
+          "attachment_directory": "~",
+          "markdown_processor": "cmark",
+          "markdown_on": "false"
+      },
+      "mail": {
+          "reply": {
+              "quote_processor": "w3m -dump -T text\/html",
+              "quote_line": "Excerpts from %1's message of %2:",
+              "mailinglist_reply_to_sender": "true"
+          },
+          "forward": {
+              "quote_line": "Forwarding %1's message of %2:",
+              "disposition": "inline"
+          },
+          "sent_tags": "sent",
+          "message_id_fqdn": "",
+          "message_id_user": "",
+          "user_agent": "default",
+          "send_delay": "2",
+          "close_on_success": "false",
+          "format_flowed": "false"
+      },
+      "poll": {
+          "interval": "600",
+          "always_full_refresh": "false"
+      },
+      "attachment": {
+          "external_open_cmd": "xdg-open"
+      },
+      "thread_view": {
+          "open_html_part_external": "false",
+          "preferred_type": "plain",
+          "preferred_html_only": "false",
+          "allow_remote_when_encrypted": "false",
+          "open_external_link": "xdg-open",
+          "default_save_directory": "~",
+          "indent_messages": "false",
+          "gravatar": {
+              "enable": "true"
+          },
+          "mark_unread_delay": "0.5",
+          "expand_flagged": "true"
+      },
+      "crypto": {
+          "gpg": {
+              "path": "gpg2",
+              "always_trust": "true",
+              "enabled": "true"
+          }
+      },
+      "saved_searches": {
+          "show_on_startup": "false",
+          "save_history": "true",
+          "history_lines_to_show": "15",
+          "history_lines": "1000"
+      }
+  }
+#+end_src
+** alacritty
+*** alacritty.toml
+:PROPERTIES:
+:header-args: :tangle .config/alacritty/alacritty.toml :mkdirp t
+:END:
+#+begin_src toml -n
+  import = ["~/.config/alacritty/themes/nord.toml"]
+  live_config_reload = true
+  [window]
+  dynamic_padding = true
+  decorations = "None"
+  blur = true
+  [scrolling]
+  history = 100000
+  [font]
+  normal = { family = "JetBrainsMonoNL Nerd Font Mono", style = "Regular" }
+  bold = { family = "JetBrainsMonoNL Nerd Font Mono", style = "Bold" }
+  italic = { family = "JetBrainsMonoNL Nerd Font Mono", style = "Italic" }
+  bold_italic = { family = "JetBrainsMonoNL Nerd Font Mono", style = "Semibold Italic" }
+  size = 10
+  [bell]
+  animation = "Ease"
+  [cursor]
+  style = { shape = "Beam", blinking = "On" }
+  [mouse]
+  hide_when_typing = true
+  [selection]
+  save_to_clipboard = true
+#+end_src
+*** THemes
+**** nord
+:PROPERTIES:
+:header-args: :tangle .config/alacritty/themes/nord.toml :mkdirp t
+:END:
+
+#+begin_src toml
+  # -*- eval: (rainbow-mode 1) -*-
+  # Colors (Nord)
+
+  # Default colors
+  [colors.primary]
+  background = '#2E3440'
+  foreground = '#D8DEE9'
+
+  # Normal colors
+  [colors.normal]
+  black   = '#3B4252'
+  red     = '#BF616A'
+  green   = '#A3BE8C'
+  yellow  = '#EBCB8B'
+  blue    = '#81A1C1'
+  magenta = '#B48EAD'
+  cyan    = '#88C0D0'
+  white   = '#E5E9F0'
+
+  # Bright colors
+  [colors.bright]
+  black   = '#4C566A'
+  red     = '#BF616A'
+  green   = '#A3BE8C'
+  yellow  = '#EBCB8B'
+  blue    = '#81A1C1'
+  magenta = '#B48EAD'
+  cyan    = '#8FBCBB'
+  white   = '#ECEFF4'
+#+end_src
+* Scripts
+** offlineimap-helper
+:PROPERTIES:
+:header-args: :tangle .local/bin/offlineimap-helper.py :shebang #!/usr/bin/env python :mkdirp t
+:END:
+#+begin_src python
+  """Offlineimap helper script"""
+
+  from subprocess import check_output
+  from os import getenv, path
+  import json
+
+  JSON_FILE = "credentials.json"
+  if getenv("XDG_DATA_HOME") and path.exists(getenv("XDG_DATA_HOME") + "/" + "offlineimap"):
+      JSON_PATH = getenv("XDG_DATA_HOME") + "/" + "offlineimap"
+  else:
+      JSON_PATH = getenv("HOME") + "/" + ".local/share/offlineimap"
+
+
+  f = open(JSON_PATH + "/" + JSON_FILE)
+  creds_data = json.load(f)
+
+  def get_credentials(name, query):
+      for item in creds_data["accounts"]:
+          if item["name"] == name:
+              if query == "host":
+                  return item["host"]
+              elif query == "port":
+                  return item["port"]
+              elif query == "user":
+                  return item["user"]
+              elif query == "passeval":
+                  return item["passeval"]
+#+end_src
+This is a helper script for my /offlineimap/ configuration
+** dunst-backlight
+:PROPERTIES:
+:header-args: :tangle .local/bin/dunst-backlight :shebang #!/usr/bin/env bash
+:END:
+
+#+begin_src sh
+  # original script from https://wiki.archlinux.org/index.php/Dunst
+  # <alexforsale@yahoo.com>
+  # changeBrightness
+
+  # Arbitrary but unique message tag
+  msgTag="mybrightness"
+
+  # Change the volume using alsa(might differ if you use pulseaudio)
+  #amixer -c 0 set Master "$@" > /dev/null
+  #pamixer --set-volume "${@}" > /dev/null
+  brightnessctl set "${@}" > /dev/null
+
+  # Query amixer for the current volume and whether or not the speaker is muted
+  #volume="$(amixer -c 0 get Master | tail -1 | awk '{print $4}' | sed 's/[^0-9]*//g')"
+  #mute="$(amixer -c 0 get Master | tail -1 | awk '{print $6}' | sed 's/[^a-z]*//g')"
+  #volume="$(pamixer --get-volume-human)"
+  #mute="$(pamixer --get-mute)"
+  max="$(brightnessctl max)"
+  current="$(brightnessctl get)"
+  percentage="$(awk -v current=${current} -v max=${max} 'BEGIN { print ( (current / max) * 100 )}')"
+  percentage="${percentage%.*}"
+
+  # Show the brightness notification
+  dunstify -a "changeBrightness" -u low -i audio-volume-high -h string:x-dunst-stack-tag:$msgTag \
+      -h int:value:"${percentage}" " Brightness: ${percentage}%"
+
+  # Play the brightness changed sound
+  canberra-gtk-play -i audio-volume-change -d "changeVolume"
+#+end_src
+** dunst-volume
+:PROPERTIES:
+:header-args: :tangle .local/bin/dunst-volume :shebang #!/usr/bin/env bash
+:END:
+
+#+begin_src sh
+  # original script from https://wiki.archlinux.org/index.php/Dunst
+  # <alexforsale@yahoo.com>
+  # changeVolume
+
+  msgTag="myvolume"
+
+  # args = -i % or -d %
+  pamixer "${@}" > /dev/null
+  volume="$(pamixer --get-volume)"
+  mute="$(pamixer --get-mute)"
+  if [ "${mute}" == "true" ]; then
+      icon="audio-volume-muted"
+      symbol=""
+  elif [ "${mute}" == "false" ] &&
+           [ "${volume}" -gt 0 ] &&
+           [ "${volume}" -le 25 ]; then
+      icon="audio-volume-low"
+      symbol=""
+  elif [ "${mute}" == "false" ] &&
+           [ "${volume}" -gt 25 ] &&
+           [ "${volume}" -le 75 ]; then
+      icon="audio-volume-medium"
+      symbol=""
+  elif [ "${mute}" == "false" ] &&
+           [ "${volume}" -gt 75 ]; then
+      icon="audio-volume-high"
+      symbol=""
+  fi
+
+  if [[ $volume == 0 || "$mute" == "true" ]]; then
+      dunstify -a "changeVolume" -u low -i "${icon}" -h string:x-dunst-stack-tag:$msgTag "${symbol} Volume muted"
+  else
+      dunstify -a "changeVolume" -u low -i "${icon}" -h string:x-dunst-stack-tag:$msgTag \
+      -h int:value:"$volume" "${symbol} Volume: ${volume}%"
+  fi
+
+  canberra-gtk-play -i audio-volume-change -d "changeVolume"
+#+end_src
+* Misc
+** org-protocol desktop file
+:PROPERTIES:
+:header-args: :tangle .local/share/applications/org-protocol.desktop :mkdirp t
+:END:
+#+begin_src conf -n
+  [Desktop Entry]
+  Name=Org-Protocol
+  Exec=emacsclient -a emacs %u
+  Icon=emacs-icon
+  Type=Application
+  Terminal=false
+  MimeType=x-scheme-handler/org-protocol
+#+end_src
