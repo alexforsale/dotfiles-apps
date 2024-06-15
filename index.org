@@ -1887,6 +1887,69 @@ button selected normal {
 #+end_src
 
 I forgot where I got this.
+*** scripts
+**** =rofi-logout=
+:PROPERTIES:
+:header-args: :tangle .local/bin/rofi-logout :shebang /usr/bin/env bash
+:END:
+#+begin_src sh
+THEME=${1:-logout}
+
+question=$(echo "󰌾 lock|󰍃 logout|󰜉 reboot|󰐥 shutdown" | rofi -sep "|" \
+    -dmenu -i -p 'System: ' "" \
+    -hide-scrollbar \
+    -eh 1 \
+    -color-enabled true \
+    -theme "$THEME")
+
+case $question in
+    ,*lock)
+        case $DESKTOP_SESSION in
+            hyprland)
+                hyprctl dispatcher exit
+                ;;
+            ,*)
+                if [ "$(pgrep -x lightdm)" ] && [ "$(command -v light-locker)" ]; then
+                    light-locker-command -l
+                fi
+                ;;
+        esac
+        ;;
+    ,*logout)
+        case $DESKTOP_SESSION in
+            hyprland)
+                hyprctl dispatcher exit
+                ;;
+            openbox)
+                openbox --exit
+                ;;
+            i3)
+                i3-msg exit
+                ;;
+            qtile)
+                qtile cmd-obj -o cmd -f shutdown
+                ;;
+        esac
+        ;;
+    ,*reboot)
+        if [[ $(command -v systemctl) ]]; then
+            systemctl reboot
+        else
+            shutdown -r now
+        fi
+        ;;
+    ,*shutdown)
+        if [[ $(command -v systemctl) ]]; then
+            systemctl poweroff
+        else
+            poweroff
+        fi
+        ;;
+    ,*)
+        exit 0  # do nothing on wrong response
+        ;;
+esac
+#+end_src
 ** picom
 :PROPERTIES:
 :header-args: :tangle .config/picom/picom.conf :mkdirp t
@@ -3587,18 +3650,4 @@ This is a helper script for my /offlineimap/ configuration
   fi
 
   canberra-gtk-play -i audio-volume-change -d "changeVolume"
-#+end_src
-* Misc
-** org-protocol desktop file
-:PROPERTIES:
-:header-args: :tangle .local/share/applications/org-protocol.desktop :mkdirp t
-:END:
-#+begin_src conf -n
-  [Desktop Entry]
-  Name=Org-Protocol
-  Exec=emacsclient -a emacs %u
-  Icon=emacs-icon
-  Type=Application
-  Terminal=false
-  MimeType=x-scheme-handler/org-protocol
 #+end_src
