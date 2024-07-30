@@ -2909,7 +2909,7 @@ My offlineimap setup for several accounts.
   decorations = "None"
   padding = { x = 25, y = 25 }
   blur = true
-  startup_mode = "Fullscreen"
+  #startup_mode = "Fullscreen"
   decorations_theme_variant = "Dark"
   [scrolling]
   history = 100000
