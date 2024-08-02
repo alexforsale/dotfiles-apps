@@ -1313,7 +1313,7 @@ I forgot where I got this.
 *** scripts
 **** rofi-logout
 :PROPERTIES:
-:header-args: :tangle .local/bin/rofi-logout :shebang /usr/bin/env bash :mkdirp t
+:header-args: :tangle .local/bin/rofi-logout :shebang #!/usr/bin/env bash :mkdirp t
 :END:
 #+begin_src sh
 THEME=${1:-logout}
