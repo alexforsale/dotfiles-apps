@@ -1329,7 +1329,7 @@ case $question in
     ,*lock)
         case $DESKTOP_SESSION in
             hyprland)
-                hyprctl dispatcher exit
+                hyprctl dispatch exit
                 ;;
             ,*)
                 if [ "$(pgrep -x lightdm)" ] && [ "$(command -v light-locker)" ]; then
@@ -1341,7 +1341,7 @@ case $question in
     ,*logout)
         case $DESKTOP_SESSION in
             hyprland)
-                hyprctl dispatcher exit
+                hyprctl dispatch exit
                 ;;
             openbox)
                 openbox --exit
